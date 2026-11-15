@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paper plan | Layout cues for passage retrieval</title>
+  <title>Worked paper plan | Advisor-Ready Paper Structure</title>
   <style>
     :root {
       color-scheme: light;
-      --page: #faf9f6;
-      --ink: #222522;
-      --muted: #575d58;
-      --rule: #d7d9d2;
+      --page: #f7f7fc;
+      --ink: #202343;
+      --muted: #535765;
+      --rule: #dadbea;
       --paper: #fff;
-      --accent: #254f3a;
+      --lavender: #ebe9fb;
+      --accent: #106967;
+      --mint: #e3f3ef;
       --sans: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
       --serif: "Iowan Old Style", "Noto Serif", Georgia, serif;
     }
@@ -23,50 +25,125 @@
       color: var(--ink);
       font: 1.0625rem / 1.58 var(--serif);
     }
-    main { width: min(100% - 2rem, 68rem); margin: clamp(2rem, 7vw, 5rem) auto; }
-    header { border-bottom: 1px solid var(--rule); padding-bottom: 2rem; }
-    h1, h2, h3, p, ol, dl, figure { margin: 0; }
-    h1, h2, h3 { line-height: 1.16; font-weight: 600; }
-    h1 { font-size: clamp(2.15rem, 5.8vw, 4.2rem); max-width: 17ch; margin: .65rem 0 1rem; }
-    h2 { font-size: clamp(1.55rem, 3.5vw, 2.15rem); margin-bottom: 1rem; }
-    h3 { font-size: 1.2rem; margin-bottom: .45rem; }
+    main { width: min(100% - 2rem, 72rem); margin: clamp(1rem, 3vw, 3rem) auto 5rem; }
+    h1, h2, h3, h4, p, ol, ul, figure { margin: 0; }
+    h1, h2, h3, h4 { line-height: 1.12; font-weight: 600; }
+    h1 { font-size: clamp(2.65rem, 6.3vw, 5.4rem); max-width: 13ch; margin: .55rem 0 1.15rem; letter-spacing: -.04em; text-wrap: balance; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.65rem); margin-bottom: 1rem; letter-spacing: -.025em; }
+    h3 { font-size: 1.34rem; margin-bottom: .55rem; }
+    h4 { margin-bottom: .6rem; font: 650 .9rem/1.3 var(--sans); }
     p + p { margin-top: .7rem; }
     a { color: var(--accent); text-underline-offset: .2em; }
-    a:focus-visible, .table-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    .eyebrow, th, .note, .caption-detail { font-family: var(--sans); }
-    .eyebrow { font-size: .8125rem; font-weight: 650; color: var(--accent); }
-    .intro { max-width: 66ch; }
-    section { margin-top: 2.3rem; }
-    .claim { font-size: clamp(1.2rem, 2.4vw, 1.55rem); max-width: 63ch; }
-    .outline-entry + .outline-entry { margin-top: 1.45rem; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    [id] { scroll-margin-block: 1.5rem; }
+    .masthead, .eyebrow, .toc, .zh, th, .note, .caption-detail { font-family: var(--sans); }
+    .masthead {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: .55rem 1.5rem;
+      padding: .8rem 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: .875rem;
+    }
+    .masthead p { font-weight: 650; }
+    .zh { color: var(--muted); font-size: .84rem; line-height: 1.45; }
+    .masthead .zh { margin-inline-start: .45rem; font-weight: 500; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(15rem, .47fr);
+      gap: clamp(1.5rem, 6vw, 5.5rem);
+      align-items: end;
+      padding-block: clamp(2rem, 6vw, 4.8rem) clamp(1.5rem, 4vw, 3.5rem);
+    }
+    .eyebrow { color: var(--accent); font-size: .875rem; font-weight: 650; }
+    .intro { max-width: 54ch; }
+    .intro .zh { display: block; margin-top: .6rem; }
+    .toc {
+      border-radius: .75rem;
+      padding: 1rem 1.1rem;
+      background: var(--lavender);
+      font-size: .9rem;
+    }
+    .toc p { margin-bottom: .45rem; font-weight: 650; }
+    .toc ul { list-style: none; padding: 0; }
+    .toc li { border-top: 1px solid #cecae6; padding: 0; margin: 0; }
+    .toc a {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: .15rem .5rem;
+      padding: .53rem 0;
+      color: var(--ink);
+      text-decoration: none;
+    }
+    .toc a:hover, .toc a:focus-visible { text-decoration: underline; }
+    section { margin-top: clamp(2.8rem, 7vw, 5.3rem); }
+    section:first-of-type { margin-top: 0; }
+    h2 .zh { display: block; letter-spacing: 0; margin-top: .36rem; font-weight: 540; }
+    .conclusion {
+      background: var(--mint);
+      border-left: .24rem solid var(--accent);
+      padding: clamp(1rem, 3.7vw, 2.4rem);
+      border-radius: 0 .65rem .65rem 0;
+    }
+    .claim { font-size: clamp(1.24rem, 2.7vw, 1.78rem); line-height: 1.43; max-width: 62ch; }
+    .conclusion .claim + p { max-width: 68ch; }
+    .priority-list { max-width: 75ch; }
+    .writing-now { max-width: 70ch; margin-top: 1rem; padding: .9rem 1rem; border-radius: .55rem; background: var(--lavender); }
+    .outline-key { max-width: 70ch; margin-bottom: .95rem; }
+    .outline-entry {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(14rem, .48fr);
+      align-items: start;
+      gap: .75rem clamp(1rem, 3vw, 2.25rem);
+      padding: 1.15rem clamp(.8rem, 2.5vw, 1.6rem);
+      border-top: 1px solid var(--rule);
+      background: var(--paper);
+    }
+    .outline-entry:last-child { border-bottom: 1px solid var(--rule); }
+    .outline-entry p { max-width: 72ch; }
     ol { padding-left: 1.5em; }
     li { padding-left: .25rem; }
     li + li { margin-top: .6rem; }
     .note, .caption-detail { font-size: .875rem; color: var(--muted); }
-    .note { border-inline-start: 2px solid var(--rule); margin: .7rem 0 0; padding: .15rem .65rem; }
-    .table-scroll { overflow-x: auto; border-bottom: 1px solid var(--rule); }
+    .note { border-inline-start: 2px solid #b1a9d8; background: #f5f4fb; margin: .7rem 0 0; padding: .55rem .65rem; }
+    .notes .note:first-child { margin-top: 0; }
+    .note strong { display: block; font-size: .78rem; }
+    .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: .52rem; }
     table { width: 100%; border-collapse: collapse; background: var(--paper); font-size: .95rem; }
     .evidence { min-width: 31rem; }
     .review { min-width: 57rem; table-layout: fixed; }
     .planned { min-width: 27rem; }
-    caption, figcaption { text-align: left; padding: .55rem 0; font-weight: 600; }
+    caption, figcaption { text-align: left; padding: .6rem .7rem; font-weight: 600; }
     th, td { border-top: 1px solid var(--rule); padding: .66rem .7rem; text-align: left; vertical-align: top; }
     th { font-size: .8125rem; }
-    thead, tbody th { background: #eeefe9; }
+    thead, tbody th { background: #f1effa; }
     .planned td { height: 2.5rem; }
-    .displays { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 1.35rem; }
+    .display-plan { grid-column: 1 / -1; padding-top: .95rem; border-top: 1px solid var(--rule); }
+    .displays { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: start; gap: 1.2rem; }
     .displays > * { min-width: 0; }
-    .plot-space { border: 1px dashed #8c958a; background: var(--paper); aspect-ratio: 16 / 7; }
-    @media (max-width: 58rem) {
-      .displays { grid-template-columns: 1fr; }
+    figcaption { padding-inline: 0; }
+    .caption-detail { margin-top: .55rem; }
+    .plot-space { border: 1px dashed #8586a4; border-radius: .45rem; background: var(--page); aspect-ratio: 16 / 6; }
+    @media (max-width: 64rem) { .displays { grid-template-columns: 1fr; } }
+    @media (max-width: 42rem) {
+      .hero, .outline-entry { grid-template-columns: 1fr; }
+      .masthead .zh { display: block; margin-inline-start: 0; }
     }
     @media print {
       @page { size: landscape; margin: 12mm; }
       body { background: #fff; font-size: 10pt; }
       main { width: 100%; margin: 0; }
       h1 { font-size: 28pt; }
+      .hero { display: block; padding-block: .9rem; }
+      .toc { display: none; }
+      section { margin-top: 1.2rem; }
+      .conclusion { padding: .7rem; }
       h2, h3 { break-after: avoid; }
-      header, .outline-entry, .displays > *, tr { break-inside: avoid; }
+      header, .entry-copy, .notes, .displays > *, tr { break-inside: avoid; }
+      .outline-entry { padding: .65rem; }
       .table-scroll { overflow: visible; }
       .review, .evidence, .planned { min-width: 0; }
       table { font-size: 8pt; }
@@ -78,19 +155,40 @@
 <body>
 <main>
   <header>
-    <p class="eyebrow">Advisor-Ready Paper Structure · Fictional example</p>
-    <h1>Layout cues for passage retrieval</h1>
-    <p class="intro">An English paper plan with Chinese revision notes, based on the <a href="source-packet.md">example source packet</a>.</p>
+    <div class="masthead">
+      <p>Advisor-Ready Paper Structure <span class="zh" lang="zh-Hans">导师会喜欢的论文结构</span></p>
+      <a href="source-packet.md">Source packet <span class="zh" lang="zh-Hans">示例材料</span></a>
+    </div>
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Worked example using fictional data</p>
+        <h1>Layout cues for passage retrieval</h1>
+        <p class="intro">
+          Start with what your evidence can support. Then see where each claim belongs and what to do when a piece is still missing.
+          <span class="zh" lang="zh-Hans">先看现有材料能支持什么，再看每节怎么写、缺口该怎么补。</span>
+        </p>
+      </div>
+      <nav class="toc" aria-label="On this page">
+        <p>In this example <span class="zh" lang="zh-Hans">示例导航</span></p>
+        <ul>
+          <li><a href="#conclusion">Working conclusion <span class="zh" lang="zh-Hans">目前能说什么</span></a></li>
+          <li><a href="#evidence">Evidence ledger <span class="zh" lang="zh-Hans">证据从哪来</span></a></li>
+          <li><a href="#priorities">Analysis order <span class="zh" lang="zh-Hans">接下来先做什么</span></a></li>
+          <li><a href="#outline">Draft outline <span class="zh" lang="zh-Hans">论文怎么写</span></a></li>
+          <li><a href="#review">Revision table <span class="zh" lang="zh-Hans">逐节修改表</span></a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
-  <section aria-labelledby="conclusion">
-    <h2 id="conclusion">Working conclusion</h2>
+  <section class="conclusion" aria-labelledby="conclusion">
+    <h2 id="conclusion">Working conclusion <span class="zh" lang="zh-Hans">目前能说什么</span></h2>
     <p class="claim">In a paired pilot on 24 questions from single-column PDFs, the reranker with layout cues retrieved the annotated top passage on 15 questions versus 12 for the text-only reranker (<a href="#e02">E02</a>).</p>
     <p>The result describes this pilot. Claims about other layouts, answer accuracy, and the individual contribution of section headings require different evidence.</p>
   </section>
 
   <section aria-labelledby="evidence">
-    <h2 id="evidence">Evidence ledger</h2>
+    <h2 id="evidence">Evidence ledger <span class="zh" lang="zh-Hans">证据从哪来</span></h2>
     <div class="table-scroll" role="region" aria-label="Evidence ledger table" tabindex="0">
       <table class="evidence">
         <thead>
@@ -107,71 +205,94 @@
   </section>
 
   <section aria-labelledby="priorities">
-    <h2 id="priorities">What to analyze first</h2>
-    <ol>
+    <h2 id="priorities">What to analyze first <span class="zh" lang="zh-Hans">接下来先做什么</span></h2>
+    <ol class="priority-list">
       <li><strong>G01 · Rebuild the paired comparison.</strong> Join both system runs to the same question IDs, gold annotations, and candidate pools. Record eligible pairs and exclusions by layout before computing scores.</li>
       <li><strong>G02 · Measure the paired effect.</strong> Tabulate both-correct, layout-only, text-only, and neither outcomes. Report denominators and uncertainty alongside the paired difference.</li>
       <li><strong>G03 · Separate the feature effects.</strong> On the fixed pairs and pools, compare the joint configuration with page-position-only and headings-only runs if the paper retains a feature-level claim.</li>
     </ol>
-    <p><strong>G04 · Fix the endpoint in the draft now.</strong> Check the claim against E01. This study measures passage retrieval. Keep answer accuracy open.</p>
+    <p class="writing-now"><strong>G04 · Fix the endpoint in the draft now.</strong> Check the claim against <a href="#e01">E01</a>. This study measures passage retrieval. Keep answer accuracy open.</p>
   </section>
 
   <section aria-labelledby="outline">
-    <h2 id="outline">Recommended paper structure</h2>
-    <div class="outline-entry">
-      <h3>Abstract</h3>
-      <p>Draft last. State the retrieval question, the combined layout inputs, and the result for the eligible evaluation population.</p>
-      <aside class="note" lang="zh-Hans"><strong>G04 可先修订</strong>　把回答准确率改为首位段落与标注段落的匹配。</aside>
-      <aside class="note" lang="zh-Hans"><strong>G01–G02 待补</strong>　结果段确认后再写摘要。核对适用范围、分母和指标。</aside>
-    </div>
-    <div class="outline-entry">
-      <h3>1. Introduction</h3>
-      <p>Frame the task as selecting an annotated evidence passage from a fixed candidate set. Introduce layout as information for reranking and end with a retrieval question.</p>
-      <aside class="note" lang="zh-Hans"><strong>G01 待补</strong>　等配对评估确定覆盖范围后，再写最后一段的主要发现。</aside>
-    </div>
-    <div class="outline-entry">
-      <h3>2. Method and evaluation</h3>
-      <p>Follow the input through the shared candidate pool, layout-aware reranker, and top-ranked passage. Define the match criterion before explaining the comparison.</p>
-      <aside class="note" lang="zh-Hans"><strong>G01 待补</strong>　写清问题、候选池和标注的配对条件，以及排除标准。</aside>
-    </div>
-    <div class="outline-entry">
-      <h3>3. Results</h3>
-      <p>Open with the question that the paired comparison addresses. Describe how to read the table by PDF layout, report the observed differences, and tie them to the joint layout configuration. Present the pilot at its actual scope.</p>
-      <aside class="note" lang="zh-Hans"><strong>G02 待补</strong>　补齐每道题的成对结果和不确定性。按分母解释差异，表格与图例等待核算。</aside>
-    <h4>Planned displays</h4>
-    <div class="displays">
-      <div>
-        <div class="table-scroll" role="region" aria-label="Planned table with empty data cells" tabindex="0">
-          <table class="planned" aria-describedby="table-gap">
-            <caption>Table 1. Paired retrieval comparison by PDF layout</caption>
-            <thead>
-              <tr><th scope="col">Layout</th><th scope="col">Pairs</th><th scope="col">Text-only matches</th><th scope="col">Layout-aware matches</th><th scope="col">Paired difference and interval</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Single-column</th><td></td><td></td><td></td><td></td></tr>
-              <tr><th scope="row">Two-column</th><td></td><td></td><td></td><td></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p id="table-gap" class="note" lang="zh-Hans"><strong>G01–G02 待补</strong>　完成全量配对和复核后填表。</p>
+    <h2 id="outline">Recommended paper structure <span class="zh" lang="zh-Hans">论文怎么写</span></h2>
+    <p class="outline-key">The English text explains what each part does. The notes alongside it name the next edit. Use each gap ID to find the same action in the <a href="#review">revision table</a>.</p>
+    <div class="outline-entry" id="abstract">
+      <div class="entry-copy">
+        <h3>Abstract</h3>
+        <p>Draft last. State the retrieval question, the combined layout inputs, and the result for the eligible evaluation population.</p>
       </div>
-      <figure>
-        <figcaption>Figure 1. Paired top-passage match difference by PDF layout</figcaption>
-        <div class="plot-space" role="img" aria-label="Empty figure placeholder reserved for the paired comparison"></div>
-        <p class="caption-detail">Layout on the vertical axis, paired difference in percentage points on the horizontal axis, with a zero reference and uncertainty intervals.</p>
-        <p class="note" lang="zh-Hans"><strong>G02 待补</strong>　用与表 1 相同的配对样本生成图，核实各组分母和区间。</p>
-      </figure>
+      <div class="notes" lang="zh-Hans">
+        <p class="note"><strong>G04 可先修订</strong>把回答准确率改为首位段落与标注段落的匹配。</p>
+        <p class="note"><strong>G01–G02 待补</strong>结果段确认后再写摘要。核对适用范围、分母和指标。</p>
+      </div>
     </div>
+    <div class="outline-entry" id="introduction">
+      <div class="entry-copy">
+        <h3>1. Introduction</h3>
+        <p>Open with the task of selecting an annotated evidence passage from a fixed candidate set. Introduce layout as information for reranking and end with a retrieval question.</p>
+      </div>
+      <div class="notes" lang="zh-Hans">
+        <p class="note"><strong>G01 待补</strong>等配对评估确定覆盖范围后，再写最后一段的主要发现。</p>
+      </div>
     </div>
-    <div class="outline-entry">
-      <h3>4. Discussion and conclusion</h3>
-      <p>Return to the retrieval question. Explain the pilot's coverage and state what the combined intervention can establish. Connect any future feature claim to a separate analysis.</p>
-      <aside class="note" lang="zh-Hans"><strong>G03 待补</strong>　如果要说明哪项特征起作用，先比较单特征配置，再检查结论的表述范围。</aside>
+    <div class="outline-entry" id="method">
+      <div class="entry-copy">
+        <h3>2. Method and evaluation</h3>
+        <p>Follow the input through the shared candidate pool, layout-aware reranker, and top-ranked passage. Define the match criterion before explaining the comparison.</p>
+      </div>
+      <div class="notes" lang="zh-Hans">
+        <p class="note"><strong>G01 待补</strong>写清问题、候选池和标注的配对条件，以及排除标准。</p>
+      </div>
+    </div>
+    <div class="outline-entry" id="results">
+      <div class="entry-copy">
+        <h3>3. Results</h3>
+        <p>Open with the question that the paired comparison addresses. Describe how to read the table by PDF layout, report the observed differences, and tie them to the joint layout configuration. Present the pilot at its actual scope.</p>
+      </div>
+      <div class="notes" lang="zh-Hans">
+        <p class="note"><strong>G02 待补</strong>补齐每道题的成对结果和不确定性。按分母解释差异，表格与图例等待核算。</p>
+      </div>
+      <div class="display-plan">
+        <h4>Planned displays <span class="zh" lang="zh-Hans">待补图表</span></h4>
+        <div class="displays">
+          <div>
+            <div class="table-scroll" role="region" aria-label="Planned table with empty data cells" tabindex="0">
+              <table class="planned" aria-describedby="table-gap">
+                <caption>Table 1. Paired retrieval comparison by PDF layout</caption>
+                <thead>
+                  <tr><th scope="col">Layout</th><th scope="col">Pairs</th><th scope="col">Text-only matches</th><th scope="col">Layout-aware matches</th><th scope="col">Paired difference and interval</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">Single-column</th><td></td><td></td><td></td><td></td></tr>
+                  <tr><th scope="row">Two-column</th><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p id="table-gap" class="note" lang="zh-Hans"><strong>G01–G02 待补</strong>完成全量配对和复核后填表。</p>
+          </div>
+          <figure>
+            <figcaption>Figure 1. Paired top-passage match difference by PDF layout</figcaption>
+            <div class="plot-space" role="img" aria-label="Empty figure placeholder reserved for the paired comparison"></div>
+            <p class="caption-detail">Layout on the vertical axis, paired difference in percentage points on the horizontal axis, with a zero reference and uncertainty intervals.</p>
+            <p class="note" lang="zh-Hans"><strong>G02 待补</strong>用与表 1 相同的配对样本生成图，核实各组分母和区间。</p>
+          </figure>
+        </div>
+      </div>
+    </div>
+    <div class="outline-entry" id="discussion">
+      <div class="entry-copy">
+        <h3>4. Discussion and conclusion</h3>
+        <p>Return to the retrieval question. Explain the pilot's coverage and state what the combined intervention can establish. Connect any future feature claim to a separate analysis.</p>
+      </div>
+      <div class="notes" lang="zh-Hans">
+        <p class="note"><strong>G03 待补</strong>如果要说明哪项特征起作用，先比较单特征配置，再检查结论的表述范围。</p>
+      </div>
     </div>
   </section>
 
   <section aria-labelledby="review">
-    <h2 id="review">Section-by-section revision table</h2>
+    <h2 id="review">Section-by-section revision table <span class="zh" lang="zh-Hans">逐节修改表</span></h2>
     <div class="table-scroll" role="region" aria-label="Section-by-section revision table" tabindex="0">
       <table class="review">
         <colgroup><col style="width:12%"><col style="width:16%"><col style="width:10%"><col style="width:19%"><col style="width:21%"><col style="width:22%"></colgroup>
@@ -179,11 +300,11 @@
           <tr><th scope="col">Section</th><th scope="col">Job</th><th scope="col">Evidence</th><th scope="col">Logic gap</th><th scope="col">What to add next</th><th scope="col">Completion check</th></tr>
         </thead>
         <tbody>
-          <tr><th scope="row">Abstract</th><td>Summarize the task and observed result.</td><td><a href="#e01">E01</a>, <a href="#e02">E02</a></td><td>G04 · The draft switches from retrieval to answering. G01–G02 · Broader results are pending.</td><td>Restore the retrieval endpoint now. State the verified comparison and cohort after 1–2.</td><td>Scope, counts, and endpoints agree with Results.</td></tr>
-          <tr><th scope="row">Introduction</th><td>Motivate a testable retrieval question.</td><td><a href="#e01">E01</a>, <a href="#e02">E02</a></td><td>G01 · The draft generalizes across PDF layouts.</td><td>After 1, write a contribution statement for the eligible cohort.</td><td>Each promised comparison appears in Results at the same scope.</td></tr>
-          <tr><th scope="row">Method and evaluation</th><td>Make the comparison reproducible.</td><td><a href="#e01">E01</a>, <a href="#e03">E03</a>, <a href="#e04">E04</a></td><td>G01 · The larger export drops the pairing keys.</td><td>1 · Rebuild the join and document the shared inputs and exclusions.</td><td>Each included row has a matching question, gold ID, and candidate pool across systems.</td></tr>
-          <tr><th scope="row">Results</th><td>Report the observed difference and its uncertainty.</td><td><a href="#e02">E02</a></td><td>G02 · Aggregate counts leave joint outcomes unknown.</td><td>2 · Fill Table 1 and Figure 1 from per-question comparisons.</td><td>Display values and text agree by cohort and denominator.</td></tr>
-          <tr><th scope="row">Discussion and conclusion</th><td>Explain the scope and tie it back to the design.</td><td><a href="#e02">E02</a>, <a href="#e04">E04</a></td><td>G03 · The joint experiment cannot isolate section headings.</td><td>3 · Run the two single-feature variants if making a feature claim. Otherwise describe the combined configuration.</td><td>Each mechanism claim has a direct comparison.</td></tr>
+          <tr><th scope="row"><a href="#abstract">Abstract</a></th><td>Summarize the task and observed result.</td><td><a href="#e01">E01</a>, <a href="#e02">E02</a></td><td>G04 · The draft switches from retrieval to answering. G01–G02 · Broader results are pending.</td><td>Restore the retrieval endpoint now. State the verified comparison and cohort after 1–2.</td><td>Scope, counts, and endpoints agree with Results.</td></tr>
+          <tr><th scope="row"><a href="#introduction">Introduction</a></th><td>Motivate a testable retrieval question.</td><td><a href="#e01">E01</a>, <a href="#e02">E02</a></td><td>G01 · The draft generalizes across PDF layouts.</td><td>After 1, write a contribution statement for the eligible cohort.</td><td>Each promised comparison appears in Results at the same scope.</td></tr>
+          <tr><th scope="row"><a href="#method">Method and evaluation</a></th><td>Make the comparison reproducible.</td><td><a href="#e01">E01</a>, <a href="#e03">E03</a>, <a href="#e04">E04</a></td><td>G01 · The larger export drops the pairing keys.</td><td>1 · Rebuild the join and document the shared inputs and exclusions.</td><td>Each included row has a matching question, gold ID, and candidate pool across systems.</td></tr>
+          <tr><th scope="row"><a href="#results">Results</a></th><td>Report the observed difference and its uncertainty.</td><td><a href="#e02">E02</a></td><td>G02 · Aggregate counts leave joint outcomes unknown.</td><td>2 · Fill Table 1 and Figure 1 from per-question comparisons.</td><td>Display values and text agree by cohort and denominator.</td></tr>
+          <tr><th scope="row"><a href="#discussion">Discussion and conclusion</a></th><td>Explain the scope and tie it back to the design.</td><td><a href="#e02">E02</a>, <a href="#e04">E04</a></td><td>G03 · The joint experiment cannot isolate section headings.</td><td>3 · Run the two single-feature variants if making a feature claim. Otherwise describe the combined configuration.</td><td>Each mechanism claim has a direct comparison.</td></tr>
         </tbody>
       </table>
     </div>
