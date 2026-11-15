@@ -1,76 +1,68 @@
-# 导师会喜欢的论文结构
+# 不伤心的论文结构建议
 
-**Advisor-Ready Paper Structure**
+**No-Burn Paper Structure**
 
-我在几所 Top 30 的 CS 院系和不同风格的导师讨论论文时，整理了他们看重的一些写法。比如 Introduction 开门见山，第一段就交代具体的研究问题，再说明为什么值得解决。哪怕手上只有半份草稿和几张实验表，这个技能也会从已有材料出发，告诉你哪一段能先写、哪里需要补证据。
+我在几所 Top 30 CS 院系和不同风格的导师讨论论文时，记下了几种反复用到的写法。比如引言第一段先让读者知道你在解决什么问题，再讲它为什么值得解决。我把这些写法做成了一个 Codex 技能。即使只有半份草稿和几张实验表，也可以用它确定哪些结论有证据、各节先写什么、下一步核对什么。
 
-I put this guide together from paper discussions with advisors who had different styles across several Top 30 CS departments. One practice I kept coming back to was opening the introduction with the research problem, then explaining why it matters. Bring a partial draft and whatever results you have. The skill will show you what you can write today and what evidence to gather next.
+I built this Codex skill from paper discussions with advisors of different styles across several Top 30 CS departments. One practice kept coming up. State the research problem in the opening paragraph, then explain why it matters. Bring a partial draft and whatever results you have, and work out what you can claim, what belongs in each section, and which check to run next.
 
-[先看一份输出 / See a sample output](examples/plan.html)
+[看完整示例 / See the worked example](examples/plan.html)
 
-![Advisor-Ready Paper Structure, a visual guide for turning scattered research material into a paper outline](assets/cover.jpg)
+![不伤心的论文结构建议。双语速查图涵盖写作顺序、证据核对和逐节修改。 Bilingual field guide to paper structure, evidence checks, and section review.](assets/no-burn-field-guide.jpg)
 
-## 快速开始 · Quick start
+## 逐节搭建论证 · Build the argument section by section
 
-**1. 安装 / Install.** 第一次用时，把仓库克隆到你的 Codex 技能目录。已安装可以直接跳到第 2 步。<br>
-Clone the repository into your Codex skills directory. If the skill is already installed, start at step 2.
+| 章节 / Section | 写作顺序 / Writing sequence |
+|---|---|
+| **Introduction** | 研究问题 → 为什么重要 → 相关工作留下的缺口 → 核心想法 → 证据预告<br>Research problem → stakes → gap in prior work → key idea → evidence preview |
+| **Method** | 核心想法 → 输入 → 关键操作及设计理由 → 输出<br>Key idea → inputs → operations and design rationale → outputs |
+| **Experiments / Results** | 实验问题 → 对照、指标和读图方式 → 观测 → 解释 → 支持哪条主张<br>Question → comparison, metric, and how to read the display → observation → interpretation → claim it supports |
+| **Conclusion** | 回答引言的问题 → 主要发现和适用范围 → 从局限推导后续工作<br>Answer to the opening question → findings and scope → future work tied to a limitation |
+
+引言可以直接问“页面位置和小节标题能否帮助检索器在学术 PDF 中找到正确的证据段落？”
+
+An introduction can open with “Can page position and section headings help a reranker retrieve the correct evidence passage from a scientific PDF?”
+
+## 证据能支持多强的结论 · Scope the claim to the evidence
+
+虚构示例中，加入版面信息后，在同一组来自单栏 PDF 的 24 个问题上，首位段落的精确匹配数从 12 增到 15（`E02`）。更大的导出混入了双栏 PDF，缺少问题 ID 和候选池哈希（`E03`）。先写配对试验的观察，把跨版式结论留待核对。第一步（`G01`）是核对问题 ID、参考标注和候选池，确定哪些样本能配对。
+
+In the fictional example, adding layout cues raises top-ranked passage exact matches from 12 to 15 on the same 24 questions from single-column PDFs (`E02`). The larger export also includes two-column PDFs and lacks question IDs and candidate-pool hashes (`E03`). Report the paired pilot observation now. Check question IDs, gold annotations, and candidate pools to find eligible pairs (`G01`) before making a claim across layouts.
+
+输出会把**当前结论、证据位置及适用范围、分析顺序**放在前面。随后给出带灰色旁注的逐节提纲和待填的图表，最后用修改表列明每节的待补内容和完成标准。
+
+The review starts with the **current conclusion, evidence locations and scope, and analysis order**. It gives you a section outline with gray notes and blank figure or table slots, then ends with a review table specifying what to revise and how to tell when it is done.
+
+[示例材料 / Example source packet](examples/source-packet.md) · [完整输出 / Full annotated example](examples/plan.html)（下载 HTML 后用浏览器打开 / Download the HTML and open it in a browser）
+
+## 在 Codex 中使用 · Run in Codex
+
+把仓库克隆到 Codex 技能目录。已安装可直接在新聊天里用。
+
+Clone into your Codex skills directory. If already installed, start a new chat.
 
 ```sh
 git clone https://github.com/ArthurQQQQ/advisor-ready-paper-structure.git "${CODEX_HOME:-$HOME/.codex}/skills/advisor-ready-paper-structure"
 ```
 
-**2. 提供材料 / Add your materials.** 在 Codex 新聊天中附上已有的草稿、组会笔记、实验结果或图表。有目标期刊或会议时，可以一并说明。<br>
-In a new Codex chat, attach or point to any mix of draft sections, meeting notes, results, figures, and tables. Include a target venue if you have one.
+附上草稿、组会笔记、实验结果或图表。有目标会议或期刊可一并说明。然后复制一条提示词。
 
-**3. 调用技能 / Run the skill.** 复制一条提示词发给 Codex。 / Copy either prompt into Codex.
+Attach any draft sections, meeting notes, results, or figures. Include your target venue if you have one, then copy either prompt.
 
 **中文**
 
 ```text
 用 $advisor-ready-paper-structure 看我附的草稿、组会笔记和实验表。
-先告诉我现有证据能支持什么结论、哪项分析应该先做。
-再给我逐节写作提纲。英文提纲的缺口用灰色中文小字注明，
-待补的图表留空，最后给我一张逐节修改表。
+告诉我证据支持什么结论、结论适用于哪些条件，以及哪项核对最先做。
+给我中英双语的逐节写作建议。英文提纲的缺口用灰色中文小字写明下一步，
+待补图表留空，最后给我一张逐节修改表。
 ```
 
 **English**
 
 ```text
 Use $advisor-ready-paper-structure on my draft, meeting notes, and results.
-Tell me what the evidence supports today and which analysis to do first.
-Give me an English outline with short gray Chinese notes at the gaps,
-empty slots for pending figures and tables, and a section-by-section review.
+Tell me what the evidence supports, under what conditions, and which check to do first.
+Give me bilingual section guidance and an English outline with short gray Chinese notes at the gaps,
+blank slots for pending figures and tables, and a section-by-section review.
 ```
-
-## 每节怎么写 · What each section does
-
-**引言的第一段就可以这样开头。** “页面位置和小节标题能否帮助检索器在学术 PDF 中找到正确的证据段落？”读者知道了问题，你就可以接着讲它为什么重要、已有方法留下了什么问题。
-
-**An introduction can open like this.** “Can page position and section headings help a reranker retrieve the correct evidence passage from a scientific PDF?” Once the reader knows the question, explain why it matters and where current approaches fall short.
-
-![A paper structure map showing the flow from Introduction through Method and Results to Conclusion](assets/paper-structure.jpg)
-
-| 章节 / Section | 写作顺序 / Writing sequence |
-|---|---|
-| **Introduction** | 研究问题 → 为什么重要 → 现有缺口 → 核心想法和证据预告<br>Research problem → stakes → remaining gap → key idea and evidence preview |
-| **Method** | 核心想法 → 输入 → 关键操作 → 输出<br>Key idea → inputs → main operations → outputs |
-| **Experiments / Results** | 要回答的问题 → 对照和图表读法 → 观察 → 解释 → 对方法意味着什么<br>Question → comparison and how to read the display → observation → interpretation → implication for the method |
-| **Conclusion** | 回答开头的问题 → 主要发现及适用范围 → 源于局限的后续工作<br>Answer to the opening question → finding and scope → future work tied to a limitation |
-
-## 你会拿到什么 · What you get back
-
-1. **当前结论 / Current conclusion.** 现有材料能支持什么，以及结论适用于哪些条件。<br>What the supplied evidence supports and under which conditions.
-2. **证据索引与分析顺序 / Evidence map and analysis order.** 每条主张对应哪份材料，先做哪个对照或核对哪项设置。<br>Where to find each claim’s evidence and which comparison or check to do first.
-3. **带批注的章节提纲 / Annotated outline.** 每节要回答什么。在缺口原位用另一种语言的灰色小字标明下一步，待补图表保留空位。<br>What each section should answer, with small gray notes in a second language at the gaps and blank space for pending displays.
-4. **逐节修改表 / Section-by-section review.** 每节的已有证据、待补逻辑、建议动作、优先级和完成标准。<br>The evidence, gap, recommended action, priority, and completion check for each section.
-
-![A preview of actionable paper feedback showing a specific evidence gap and a concrete next step](assets/feedback-preview.jpg)
-
-### 示例 · Worked example
-
-这份虚构材料里，带版面信息的方法在同一组 24 道单栏 PDF 题目上命中 15 道，基线命中 12 道。更大一批结果的测试样本不同，所以提纲先记录这个小样本的观察，优先核对更大批次能否配对，再给完整对照图表留位。
-
-In the fictional packet, the layout-aware method finds 15 correct passages and the baseline finds 12 on the same 24 questions from single-column PDFs. The larger export uses different samples, so the plan records the pilot observation, puts a sample-matching check first, and reserves space for the full comparison.
-
-- [示例输入 / Example source packet](examples/source-packet.md)
-- [完整输出 / Full annotated example](examples/plan.html) · 下载 HTML 后用浏览器打开 / Download the HTML and open it in a browser

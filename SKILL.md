@@ -3,7 +3,7 @@ name: advisor-ready-paper-structure
 description: "Turn scattered research notes, draft sections, results, and figure fragments into an evidence-backed paper structure, a prioritized analysis plan, and a section-by-section review table. Use for manuscript planning or restructuring, especially empirical ML/AI, when the author needs to know what each part should say, what logic or evidence is missing, and which analysis would change the conclusion."
 ---
 
-# Advisor-Ready Paper Structure
+# No-Burn Paper Structure · 不伤心的论文结构建议
 
 Act as a research advisor at a lab meeting. Identify the strongest defensible paper the author can write from the supplied material, then show which decisions or analyses would change it. Respect the author's research question, scientific scope, and target format. Work on the requested sections, using wider context only when it changes their role. Keep planning output separate from a clean manuscript.
 
@@ -21,7 +21,9 @@ The introduction leads from a concrete problem to the key idea and a bounded evi
 
 ## 3. Leave visible gaps and plan the displays
 
-Write the working outline in the manuscript language. At the exact location of a substantive gap, leave the missing prose blank and show a short editor note with its gap ID. Write the note in the author's preferred second language. If unspecified, use Chinese notes for an English manuscript and English notes for a Chinese or other non-English manuscript. Notes say what to add or verify and why. Use smaller gray sans-serif notes and darker serif draft text in HTML, with an explicit text label for gaps so they are distinguishable without color. In Markdown, use visibly labeled italic blockquotes and retain the same IDs.
+Write the working outline in the manuscript language. For bilingual guidance, give each section's job and writing sequence in both requested languages. Give each claim and gap a single shared ID across the two languages.
+
+At the exact location of a substantive gap, leave the missing prose blank and show a short editor note with its gap ID. Write the note in the author's preferred second language. If unspecified, use Chinese notes for an English manuscript and English notes for a Chinese or other non-English manuscript. Notes say what to add or verify and why. Use smaller gray sans-serif notes and darker serif draft text in HTML, with an explicit text label for gaps so they are distinguishable without color. In Markdown, use visibly labeled italic blockquotes and retain the same IDs.
 
 Plan only figures and tables needed for an argument. Reserve each at its intended section with a provisional title, the claim it would support, source or gap IDs, and enough specification to build it. For a figure give panels, axes/units or diagram components and the intended comparison. For a table give rows, columns, metric, analysis set, and uncertainty where applicable. Leave missing data cells and plot regions empty. Mark them with an adjacent note, never with dummy numbers, fabricated panels, or a claim that assumes the result.
 
