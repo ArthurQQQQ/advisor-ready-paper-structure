@@ -1,56 +1,169 @@
 <!doctype html>
 <html lang="en">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Annotated paper outline</title>
-<style>
-  html { color-scheme: light; }
-  body { margin: 2rem auto; padding: 0 1.25rem; max-width: 76rem; font: 1.05rem/1.55 Georgia, "Noto Serif", serif; color: #171a20; background: #fff; }
-  h1, h2, h3 { line-height: 1.2; }
-  .editor-note { margin: .7rem 0 1.2rem; padding: .55rem .8rem; border-inline-start: 3px solid #9b9da3; color: #575b64; background: #f5f5f6; font: .88rem/1.55 system-ui, "Noto Sans CJK SC", sans-serif; }
-  .figure-slot { min-height: 8rem; border: 1px dashed #767982; }
-  .table-wrap { max-width: 100%; overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font: .9rem/1.45 system-ui, sans-serif; }
-  caption { text-align: start; padding-block: .4rem; }
-  th, td { padding: .55rem; border: 1px solid #bbbfc7; vertical-align: top; text-align: start; }
-  th { background: #f5f5f6; }
-  figure { margin: 1.1rem 0; }
-  @media print {
-    body { margin: 0; padding: 0; }
-    h2, h3 { break-after: avoid; }
-    .table-wrap { overflow: visible; }
-    figure, tr, .editor-note { break-inside: avoid; }
-  }
-</style>
-<main>
-  <h1>Annotated paper outline</h1>
-  <section aria-labelledby="conclusion"><h2 id="conclusion">Current conclusion</h2></section>
-  <section aria-labelledby="evidence"><h2 id="evidence">Evidence map</h2></section>
-  <section aria-labelledby="analysis"><h2 id="analysis">Analysis order</h2></section>
-  <section aria-labelledby="outline">
-    <h2 id="outline">Suggested structure</h2>
-    <h3>Results</h3>
-    <p class="editor-note" lang="zh-Hans"><strong>待补 G01</strong>　填写需要核验的比较、完成条件和它影响的主张。</p>
-    <figure>
-      <figcaption>Planned figure</figcaption>
-      <div class="figure-slot" aria-label="Reserved figure space. Data pending."></div>
-    </figure>
-    <div class="table-wrap">
-      <table>
-        <caption>Planned table</caption>
-        <thead><tr><th scope="col">Comparison</th><th scope="col">Outcome</th></tr></thead>
-        <tbody><tr><th scope="row">Primary comparison</th><td></td></tr></tbody>
-      </table>
-    </div>
-  </section>
-  <section aria-labelledby="review">
-    <h2 id="review">Section-by-section review</h2>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th scope="col">Section</th><th scope="col">Job in the argument</th><th scope="col">Evidence and location</th><th scope="col">Logic or evidence gap</th><th scope="col">What to write or do next</th><th scope="col">Priority and completion check</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-  </section>
-</main>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Annotated paper plan</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #fff;
+      --ink: #202343;
+      --teal: #106967;
+      --lavender: #ebe9fb;
+      --rule: #d8dae7;
+      --note: #575b68;
+      --note-paper: #f5f5f8;
+      --serif: Baskervville, "Iowan Old Style", Georgia, serif;
+      --sans: "Instrument Sans", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 1.05rem/1.6 var(--serif); }
+    main { inline-size: min(74rem, 100% - 2rem); margin: clamp(2rem, 6vw, 5rem) auto; }
+    header { padding-block: 1.5rem; border-block-start: .35rem solid var(--ink); }
+    h1, h2, h3, p, ol, figure { margin-block-start: 0; }
+    h1, h2, h3 { line-height: 1.18; }
+    h1 { margin-block-end: .65rem; font-size: clamp(2.2rem, 6.5vw, 4.5rem); }
+    h2 { margin-block-end: 1.15rem; font-size: clamp(1.55rem, 4vw, 2.2rem); }
+    h3 { margin-block-end: .55rem; font-size: 1.2rem; }
+    p, ol { max-inline-size: 68ch; }
+    header p { margin: 0; font-family: var(--sans); }
+    a { color: var(--teal); text-underline-offset: .18em; }
+    :focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem 1.1rem;
+      padding: .85rem 1rem;
+      background: var(--lavender);
+      font: 600 .9rem/1.5 var(--sans);
+    }
+    section { margin-block-start: 2.2rem; padding-block-start: 1.15rem; border-block-start: 1px solid var(--rule); }
+    section:target > h2 { color: var(--teal); }
+    .editor-note {
+      margin-block: .8rem 1.15rem;
+      padding: .6rem .85rem;
+      border-inline-start: .2rem solid #9698a8;
+      background: var(--note-paper);
+      color: var(--note);
+      font: .875rem/1.55 var(--sans);
+    }
+    .displays { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 1.35rem; }
+    .displays > * { min-inline-size: 0; }
+    figure { margin-inline: 0; }
+    .figure-slot {
+      min-block-size: 8rem;
+      border: 1px dashed #777d93;
+    }
+    .table-wrap { overflow-x: auto; border-block-end: 1px solid var(--rule); }
+    table { inline-size: 100%; border-collapse: collapse; font: .9rem/1.45 var(--sans); }
+    .evidence-table { min-inline-size: 34rem; }
+    .review-table { min-inline-size: 52rem; }
+    caption, figcaption { padding-block: .5rem; text-align: start; font-weight: 650; }
+    th, td { padding: .6rem .7rem; border-block-start: 1px solid var(--rule); vertical-align: top; text-align: start; }
+    thead th { background: var(--lavender); }
+    tbody th { font-weight: 600; }
+    .planned-table td { block-size: 2.75rem; }
+
+    @media (max-width: 42rem) {
+      .displays { grid-template-columns: 1fr; }
+    }
+    @media print {
+      @page { size: landscape; margin: 12mm; }
+      body { font-size: 11pt; }
+      main { inline-size: 100%; margin: 0; }
+      header { padding-block: .65rem; }
+      nav { display: none; }
+      h1 { font-size: 28pt; }
+      h2 { font-size: 18pt; }
+      h2, h3 { break-after: avoid; }
+      .table-wrap { overflow: visible; }
+      .evidence-table, .review-table { min-inline-size: 0; table-layout: fixed; }
+      table { font-size: 9pt; }
+      th, td { padding: .35rem .4rem; overflow-wrap: anywhere; }
+      figure, tr, .editor-note { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Annotated paper plan</h1>
+      <p>What the evidence supports today and where to start the next revision.</p>
+    </header>
+    <nav aria-label="In this plan">
+      <a href="#conclusion">Conclusion</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#analysis">Analysis order</a>
+      <a href="#outline">Outline</a>
+      <a href="#review">Review table</a>
+    </nav>
+
+    <section id="conclusion" aria-labelledby="conclusion-heading">
+      <h2 id="conclusion-heading">Current conclusion</h2>
+      <!-- Insert the supported claim and its boundary with evidence IDs. -->
+    </section>
+
+    <section id="evidence" aria-labelledby="evidence-heading">
+      <h2 id="evidence-heading">Evidence map</h2>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="evidence-heading">
+        <table class="evidence-table">
+          <thead>
+            <tr><th scope="col">ID</th><th scope="col">Source and location</th><th scope="col">What it supports</th><th scope="col">Scope and status</th></tr>
+          </thead>
+          <tbody><!-- Add one row per evidence item. --></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="analysis" aria-labelledby="analysis-heading">
+      <h2 id="analysis-heading">Analysis order</h2>
+      <!-- List the actions in dependency order with completion checks and the decisions they inform. -->
+    </section>
+
+    <section id="outline" aria-labelledby="outline-heading">
+      <h2 id="outline-heading">Suggested structure</h2>
+      <!-- Add sections for this manuscript. The results section below demonstrates a gap and reserved displays. -->
+      <h3>Results</h3>
+      <p class="editor-note" lang="zh-Hans"><strong>待补 G01</strong> 先核对比较所用的样本和指标，再填写图表和结果段。</p>
+      <div class="displays">
+        <figure aria-describedby="figure-gap">
+          <figcaption>Planned figure</figcaption>
+          <div class="figure-slot" aria-hidden="true"></div>
+          <p id="figure-gap" class="editor-note" lang="zh-Hans"><strong>图待补 G01</strong> 核对比较口径后在此放图。</p>
+        </figure>
+        <div>
+          <div class="table-wrap" tabindex="0" role="region" aria-labelledby="planned-table-caption">
+            <table class="planned-table" aria-describedby="table-gap">
+              <caption id="planned-table-caption">Planned table</caption>
+              <thead><tr><th scope="col">Comparison</th><th scope="col">Outcome</th></tr></thead>
+              <tbody><tr><th scope="row">Primary comparison</th><td></td></tr></tbody>
+            </table>
+          </div>
+          <p id="table-gap" class="editor-note" lang="zh-Hans"><strong>表待补 G01</strong> 对齐样本和指标后填写。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="review" aria-labelledby="review-heading">
+      <h2 id="review-heading">Section-by-section review</h2>
+      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="review-heading">
+        <table class="review-table">
+          <thead>
+            <tr>
+              <th scope="col">Section</th>
+              <th scope="col">Job in the argument</th>
+              <th scope="col">Evidence and location</th>
+              <th scope="col">Logic or evidence gap</th>
+              <th scope="col">What to write or do next</th>
+              <th scope="col">Priority and completion check</th>
+            </tr>
+          </thead>
+          <tbody><!-- Add a row for each section and substantive subsection. --></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
 </html>
