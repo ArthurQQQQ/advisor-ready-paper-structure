@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>No-Burn Paper Structure | 不伤心的论文结构建议 | Worked example</title>
+  <title>No-Burn Paper Structure | 不烧型论文结构审阅 | Worked example</title>
   <style>
     :root {
       color-scheme: light;
@@ -174,7 +174,7 @@
 <main>
   <header>
     <div class="masthead">
-      <p>No-Burn Paper Structure <span class="zh" lang="zh-Hans">不伤心的论文结构建议</span></p>
+      <p>No-Burn Paper Structure <span class="zh" lang="zh-Hans">不烧型论文结构审阅</span></p>
       <a href="source-packet.md">Source packet <span class="zh" lang="zh-Hans">示例材料</span></a>
     </div>
     <div class="hero">
@@ -182,16 +182,16 @@
         <p class="context">Worked example using fictional data <span class="zh" lang="zh-Hans">虚构数据示例</span></p>
         <h1>Layout cues for passage retrieval</h1>
         <p class="intro">
-          Track a retrieval claim from the pilot results through the outline and the final revision table.
-          <span class="zh" lang="zh-Hans">跟着一条检索结论，看现有证据能写到哪里，以及下一步要补什么。</span>
+          Follow a retrieval claim through the review to see which section it belongs in and what evidence the reader needs there.
+          <span class="zh" lang="zh-Hans">跟着一条检索主张，看它该出现在论文哪一节、需要哪些证据。</span>
         </p>
       </div>
       <nav class="toc" aria-label="On this page">
         <p>On this page <span class="zh" lang="zh-Hans">本页目录</span></p>
         <ul>
-          <li><a href="#conclusion">Working conclusion <span class="zh" lang="zh-Hans">现有结论</span></a></li>
+          <li><a href="#conclusion">Review summary <span class="zh" lang="zh-Hans">审阅摘要</span></a></li>
           <li><a href="#evidence">Evidence ledger <span class="zh" lang="zh-Hans">证据台账</span></a></li>
-          <li><a href="#priorities">Analysis order <span class="zh" lang="zh-Hans">分析顺序</span></a></li>
+          <li><a href="#priorities">Priority checks <span class="zh" lang="zh-Hans">优先核对</span></a></li>
           <li><a href="#outline">Draft outline <span class="zh" lang="zh-Hans">写作提纲</span></a></li>
           <li><a href="#review">Revision table <span class="zh" lang="zh-Hans">逐节修改表</span></a></li>
         </ul>
@@ -200,7 +200,8 @@
   </header>
 
   <section class="conclusion" aria-labelledby="conclusion">
-    <h2 id="conclusion">Working conclusion <span class="zh" lang="zh-Hans">目前能说什么</span></h2>
+    <h2 id="conclusion">Review summary <span class="zh" lang="zh-Hans">审阅摘要</span></h2>
+    <p>Frame the Abstract and Introduction around passage retrieval. Start Results with the paired pilot and reserve a later subsection for comparisons across PDF layouts.</p>
     <p class="claim">In a paired pilot on 24 questions from single-column PDFs, the reranker with layout cues retrieved the annotated top passage on 15 questions versus 12 for the text-only reranker (<a href="#e02">E02</a>).</p>
     <p>The result describes this pilot. Claims about other layouts, answer accuracy, and the individual contribution of section headings require different evidence.</p>
   </section>
@@ -223,7 +224,7 @@
   </section>
 
   <section aria-labelledby="priorities">
-    <h2 id="priorities">What to analyze first <span class="zh" lang="zh-Hans">接下来先做什么</span></h2>
+    <h2 id="priorities">Priority checks <span class="zh" lang="zh-Hans">优先核对</span></h2>
     <ol class="priority-list">
       <li><strong><code>G01</code> Rebuild the paired comparison.</strong> Join both system runs to the same question IDs, gold annotations, and candidate pools. Record eligible pairs and exclusions by layout before computing scores.</li>
       <li><strong><code>G02</code> Measure the paired effect.</strong> Tabulate both-correct, layout-only, text-only, and neither outcomes. Report denominators and uncertainty alongside the paired difference.</li>
@@ -233,7 +234,7 @@
   </section>
 
   <section aria-labelledby="outline">
-    <h2 id="outline">Recommended paper structure <span class="zh" lang="zh-Hans">论文怎么写</span></h2>
+    <h2 id="outline">Recommended paper structure <span class="zh" lang="zh-Hans">建议结构</span></h2>
     <p class="outline-key">The English text explains what each part does. The notes alongside it name the next edit. Use each gap ID to find the same action in the <a href="#review">revision table</a>.</p>
     <div class="outline-entry" id="abstract">
       <div class="entry-copy">
