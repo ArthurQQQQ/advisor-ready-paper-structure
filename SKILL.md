@@ -1,13 +1,13 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review and restructure a paper or outline, especially empirical ML/AI. Lead with a short verdict and a clickable whole-paper argument map. Each node gives one or two concrete revisions grounded in evidence and baseline checks."
+description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver a short verdict and an interactive argument map that connects sections to highlighted manuscript excerpts, evidence gaps, and concrete edits."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
 
 Review how the draft or outline makes its argument from the supplied material. Identify where the paper makes its central claim, where the reader finds its evidence, and which changes would make that sequence clearer. Respect the author's research question, scientific scope, and target format. Work on the requested sections, using wider context only when it changes their role.
 
-Start with the topic or research question and a draft or outline. Use experiment notes, results, baseline descriptions, figures, and tables when supplied. A target venue is optional. Review what the author has and record material gaps in the review.
+Start with the paper PDF, draft, or outline and identify its research question. Use experiment notes, results, baseline descriptions, figures, and tables when supplied. A target venue is optional. Review what the author has and record material gaps.
 
 ## 1. Establish what the evidence supports
 
@@ -20,9 +20,11 @@ Start with the topic or research question and a draft or outline. Use experiment
 
 Use [the section playbook](references/section-playbook.md) to adapt the map to the manuscript's topic, contribution, and venue. For a whole-paper review, cover the title and abstract, introduction, related work where relevant, method, experimental setup, substantive results in the proposed order, discussion, conclusion, and appendices as applicable. Use the paper's actual section names or concrete proposed headings. Group minor subsections under the node where their material belongs. For narrower reviews, map the requested sections and include adjacent context where a handoff depends on it.
 
-Label each node with a short section or result name. Show the reading order and use connections only where a section hands an assumption, design choice, result, or limitation to another. Keep parallel experiments and supporting analyses distinct, especially when they test different populations, outcomes, or claims.
+Number the proposed structure so readers can follow it, including subsections such as 1.1, 1.2, and 1.3. Label each node with a short section or result name. Show the reading order and use connections only where a section hands an assumption, design choice, result, or limitation to another. Keep parallel experiments and supporting analyses distinct, especially when they test different populations, outcomes, or claims.
 
-On selection, show one or two concrete edits for the node. Use direct verbs and name the affected heading, paragraph, figure, or table. For a move or split, name the current location and the destination. Include evidence, comparison boundaries, or a fallback in the edit when they affect what the author should do. Keep exact source locations traceable through the relevant edit text.
+For each reviewed node, identify the manuscript passage that bears on it. Quote a short exact span, with enough surrounding text to read it in context, and record its verified PDF page, section, figure, or table. For a proposed addition, anchor the highlight to the existing claim that needs support and explain the missing link in the review. If no passage is available, leave the source open and name the material needed.
+
+Describe what the current material supports, the specific reasoning or comparison still needed where applicable, and one or two concrete edits. Use direct verbs and name the affected heading, paragraph, figure, or table. For a move or split, name the current location and the destination. Keep source locations and evidence limits traceable in the review.
 
 The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method explains the key idea and follows the actual flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
 
@@ -37,7 +39,7 @@ Plan only figures and tables needed for an argument. Reserve each at its intende
 ## 4. Deliver a compact review
 
 1. **Verdict.** Lead with one short sentence that states the most consequential structural change. Include an evidence boundary when it determines the recommendation.
-2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for a standalone file. Match the visual language of the paper or project when a reference is available. Use short node labels and a clear reading direction. Keep the initial view to the paper title, verdict, and map. Each node opens with a click or keyboard and shows only one or two actionable edits. A shared detail area can keep the map steady as readers move between sections. Keep branding, kickers, help captions, secondary small text, legends, sidebars, and archives out of the default report. Provide a full audit or review table when requested.
-3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Give one or two edits under each node.
+2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for one self-contained report that opens offline. Follow the schema documented above its inline `report-data` JSON block. Lead with the title, verdict, and central map. Selecting a numbered node by pointer, keyboard, or direct link highlights the source passage on the left and shows the support, precise gap if applicable, and edits on the right. On narrow screens, keep the map first, followed by the review and source. Include only navigation, source material, and actionable review content. Provide a full audit or review table when requested.
+3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Place the source location, evidence, any gap, and one or two edits under the relevant node.
 
-Check that the verdict and map are clear before opening a node, and every visible element helps the author navigate or make an edit. Verify that material claims are traceable, gaps have next actions, and each node opens the right edits. Keep each recommendation in one place.
+Check that the verdict and map are clear before opening a node. Verify that the source highlight and review match the selected node, every quoted span is in the draft, and each material gap has a next action. Keep each recommendation in one place.

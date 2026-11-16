@@ -4,7 +4,7 @@
 
 I put this guide together from my experience doing research with professors at leading universities around the world and writing papers for major machine learning and AI conferences. It helps you educate your readers with a clear, logical paper structure.
 
-Upload your paper as a PDF and get an interactive HTML review.
+Upload your paper as a PDF and get an interactive HTML review you can open offline.
 
 [简体中文](README.zh-CN.md) · [Worked example](examples/plan.html)
 
@@ -18,7 +18,7 @@ Attach your paper as a PDF, even if the draft is incomplete. If the paper refers
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
-Open the HTML review for a short verdict and a clickable map of the proposed structure. Select a section to see how it supports the argument, where the reasoning or evidence falls short, and what to change.
+Start with a short verdict and the numbered argument map in the center. Select a node to highlight the corresponding manuscript passage on the left and see what it supports, what is missing, and how to revise it on the right.
 
 ## Review the argument section by section
 
@@ -51,5 +51,6 @@ Attach your paper PDF and send this prompt.
 Use $advisor-ready-paper-structure to review the attached PDF.
 Trace the argument through each section. Show which claims the evidence supports
 and where a step in the reasoning, a baseline comparison, or evidence is missing.
-Return one interactive HTML review with a short verdict and a clickable outline.
+Return one offline HTML review with a short verdict and a numbered argument map.
+Link each node to the corresponding source excerpt and one or two specific edits.
 ```
