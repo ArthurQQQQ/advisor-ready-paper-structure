@@ -1,6 +1,6 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver a short verdict and an interactive argument map that connects sections to highlighted original PDF passages, evidence gaps, and concrete edits."
+description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver an interactive argument map with prioritized issues, highlighted original PDF passages, and editable revisions the author can approve."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
@@ -26,6 +26,15 @@ For each reviewed node, identify the manuscript passage that bears on it. Quote 
 
 Describe what the current material supports, the specific reasoning or comparison still needed where applicable, and one or two concrete edits. Use direct verbs and name the affected heading, paragraph, figure, or table. For a move or split, name the current location and the destination. Keep source locations and evidence limits traceable in the review.
 
+Assign each node the severity of its most consequential open issue.
+
+| Marker | When to use it |
+|---|---|
+| Red | A central claim, comparison, or result lacks essential information. Surface this gap first. |
+| Yellow | The argument needs a material clarification, revision, or verification. |
+| Green | A small, evidence-supported change can improve wording, transitions, or placement. |
+| Blank | The section serves its role as written and has no proposed changes. |
+
 The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method explains the key idea and follows the actual flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
 
 ## 3. Leave visible gaps and plan the displays
@@ -40,6 +49,7 @@ Plan only figures and tables needed for an argument. Reserve each at its intende
 
 1. **Verdict.** Lead with one short sentence that states the most consequential structural change. Include an evidence boundary when it determines the recommendation.
 2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) and follow the schema documented above its inline `report-data` JSON block. Lead with the title, verdict, and central map. Selecting a numbered node by pointer, keyboard, or direct link shows the support, precise gap if applicable, and edits on the left. For a PDF, use [the PDF bundler](scripts/bundle-pdf.py) to embed the source PDF and viewer in the report, which opens offline. The right panel opens the matching original page and highlights the verified passage. If the page match is unavailable, state that clearly and show the verified excerpt or source location when available. For draft or outline input, show the corresponding excerpt and locator. On narrow screens, keep the map first, followed by the review and source. Provide a full audit or review table when requested.
-3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Place the source location, evidence, any gap, and one or two edits under the relevant node.
+3. **Approval and revision.** Prepare each adoptable suggestion as a replacement in editable source supplied by the author. Name its relative file path, include a unique exact span from that file, and give the complete replacement. Keep proposed replacements independent and check their claims against the cited evidence. Follow the scaffold's `report.adoption` schema and use a version-specific ID for the source snapshot. Per-suggestion approval and **Approve all** apply selected replacements to a working copy, with a ZIP containing changed source files and the revision record. Record suggestions that require new evidence, an experiment, a source check, or editable input as pending tasks with the specific requirement. Keep the supplied originals available for comparison.
+4. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Place the source location, evidence, severity, any gap, and one or two edits under the relevant node.
 
-Check that the verdict and map are clear before opening a node. Verify that the PDF page, highlight, and review match the selected node, every quoted span is in the draft, and each material gap has a next action. Keep each recommendation in one place.
+Check that the verdict and map are clear before opening a node. Verify that the PDF page, highlight, and review match the selected node, every quoted span is in the draft, and each material gap has a next action. In the revision record, identify each approved change by node and state whether it applied, needs material, or could not be matched. Verify the downloaded source against the approved replacements and leave a clear next action for any match failure. Keep each recommendation in one place.

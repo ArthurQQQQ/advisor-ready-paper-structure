@@ -14,11 +14,17 @@ Upload your paper as a PDF and get an interactive HTML review you can open offli
 
 Attach your paper as a PDF, even if the draft is incomplete. If the paper refers to evidence or comparisons outside the PDF, attach the relevant notes, figures, or tables. Include your target venue if it affects how the paper should be structured.
 
+Attach the editable LaTeX or Markdown source if you want the review to apply approved edits to a downloadable revision.
+
 ## What you get back
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
 Start with a short verdict and the numbered argument map in the center. Select a node to see the evidence, gaps, and suggested edits on the left. On the right, the original PDF opens to the corresponding page and highlights the matching passage. When a passage cannot be matched on the PDF page, the panel shows the verified excerpt and explains the fallback.
+
+Red marks a major information gap to address first. Yellow marks a revision or check that needs attention. Green marks a small edit. A node with no marker needs no change.
+
+Approve each suggestion from its node, or use **Approve all** at the top. Approval applies prepared text replacements to a working copy when editable source is available. Download the changed LaTeX or Markdown files and the revision record together as a ZIP. The record lists the applied changes and tasks that require new evidence or verification.
 
 ## Review the argument section by section
 
@@ -45,7 +51,7 @@ Clone into your Codex skills directory, then open a new chat.
 git clone https://github.com/ArthurQQQQ/advisor-ready-paper-structure.git "${CODEX_HOME:-$HOME/.codex}/skills/advisor-ready-paper-structure"
 ```
 
-Attach your paper PDF and send this prompt.
+Attach your paper PDF and any editable source, then send this prompt.
 
 ```text
 Use $advisor-ready-paper-structure to review the attached PDF.
@@ -53,4 +59,6 @@ Trace the argument through each section. Show which claims the evidence supports
 and where a step in the reasoning, a baseline comparison, or evidence is missing.
 Return one offline HTML review with a short verdict and a numbered argument map.
 Show one or two specific edits on the left and highlight the matching passage on the original PDF page on the right.
+Mark each node by severity and include the controls for individual and batch approval.
+Prepare evidence-supported text replacements in my editable source and record checks that require additional material.
 ```
