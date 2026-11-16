@@ -7,188 +7,299 @@
   <style>
     :root {
       color-scheme: light;
-      --paper: #fcfdfe;
+      --paper: #f6f8fb;
+      --white: #fff;
       --ink: #14243b;
-      --accent: #007e84;
-      --link: #006469;
-      --rule: #ccd6df;
-      --tint: #edf4f7;
-      --note: #4d5c6b;
-      --note-paper: #f1f4f7;
+      --accent: #00747a;
+      --rule: #cad5e0;
+      --tint: #eff7f7;
+      --note: #49586b;
       --serif: Spectral, "Iowan Old Style", Georgia, "Songti SC", serif;
       --sans: "Source Sans 3", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
     }
 
     * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: var(--paper); font: 1.05rem/1.6 var(--serif); }
-    main { inline-size: min(72rem, 100% - 2rem); margin: clamp(2rem, 5vw, 4rem) auto; }
-    header { padding-block: 1rem 1.55rem; border-block-start: .3rem solid var(--ink); }
-    h1, h2, h3, p, ol, figure { margin-block-start: 0; }
+    body { margin: 0; color: var(--ink); background: var(--paper); font: 1rem/1.5 var(--sans); }
+    main { width: min(73rem, 100% - 2rem); margin: clamp(1.25rem, 4vw, 3rem) auto; }
+    h1, h2, h3, p, ol, ul, dl, figure { margin: 0; }
     h1, h2, h3 { line-height: 1.18; }
-    h1 { margin-block-end: .55rem; font-size: clamp(2.25rem, 5.5vw, 4.1rem); font-weight: 600; }
-    h2 { margin-block-end: 1rem; font-size: clamp(1.5rem, 3.5vw, 2.05rem); }
-    h3 { margin-block-end: .55rem; font-size: 1.2rem; }
-    p, ol { max-inline-size: 68ch; }
-    header p { margin: 0; }
-    header .masthead {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .25rem .7rem;
-      margin-block-end: 1.6rem;
-      font: 650 .85rem/1.4 var(--sans);
-    }
-    .masthead .parallel { color: var(--link); }
-    .parallel { font-family: var(--sans); }
-    a { color: var(--link); text-underline-offset: .18em; }
+    h1, h2 { font-family: var(--serif); }
+    h1 { font-size: clamp(1.9rem, 4.2vw, 3rem); font-weight: 620; }
+    h2 { font-size: clamp(1.3rem, 2.1vw, 1.8rem); }
+    a { color: var(--accent); text-underline-offset: .18em; }
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .45rem 1rem;
-      padding: .75rem .9rem;
-      border-block: 1px solid var(--rule);
-      background: var(--tint);
-      font: 600 .9rem/1.5 var(--sans);
-    }
-    nav a { padding-block: .2rem; }
-    nav .parallel { color: var(--note); font-size: .8em; margin-inline-start: .18rem; }
-    section { margin-block-start: 2rem; padding-block-start: 1.05rem; border-block-start: 1px solid var(--rule); scroll-margin-block-start: .8rem; }
-    section:first-of-type { border-block-start: 0; }
-    section:target > h2 { color: var(--link); }
-    .editor-note {
-      margin-block: .8rem 1.15rem;
-      padding: .6rem .85rem;
-      border-inline-start: .2rem solid #8c9baa;
-      background: var(--note-paper);
-      color: var(--note);
-      font: .875rem/1.55 var(--sans);
-    }
-    .ref-id {
-      padding: .05rem .2rem;
-      border: 1px solid var(--rule);
-      border-radius: .18rem;
-      font: 600 .88em/1.3 var(--mono);
-      white-space: nowrap;
-    }
-    .displays { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 1.35rem; }
-    .displays > * { min-inline-size: 0; }
-    figure { margin-inline: 0; }
-    .figure-slot {
-      min-block-size: 8rem;
-      border: 1px dashed #8293a4;
-    }
-    .table-wrap { overflow-x: auto; border-block-end: 1px solid var(--rule); }
-    table { inline-size: 100%; border-collapse: collapse; font: .9rem/1.45 var(--sans); }
-    .evidence-table { min-inline-size: 34rem; }
-    .review-table { min-inline-size: 52rem; }
-    caption, figcaption { padding-block: .5rem; text-align: start; font-weight: 650; }
-    th, td { padding: .6rem .7rem; border-block-start: 1px solid var(--rule); vertical-align: top; text-align: start; }
-    thead th { background: var(--tint); }
-    tbody th { font-weight: 600; }
-    .planned-table td { block-size: 2.75rem; }
+    [id] { scroll-margin-block: 1rem; }
 
-    @media (max-width: 42rem) {
-      .displays { grid-template-columns: 1fr; }
+    header { display: grid; gap: .45rem; border-block-start: 3px solid var(--ink); padding-block: .9rem 1rem; }
+    .masthead { color: var(--accent); font-size: .82rem; font-weight: 700; }
+    .masthead span { margin-inline-start: .45rem; }
+    .identity { color: var(--note); font-size: .86rem; }
+    .overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+      gap: 1rem;
+      margin-block-end: 1.45rem;
+    }
+    .verdict, .priorities { padding: .95rem 1rem; }
+    .verdict { background: var(--tint); border-inline-start: 3px solid var(--accent); }
+    .verdict p { margin-block-start: .4rem; max-inline-size: 65ch; font-weight: 530; }
+    .priorities { border-block-start: 1px solid var(--rule); }
+    .priorities h2 { font: 700 .88rem/1.35 var(--sans); }
+    .priority-list { padding-inline-start: 1.1rem; margin-block-start: .38rem; font-size: .9rem; }
+    .priority-list li + li { margin-block-start: .25rem; }
+
+    .argument-map {
+      padding: clamp(.8rem, 2.5vw, 1.5rem);
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-block-start: 2px solid var(--ink);
+    }
+    .map-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .35rem 1rem; }
+    .map-help { color: var(--note); font-size: .83rem; }
+    .stage { margin-block-start: .8rem; }
+    .map-flow, .result-grid {
+      display: grid;
+      grid-auto-columns: minmax(0, 1fr);
+      gap: 1.7rem;
+      list-style: none;
+      padding: 0;
+      align-items: start;
+    }
+    .map-flow { grid-auto-flow: column; }
+    .map-flow > li { min-width: 0; position: relative; }
+    .map-flow > li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      inset-block-start: 1.42rem;
+      inset-inline-end: -1.55rem;
+      width: 1.4rem;
+      height: .57rem;
+      background: var(--accent);
+      clip-path: polygon(0 43%, 76% 43%, 76% 0, 100% 50%, 76% 100%, 76% 57%, 0 57%);
+      pointer-events: none;
+    }
+    .handoff {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: .45rem;
+      color: var(--accent);
+      margin-block: .65rem;
+      font-size: .78rem;
+      text-align: center;
+    }
+    .handoff::before {
+      content: "";
+      width: .55rem;
+      height: .55rem;
+      flex-shrink: 0;
+      border: solid currentColor;
+      border-width: 0 1px 1px 0;
+      transform: rotate(45deg) translateY(-.14rem);
+    }
+    .stage-results {
+      padding: .75rem;
+      border: 1px solid var(--rule);
+      background: var(--tint);
+    }
+    .stage-title { margin: 0 0 .55rem; font-size: .95rem; }
+    .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .result-grid > li { min-width: 0; }
+
+    .node {
+      background: var(--white);
+      border: 1px solid var(--rule);
+      border-inline-start: 2px solid var(--accent);
+      overflow-wrap: anywhere;
+    }
+    .node summary, .appendix summary { cursor: pointer; min-height: 2.75rem; }
+    .node summary { padding: .55rem .65rem; }
+    .node summary::marker, .appendix summary::marker { color: var(--accent); }
+    .node summary:hover, .appendix summary:hover { background: var(--tint); }
+    .node-label { color: var(--ink); font-weight: 710; line-height: 1.2; }
+    .node-role { display: block; color: var(--note); font-size: .83rem; line-height: 1.35; margin-block-start: .15rem; }
+    .node-body { border-block-start: 1px solid var(--rule); padding: .63rem .7rem; font-size: .86rem; }
+    .node-body dl { display: grid; gap: .28rem; }
+    .node-body dt { font-weight: 700; }
+    .node-body dd { margin-inline-start: 0; margin-block-end: .25rem; }
+    .node-body p + p { margin-block-start: .4rem; }
+    .ref-id { font: .85em/1.4 var(--mono); color: var(--accent); }
+    .editor-note { margin-block-start: .6rem; padding-inline-start: .55rem; border-inline-start: 2px solid var(--rule); color: var(--note); }
+    .figure-slot { min-block-size: 6rem; border: 1px dashed var(--rule); margin-block: .5rem; }
+    .support { margin-block-start: 1rem; border-block-start: 1px solid var(--rule); }
+    .appendix { border-block-end: 1px solid var(--rule); }
+    .appendix summary { padding: .55rem .35rem; font-weight: 680; font-size: .87rem; }
+    .appendix .node-body { border: 0; }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; inline-size: 100%; font-size: .85rem; }
+    caption { font-weight: 700; text-align: start; padding-block: .3rem; }
+    th, td { vertical-align: top; text-align: start; border-block-start: 1px solid var(--rule); padding: .45rem .55rem; }
+    thead th { background: var(--tint); }
+
+    @media (max-width: 49rem) {
+      .overview { grid-template-columns: 1fr; gap: .35rem; }
+      .map-flow { grid-auto-flow: row; gap: 1.2rem; }
+      .map-flow > li:not(:last-child)::after {
+        inset-block-start: auto;
+        inset-block-end: -.94rem;
+        inset-inline-start: 50%;
+        inset-inline-end: auto;
+        width: .75rem;
+        height: .5rem;
+        transform: rotate(90deg);
+      }
+      .result-grid { grid-template-columns: 1fr; }
+      .handoff { justify-content: flex-start; text-align: start; }
     }
     @media print {
-      @page { size: landscape; margin: 12mm; }
-      body { font-size: 11pt; }
-      main { inline-size: 100%; margin: 0; }
-      header { padding-block: .65rem; }
-      header .masthead { margin-block-end: .5rem; }
-      nav { display: none; }
-      h1 { font-size: 28pt; }
-      h2 { font-size: 18pt; }
-      h2, h3 { break-after: avoid; }
+      @page { size: landscape; margin: 11mm; }
+      body { background: white; }
+      main { width: 100%; margin: 0; }
+      h1 { font-size: 22pt; }
+      .overview { grid-template-columns: 1.45fr 1fr; }
+      .argument-map, .node, .overview { break-inside: avoid; }
+      .argument-map { print-color-adjust: exact; }
+      .map-help { display: none; }
+      .map-flow { grid-auto-flow: column; gap: 1.7rem; }
+      .map-flow > li:not(:last-child)::after {
+        inset: 1.42rem -1.55rem auto auto;
+        width: 1.4rem;
+        height: .57rem;
+        transform: none;
+      }
+      .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .handoff { justify-content: center; text-align: center; }
       .table-wrap { overflow: visible; }
-      .evidence-table, .review-table { min-inline-size: 0; table-layout: fixed; }
-      table { font-size: 9pt; }
-      th, td { padding: .35rem .4rem; overflow-wrap: anywhere; }
-      figure, tr, .editor-note { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <p class="masthead">Advisor-Ready Paper Structure <span class="parallel" lang="zh-Hans">不烧心的论文结构审阅</span></p>
-      <!-- Replace the title and navigation labels with the language of this review. Keep the manuscript text and notes in their requested languages. -->
+      <p class="masthead">Advisor-Ready Paper Structure <span lang="zh-Hans">不烧心的论文结构审阅</span></p>
       <h1>Paper structure review</h1>
-      <p>How the sections build the argument and where to revise first.</p>
+      <p class="identity"><!-- Manuscript title and version. --></p>
     </header>
-    <nav aria-label="In this review">
-      <a href="#conclusion">Summary <span class="parallel" lang="zh-Hans">审阅摘要</span></a>
-      <a href="#evidence">Evidence <span class="parallel" lang="zh-Hans">证据</span></a>
-      <a href="#analysis">Priority checks <span class="parallel" lang="zh-Hans">优先核对</span></a>
-      <a href="#outline">Outline <span class="parallel" lang="zh-Hans">提纲</span></a>
-      <a href="#review">Review table <span class="parallel" lang="zh-Hans">修改表</span></a>
-    </nav>
 
-    <section id="conclusion" aria-labelledby="conclusion-heading">
-      <h2 id="conclusion-heading">Review summary</h2>
-      <!-- State the main structural finding, the strongest supported claim with evidence IDs, and the uncertainty that most affects the outline. -->
-    </section>
-
-    <section id="evidence" aria-labelledby="evidence-heading">
-      <h2 id="evidence-heading">Evidence map</h2>
-      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="evidence-heading">
-        <table class="evidence-table">
-          <thead>
-            <tr><th scope="col">ID</th><th scope="col">Source and location</th><th scope="col">What it supports</th><th scope="col">Scope and status</th></tr>
-          </thead>
-          <tbody><!-- Add one row per evidence item. Use <code class="ref-id">E01</code> for evidence IDs. --></tbody>
-        </table>
+    <section class="overview" aria-label="Review decisions">
+      <div class="verdict">
+        <h2>Conclusion</h2>
+        <p><!-- One or two direct sentences naming the paper's strongest supported argument and the structural change that matters most. --></p>
+      </div>
+      <div class="priorities">
+        <h2>Revise first</h2>
+        <!-- Keep one to three actions. Link each to its node. -->
+        <ol class="priority-list">
+          <li><a href="#result-primary">Place the primary comparison next to the claim it tests.</a></li>
+        </ol>
       </div>
     </section>
 
-    <section id="analysis" aria-labelledby="analysis-heading">
-      <h2 id="analysis-heading">Priority checks</h2>
-      <!-- List the checks in dependency order. Identify the source, the draft location, and the structural choice that each check would change. -->
-    </section>
+    <figure class="argument-map" aria-labelledby="map-heading">
+      <figcaption class="map-head">
+        <h2 id="map-heading">Paper argument map</h2>
+        <p class="map-help">Open a section to see the suggested edit and its evidence.</p>
+      </figcaption>
+      <!-- Use the manuscript's section names and roles. Label handoffs with real dependencies, and add or remove nodes as needed. -->
+      <ol class="stage map-flow" aria-label="Question and approach">
+        <li>
+          <details class="node" id="abstract">
+            <summary><span class="node-label">Title and Abstract</span><span class="node-role">Preview the question, approach, and supported answer.</span></summary>
+            <div class="node-body">
+              <p><!-- State the present finding, an edit at a concrete location, and its evidence. --></p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="introduction">
+            <summary><span class="node-label">Introduction</span><span class="node-role">Define the problem the paper will answer.</span></summary>
+            <div class="node-body"><p><!-- Identify the opening question and the claim that needs support. --></p></div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="related-work">
+            <summary><span class="node-label">Related Work</span><span class="node-role">Locate the closest existing approaches.</span></summary>
+            <div class="node-body"><p><!-- Name the supplied evidence for the gap. Remove this node if the manuscript does not need it. --></p></div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="method">
+            <summary><span class="node-label">Method</span><span class="node-role">Turn the gap into a testable design choice.</span></summary>
+            <div class="node-body"><p><!-- Show where the design creates a comparison for Results. --></p></div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="setup">
+            <summary><span class="node-label">Experimental Setup</span><span class="node-role">Define the comparisons and evaluation conditions.</span></summary>
+            <div class="node-body"><p><!-- Give cohort, metric, baseline, and protocol limits when they change the interpretation. --></p></div>
+          </details>
+        </li>
+      </ol>
 
-    <section id="outline" aria-labelledby="outline-heading">
-      <h2 id="outline-heading">Suggested structure</h2>
-      <!-- Add sections for this manuscript. Name the current location and destination for recommended moves. The results section below demonstrates a gap and reserved displays. -->
-      <h3>Results</h3>
-      <p class="editor-note" lang="zh-Hans"><strong>待补 <code class="ref-id">G01</code></strong> 先核对比较所用的样本和指标，再填写图表和结果段。</p>
-      <div class="displays">
-        <figure aria-describedby="figure-gap">
-          <figcaption>Planned figure</figcaption>
-          <div class="figure-slot" aria-hidden="true"></div>
-          <p id="figure-gap" class="editor-note" lang="zh-Hans"><strong>图待补 <code class="ref-id">G01</code></strong> 核对比较口径后在此放图。</p>
-        </figure>
-        <div>
-          <div class="table-wrap" tabindex="0" role="region" aria-labelledby="planned-table-caption">
-            <table class="planned-table" aria-describedby="table-gap">
-              <caption id="planned-table-caption">Planned table</caption>
-              <thead><tr><th scope="col">Comparison</th><th scope="col">Outcome</th></tr></thead>
-              <tbody><tr><th scope="row">Primary comparison</th><td></td></tr></tbody>
-            </table>
-          </div>
-          <p id="table-gap" class="editor-note" lang="zh-Hans"><strong>表待补 <code class="ref-id">G01</code></strong> 对齐样本和指标后填写。</p>
+      <p class="handoff">Design claims become comparisons under the stated conditions.</p>
+
+      <section class="stage stage-results" aria-labelledby="results-heading">
+        <h3 class="stage-title" id="results-heading">Results and analysis</h3>
+        <ol class="result-grid" aria-label="Ordered evidence panels">
+          <li>
+            <details class="node" id="result-primary">
+              <summary><span class="node-label">Primary result</span><span class="node-role">Answer the research question with the main comparison.</span></summary>
+              <div class="node-body">
+                <dl>
+                  <dt>Evidence</dt><dd><!-- Link the result and baseline to their exact source locators. --></dd>
+                  <dt>Revision</dt><dd><!-- Name the current and proposed locations for the main result. --></dd>
+                </dl>
+              </div>
+            </details>
+          </li>
+          <li>
+            <details class="node" id="result-controls">
+              <summary><span class="node-label">Controls and ablations</span><span class="node-role">Check the design choices that the claim depends on.</span></summary>
+              <div class="node-body"><p><!-- Distinguish observed comparisons, missing exposition, and experiments needed for stronger claims. --></p></div>
+            </details>
+          </li>
+          <li>
+            <details class="node" id="result-limits">
+              <summary><span class="node-label">Secondary analysis</span><span class="node-role">Identify the conditions and limits of the result.</span></summary>
+              <div class="node-body"><p><!-- Identify where this evidence changes the claim or belongs in the appendix. --></p></div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
+      <p class="handoff">The comparisons set the scope of the interpretation.</p>
+
+      <ol class="stage map-flow" aria-label="Interpretation and closure">
+        <li>
+          <details class="node" id="discussion">
+            <summary><span class="node-label">Discussion and Limitations</span><span class="node-role">Interpret the findings within their measured scope.</span></summary>
+            <div class="node-body"><p><!-- Map each limitation to the result it qualifies. --></p></div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="conclusion">
+            <summary><span class="node-label">Conclusion</span><span class="node-role">Return to the opening question with a bounded answer.</span></summary>
+            <div class="node-body"><p><!-- State which answer the evidence supports and which question remains open. --></p></div>
+          </details>
+        </li>
+        <li>
+          <details class="node" id="appendices">
+            <summary><span class="node-label">Appendices</span><span class="node-role">Make protocols and supporting analyses traceable.</span></summary>
+            <div class="node-body"><p><!-- Map appendix material to the node that uses it. --></p></div>
+          </details>
+        </li>
+      </ol>
+    </figure>
+
+    <aside class="support" aria-label="Optional supporting material">
+      <details class="appendix">
+        <summary>Evidence and checks across sections</summary>
+        <div class="node-body">
+          <!-- Add shared evidence IDs, precise locators, and comparison limits only where they support multiple nodes. -->
         </div>
-      </div>
-    </section>
-
-    <section id="review" aria-labelledby="review-heading">
-      <h2 id="review-heading">Section-by-section review</h2>
-      <div class="table-wrap" tabindex="0" role="region" aria-labelledby="review-heading">
-        <table class="review-table">
-          <thead>
-            <tr>
-              <th scope="col">Section</th>
-              <th scope="col">Job in the argument</th>
-              <th scope="col">Evidence and location</th>
-              <th scope="col">Logic or evidence gap</th>
-              <th scope="col">Recommended revision</th>
-              <th scope="col">Priority and completion check</th>
-            </tr>
-          </thead>
-          <tbody><!-- Add a row for each section and substantive subsection. --></tbody>
-        </table>
-      </div>
-    </section>
+      </details>
+    </aside>
   </main>
 </body>
 </html>
