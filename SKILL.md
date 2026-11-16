@@ -1,6 +1,6 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review and restructure a paper or outline, especially empirical ML/AI. Lead with a concise verdict and the first edits, then show a clickable whole-paper argument map with evidence, baseline checks, and specific revisions inside each section."
+description: "Review and restructure a paper or outline, especially empirical ML/AI. Lead with a short verdict and a clickable whole-paper argument map. Each node gives one or two concrete revisions grounded in evidence and baseline checks."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
@@ -20,24 +20,24 @@ Start with the topic or research question and a draft or outline. Use experiment
 
 Use [the section playbook](references/section-playbook.md) to adapt the map to the manuscript's topic, contribution, and venue. For a whole-paper review, cover the title and abstract, introduction, related work where relevant, method, experimental setup, substantive results in the proposed order, discussion, conclusion, and appendices as applicable. Use the paper's actual section names or concrete proposed headings. Group minor subsections under the node where their material belongs. For narrower reviews, map the requested sections and include adjacent context where a handoff depends on it.
 
-Give each node a short visible statement of the question it answers or the job it does. Show how it hands an assumption, design choice, result, or limitation to another node. Use a connection only where the paper's logic warrants it. Keep parallel experiments and supporting analyses distinct, especially when they test different populations, outcomes, or claims. Use cross-links for appendices and evidence that serves more than one section.
+Label each node with a short section or result name. Show the reading order and use connections only where a section hands an assumption, design choice, result, or limitation to another. Keep parallel experiments and supporting analyses distinct, especially when they test different populations, outcomes, or claims.
 
-Inside each node, describe its proposed argument and the edit that makes it work. Anchor recommendations to the current heading, paragraph, figure, or table. Include exact evidence and gap IDs and the comparison boundaries that matter. For a move or split, name both the current location and the destination. For a new outline, name where material belongs. Give a completion check for a proposed edit and a practical fallback for an unresolved dependency.
+On selection, show one or two concrete edits for the node. Use direct verbs and name the affected heading, paragraph, figure, or table. For a move or split, name the current location and the destination. Include evidence, comparison boundaries, or a fallback in the edit when they affect what the author should do. Keep exact source locations traceable through the relevant edit text.
 
 The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method explains the key idea and follows the actual flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
 
 ## 3. Leave visible gaps and plan the displays
 
-Write the working outline in the manuscript language. For bilingual guidance, give each section's job and writing sequence in both requested languages. Give each claim and gap a single shared ID across the two languages.
+Write the outline in the manuscript language. For bilingual guidance, give the edit in both requested languages when needed. Use the same evidence and gap IDs across languages.
 
-At the exact location of a substantive gap, leave the missing prose blank and show a short editor note with its gap ID. Write the note in the author's preferred second language. If unspecified, use Chinese notes for an English manuscript and English notes for a Chinese or other non-English manuscript. Notes say what to add or verify and why. Use smaller gray sans-serif notes and darker serif draft text in HTML, with an explicit text label for gaps so they are distinguishable without color. In Markdown, use visibly labeled italic blockquotes and retain the same IDs.
+At a substantive gap, say what to add or verify as one of the node's edits. For a separate annotated draft, put the note at the exact location in the author's preferred second language. Keep all visible report text at a comfortably readable size.
 
 Plan only figures and tables needed for an argument. Reserve each at its intended section with a provisional title, the claim it would support, source or gap IDs, and enough specification to build it. For a figure give panels, axes/units or diagram components and the intended comparison. For a table give rows, columns, metric, analysis set, and uncertainty where applicable. Leave missing data cells and plot regions empty. Mark them with an adjacent note, never with dummy numbers, fabricated panels, or a claim that assumes the result.
 
 ## 4. Deliver a compact review
 
-1. **Verdict and first edits.** Lead with one or two sentences that state the structural diagnosis, the strongest supported conclusion, and any uncertainty that materially changes it. Give one to three priority edits in execution order and link each to its node.
-2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for a standalone file when file output is available. Use the conventions of a research-paper figure, with short labels, a consistent reading direction, evidence IDs, and explicit handoffs. Use native `<details>` and focusable `<summary>` so each node starts closed and opens with a click or keyboard. The map supplies the proposed outline. Put section rationale, source locators, baseline checks, editor notes, and display plans inside the node that uses them. Put shared checks or a source index in a separate collapsed panel when multiple nodes need them.
-3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, lead with the same verdict and priorities. Use a compact map with explicit handoffs, followed by details grouped by node. Honor requests for a different format or for a full review table.
+1. **Verdict.** Lead with one short sentence that states the most consequential structural change. Include an evidence boundary when it determines the recommendation.
+2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for a standalone file. Match the visual language of the paper or project when a reference is available. Use short node labels and a clear reading direction. Keep the initial view to the paper title, verdict, and map. Each node opens with a click or keyboard and shows only one or two actionable edits. A shared detail area can keep the map steady as readers move between sections. Keep branding, kickers, help captions, secondary small text, legends, sidebars, and archives out of the default report. Provide a full audit or review table when requested.
+3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Give one or two edits under each node.
 
-Check the initial view on its own: the verdict, priority edits, and paper structure should be clear before opening any node. Verify that material claims have source locators, gaps have next actions, links land on their nodes, and planned displays connect to a claim or gap. Keep each detailed recommendation in one place.
+Check that the verdict and map are clear before opening a node, and every visible element helps the author navigate or make an edit. Verify that material claims are traceable, gaps have next actions, and each node opens the right edits. Keep each recommendation in one place.

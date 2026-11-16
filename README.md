@@ -20,7 +20,7 @@ The skill brings an ML paper structure template drawn from those advisor discuss
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
-The review opens with its conclusion and up to three edits to make first. The clickable paper map shows the proposed section order and how each section hands off to the next. Open a section to see the evidence, baseline checks, what to keep or move, and how to verify the edit.
+Start with one short verdict and a clickable map of the revised paper structure. Each section opens one or two concrete edits, grounded in the evidence and baseline comparisons that matter there.
 
 ## Review the argument section by section
 
@@ -36,8 +36,6 @@ In the worked example, the introduction can open with “Can page position and s
 ## Worked example
 
 In the fictional example, a layout-aware reranker improves top-ranked passage matches from 12 to 15 on the same 24 questions from single-column PDFs (`E02`). A larger export includes two-column PDFs and omits question IDs and candidate-pool hashes (`E03`). The review keeps the pilot result in the paper and marks the cross-layout comparison as pending. The first check (`G01`) is to recover the matching question IDs, gold annotations, and candidate pools.
-
-Open a node for its gray editor notes and any pending figure or table.
 
 [Example source packet](examples/source-packet.md) · [Interactive review](examples/plan.html) (download the HTML and open it in a browser)
 
@@ -55,5 +53,5 @@ Share the topic, draft or outline, and any results or baseline details you want 
 Use $advisor-ready-paper-structure to review this paper.
 Adapt the ML paper template to my topic and trace the argument through each section.
 Check which claims the evidence supports and whether the baseline comparisons are complete.
-Start with your verdict and the edits to make first. Show the revised outline as a clickable paper map with details inside each section.
+Lead with one short verdict. Show the revised outline as a clickable paper map with one or two concrete edits per section.
 ```
