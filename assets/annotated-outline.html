@@ -51,14 +51,14 @@
     .verdict { max-width: 86ch; margin-top: .6rem; color: var(--muted); text-wrap: pretty; }
     .workspace {
       display: grid;
-      grid-template-columns: minmax(14rem, .84fr) minmax(24rem, 1.54fr) minmax(17rem, 1fr);
-      grid-template-areas: "source map review";
+      grid-template-columns: minmax(15rem, .87fr) minmax(23rem, 1.25fr) minmax(17rem, 1.13fr);
+      grid-template-areas: "review map source";
       min-height: 0;
     }
     .pane { min-width: 0; display: flex; flex-direction: column; }
     .map-pane { grid-area: map; }
-    .source-pane { grid-area: source; border-inline-end: 1px solid var(--rule); }
-    .review-pane { grid-area: review; border-inline-start: 1px solid var(--rule); }
+    .source-pane { grid-area: source; border-inline-start: 1px solid var(--rule); }
+    .review-pane { grid-area: review; border-inline-end: 1px solid var(--rule); }
     .side { background: var(--side); }
     .pane-head {
       display: flex;
@@ -207,6 +207,76 @@
     .fact-gap h4 { color: var(--gap); }
     .jump-source { display: none; }
     .empty { max-width: 55ch; color: var(--muted); }
+    .pdf-status {
+      padding: .62rem 1.12rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .pdf-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: .65rem;
+      padding: .48rem .8rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: .86rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .pdf-pages { display: flex; align-items: center; gap: .44rem; }
+    .pdf-tools button {
+      padding: .24em .5em;
+      border: 1px solid var(--rule);
+      border-radius: .28rem;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+    }
+    .pdf-tools button:disabled { opacity: .5; cursor: default; }
+    .pdf-tools button[aria-pressed="true"] { border-color: var(--accent); }
+    .pdf-sheet {
+      position: relative;
+      margin-inline: auto;
+      background: #fff;
+      color-scheme: light;
+    }
+    .pdf-sheet canvas { display: block; width: 100%; height: 100%; }
+    .pdf-highlight-layer, .textLayer { position: absolute; inset: 0; }
+    .pdf-highlight-layer { z-index: 1; pointer-events: none; }
+    .pdf-highlight {
+      position: absolute;
+      background: rgb(255 205 48 / 48%);
+      mix-blend-mode: multiply;
+      box-shadow: inset 0 -1px #ad7900;
+    }
+    .textLayer {
+      z-index: 2;
+      overflow: clip;
+      line-height: 1;
+      text-size-adjust: none;
+      --min-font-size: 1;
+      --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+      --min-font-size-inv: calc(1 / var(--min-font-size));
+    }
+    .textLayer span, .textLayer br {
+      position: absolute;
+      color: transparent;
+      white-space: pre;
+      cursor: text;
+      transform-origin: 0 0;
+    }
+    .textLayer > :not(.markedContent), .textLayer .markedContent span:not(.markedContent) {
+      --font-height: 0;
+      --scale-x: 1;
+      --rotate: 0deg;
+      font-size: calc(var(--text-scale-factor) * var(--font-height));
+      transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+    }
+    .textLayer .markedContent { display: contents; }
+    .textLayer ::selection { color: transparent; background: #a6c5f5a0; }
+    .hiddenCanvasElement { position: absolute; top: 0; left: 0; display: none; }
     .sr-only {
       position: absolute;
       width: 1px;
@@ -230,8 +300,8 @@
         grid-template-areas: "map map" "review source";
       }
       .side { border-block-start: 1px solid var(--rule); }
-      .review-pane { border-inline-start: 0; }
-      .source-pane { border-inline-start: 1px solid var(--rule); border-inline-end: 0; }
+      .review-pane { border-inline-end: 0; }
+      .source-pane { border-inline-start: 1px solid var(--rule); }
       .map-body { width: min(100%, 47rem); margin-inline: auto; }
       .jump-source { display: inline; font-size: .9rem; }
     }
@@ -305,7 +375,17 @@
         <h2 id="source-heading">Manuscript</h2>
         <a id="original" hidden target="_blank" rel="noopener">Open PDF</a>
       </header>
+      <div class="pdf-tools" id="pdf-tools" hidden>
+        <div class="pdf-pages">
+          <button type="button" id="pdf-previous"></button>
+          <output id="pdf-page"></output>
+          <button type="button" id="pdf-next"></button>
+        </div>
+        <button type="button" id="pdf-zoom" aria-pressed="false"></button>
+      </div>
+      <p class="pdf-status" id="pdf-status" role="status" hidden></p>
       <div class="pane-body" id="source-body">
+        <div id="pdf-view" hidden></div>
         <p class="locator" id="locator"></p>
         <blockquote class="manuscript" id="excerpt"><span id="source-before"></span><mark id="highlight"></mark><span id="source-after"></span></blockquote>
         <p class="empty" id="no-source" hidden></p>
@@ -349,6 +429,7 @@
     ]
   }
   </script>
+  <!-- EMBEDDED_PDF -->
   <script>
     const el = id => document.getElementById(id);
     const report = JSON.parse(el("report-data").textContent);
@@ -386,6 +467,7 @@
       ? manuscript : null;
     const items = new Map();
     let selected = null;
+    const pdfPanel = typeof createPdfPanel === "function" ? createPdfPanel(report.lang || "en") : null;
 
     function make(tag, className, content) {
       const element = document.createElement(tag);
@@ -457,6 +539,7 @@
         pdf.hash = Number.isInteger(source?.page) && source.page > 0 ? "page=" + source.page : "";
         el("original").href = pdf.href;
       }
+      pdfPanel?.select(source);
       el("review-body").scrollTop = 0;
       const sourceBody = el("source-body");
       sourceBody.scrollTop = 0;
