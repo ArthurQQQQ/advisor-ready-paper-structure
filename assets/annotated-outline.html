@@ -6,215 +6,495 @@
   <title>Paper structure review</title>
   <style>
     :root {
-      color-scheme: light;
-      --ink: #172b40;
-      --blue: #355a85;
-      --keyline: #9daebc;
-      --sky: #e6effa;
-      --mint: #e5f3ec;
-      --teal: #147766;
-      --serif: "STIX Two Text", "Iowan Old Style", Georgia, "Songti SC", "Noto Serif CJK SC", serif;
-      --body: "Source Sans 3", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color-scheme: dark;
+      --canvas: #111115;
+      --side: #0c0d11;
+      --panel: #191a20;
+      --rule: #2e3039;
+      --wire: #414452;
+      --ink: #edeef4;
+      --muted: #aeb1c1;
+      --accent: #b7baff;
+      --accent-bg: #232540;
+      --gap: #ebc890;
+      --gap-bg: #241f1a;
+      --sans: "Geist", "Inter", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+      --serif: "STIX Two Text", "Iowan Old Style", Georgia, "Songti SC", serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
     }
-
     * { box-sizing: border-box; }
-    body { margin: 0; background: #fff; color: var(--ink); font: 1.0625rem/1.55 var(--body); }
-    main { width: min(65rem, 100% - 2.5rem); margin: clamp(1.75rem, 5vw, 4.25rem) auto; }
-    h1, h2, p, ol, ul, figure { margin: 0; }
-    h1, h2, .node { font-family: var(--serif); }
-    h1 { font-size: clamp(2.3rem, 6vw, 4rem); font-weight: 700; line-height: 1.08; letter-spacing: -.025em; }
-    .verdict { max-width: 64ch; margin: .8rem 0 1.6rem; font-size: clamp(1.0625rem, 2.2vw, 1.25rem); }
-    .map { --gap: clamp(1rem, 2.8vw, 2.35rem); }
-    .flow {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 1fr);
-      gap: var(--gap);
-      padding: 0;
-      list-style: none;
-    }
-    .flow > li { position: relative; min-width: 0; }
-    .flow > li:not(:last-child)::after {
-      position: absolute;
-      content: "";
-      inset-block-start: 50%;
-      inset-inline-end: calc(-1 * var(--gap) + .16rem);
-      width: calc(var(--gap) - .32rem);
-      height: .65rem;
-      background: var(--blue);
-      clip-path: polygon(0 40%, 72% 40%, 72% 0, 100% 50%, 72% 100%, 72% 60%, 0 60%);
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-    .node {
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 3.15rem;
-      padding: .5rem .55rem;
-      border: 1px solid var(--blue);
-      border-radius: .3rem;
-      background: #fff;
+    body {
+      min-width: 18rem;
+      min-height: 100dvh;
+      margin: 0;
+      background: var(--canvas);
       color: var(--ink);
-      font-size: 1.0625rem;
-      font-weight: 680;
+      font: 1rem/1.5 var(--sans);
+    }
+    [hidden] { display: none !important; }
+    h1, h2, h3, p, ol, ul, blockquote { margin: 0; }
+    a { color: var(--accent); text-underline-offset: .22em; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+    ::selection { background: #41477e; color: white; }
+    .intro {
+      padding: 1.2rem clamp(1.2rem, 3vw, 2.75rem) 1.25rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .intro h1 {
+      max-width: 48ch;
+      font-size: clamp(1.55rem, 2.45vw, 2.35rem);
+      font-weight: 660;
+      line-height: 1.12;
+      letter-spacing: -.035em;
+      text-wrap: balance;
+    }
+    .verdict { max-width: 86ch; margin-top: .6rem; color: var(--muted); text-wrap: pretty; }
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(14rem, .84fr) minmax(24rem, 1.54fr) minmax(17rem, 1fr);
+      grid-template-areas: "source map review";
+      min-height: 0;
+    }
+    .pane { min-width: 0; display: flex; flex-direction: column; }
+    .map-pane { grid-area: map; }
+    .source-pane { grid-area: source; border-inline-end: 1px solid var(--rule); }
+    .review-pane { grid-area: review; border-inline-start: 1px solid var(--rule); }
+    .side { background: var(--side); }
+    .pane-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: .6rem;
+      padding: .83rem 1.12rem;
+      border-bottom: 1px solid var(--rule);
+    }
+    .pane-head h2 { font-size: .98rem; font-weight: 625; }
+    .pane-head a { font-size: .87rem; }
+    .pane-body { padding: clamp(1rem, 1.65vw, 1.55rem); min-width: 0; }
+    .map-body { padding: 1.15rem clamp(.8rem, 1.8vw, 1.6rem) 1.4rem; }
+    .argument-map, .branches { list-style: none; padding: 0; }
+
+    .stage-row {
+      --rail: 1.68rem;
+      position: relative;
+      display: grid;
+      grid-template-columns: var(--rail) minmax(5.5rem, .5fr) minmax(0, 1.7fr);
+      align-items: stretch;
+      column-gap: .73rem;
+      min-width: 0;
+      padding-block: .5rem;
+    }
+    .stage-row:not(:last-child)::before {
+      position: absolute;
+      z-index: 0;
+      inset: 1.34rem auto -1.44rem calc(var(--rail) / 2);
+      width: 1px;
+      background: var(--wire);
+      content: "";
+    }
+    .stage-number {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: var(--rail);
+      height: var(--rail);
+      margin-block-start: .13rem;
+      background: var(--panel);
+      border: 1px solid var(--wire);
+      border-radius: 50%;
+      color: var(--muted);
+      font: 600 .86rem/1 var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+    .stage-title {
+      align-self: start;
+      padding-block-start: .3rem;
+      font-size: .96rem;
+      font-weight: 620;
       line-height: 1.25;
       overflow-wrap: anywhere;
+    }
+    .branches {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .38rem;
+    }
+    .branches::before {
+      position: absolute;
+      z-index: 0;
+      inset: .96rem auto auto -.69rem;
+      width: .69rem;
+      height: 1px;
+      background: var(--wire);
+      content: "";
+    }
+    .branches > li:only-child { grid-column: 1 / -1; }
+    .branches > li { min-width: 0; }
+    .node {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      width: 100%;
+      height: 100%;
+      min-height: 2.68rem;
+      padding: .51rem .55rem;
+      border: 1px solid var(--rule);
+      border-radius: .42rem;
+      background: var(--panel);
+      color: var(--ink);
+      text-align: start;
+      font: 550 .87rem/1.3 var(--sans);
       cursor: pointer;
+      transition: background-color 140ms, border-color 140ms;
     }
-    .node:hover { background: var(--sky); }
-    .node:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
-    .node[aria-expanded="true"] { border-color: var(--teal); background: var(--mint); box-shadow: inset 0 0 0 1px var(--teal); }
-    .between {
-      width: .56rem;
-      height: 1.45rem;
-      margin: .18rem auto;
-      background: var(--blue);
-      clip-path: polygon(42% 0, 58% 0, 58% 68%, 100% 68%, 50% 100%, 0 68%, 42% 68%);
+    .node:hover { border-color: #777b95; background: #22232d; }
+    .node[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-bg); }
+    .node [data-number], .review-number { color: var(--accent); font: 600 .85rem/1.2 var(--mono); }
+    .node-label { min-width: 0; overflow-wrap: anywhere; }
+    .gap-dot {
+      flex: none;
+      align-self: center;
+      margin-inline-start: auto;
+      width: .44rem;
+      height: .44rem;
+      border-radius: 50%;
+      background: var(--gap);
     }
-    .results { padding: .78rem .88rem .88rem; background: var(--sky); border: 1px solid var(--blue); border-radius: .32rem; }
-    .results h2 { margin-block-end: .65rem; font-size: 1.35rem; line-height: 1.2; }
-    .actions[hidden] { display: none; }
-    .actions {
-      margin-block-start: 1.05rem;
-      padding: .65rem 1rem .7rem;
-      border: 1px solid var(--teal);
-      border-radius: .3rem;
-      background: var(--mint);
+    .locator {
+      margin-block-end: .85rem;
+      color: var(--muted);
+      font-size: .9rem;
+      overflow-wrap: anywhere;
     }
-    .actions ul { padding-inline-start: 1.35rem; }
-    .actions li + li { margin-block-start: .3rem; }
+    .manuscript {
+      padding: .9rem 1rem;
+      border: 1px solid var(--rule);
+      border-radius: .42rem;
+      background: #16171c;
+      color: #d6d7e1;
+      font: 1.032rem/1.72 var(--serif);
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+    mark {
+      padding-block: .13em;
+      background: #3a3f70;
+      color: #fff;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+    .review-title {
+      margin-block: .4rem .6rem;
+      font-size: clamp(1.2rem, 1.7vw, 1.62rem);
+      letter-spacing: -.025em;
+      line-height: 1.15;
+      text-wrap: balance;
+    }
+    .summary { color: var(--muted); }
+    .fact { margin-block-start: 1.04rem; padding-block-start: .85rem; border-top: 1px solid var(--rule); }
+    .fact h3, .fact h4 { margin: 0 0 .28rem; font-size: .93rem; font-weight: 680; }
+    .fact p, .fact li, .summary { font-size: .95rem; overflow-wrap: anywhere; }
+    .fact ul { padding-inline-start: 1.18rem; }
+    .fact li + li { margin-block-start: .4rem; }
+    .fact-gap {
+      padding: .76rem .85rem;
+      border: 1px solid #59472f;
+      border-radius: .42rem;
+      background: var(--gap-bg);
+    }
+    .fact-gap h4 { color: var(--gap); }
+    .jump-source { display: none; }
+    .empty { max-width: 55ch; color: var(--muted); }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
 
-    @media (max-width: 38rem) {
-      main { width: calc(100% - 1.35rem); margin-block-start: 1.65rem; }
-      .map { --gap: .82rem; }
-      .node { padding: .45rem .18rem; }
-      .results { padding-inline: .45rem; }
-      .results h2 { margin-inline-start: .25rem; }
+    @media (min-width: 65em) {
+      body { display: flex; flex-direction: column; height: 100dvh; }
+      .workspace { flex: 1; }
+      .pane-body { min-height: 0; flex: 1; overflow: auto; scrollbar-color: #424550 transparent; }
     }
-    @media (max-width: 27rem) {
-      .results .flow { grid-auto-flow: row; grid-template-columns: 1fr; gap: .95rem; }
-      .results .flow > li:not(:last-child)::after {
-        inset-block-start: auto;
-        inset-block-end: -.78rem;
-        inset-inline: 50% auto;
-        width: .56rem;
-        height: .62rem;
-        clip-path: polygon(42% 0, 58% 0, 58% 60%, 100% 60%, 50% 100%, 0 60%, 42% 60%);
-        transform: translateX(-50%);
+    @media (max-width: 64.99em) {
+      .workspace {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        grid-template-areas: "map map" "review source";
       }
+      .side { border-block-start: 1px solid var(--rule); }
+      .review-pane { border-inline-start: 0; }
+      .source-pane { border-inline-start: 1px solid var(--rule); border-inline-end: 0; }
+      .map-body { width: min(100%, 47rem); margin-inline: auto; }
+      .jump-source { display: inline; font-size: .9rem; }
+    }
+    @media (max-width: 39em) {
+      .workspace { grid-template-columns: minmax(0, 1fr); grid-template-areas: "map" "review" "source"; }
+      .source-pane { border-inline-start: 0; }
+      .stage-row {
+        grid-template-columns: var(--rail) minmax(0, 1fr);
+        grid-template-areas: "number stage" ". branches";
+        row-gap: .4rem;
+      }
+      .stage-number { grid-area: number; }
+      .stage-title { grid-area: stage; }
+      .branches { grid-area: branches; }
+      .branches::before { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .node { transition: none; }
     }
     @media print {
-      @page { size: landscape; margin: 12mm; }
-      main { width: 100%; margin: 0; }
-      .map { break-inside: avoid; print-color-adjust: exact; }
+      :root { color-scheme: light; --canvas: white; --side: white; --panel: white; --ink: #111; --muted: #333; --rule: #aaa; --wire: #666; --accent: #272952; --accent-bg: #e8e9f5; }
+      body { display: block; height: auto; }
+      .workspace { display: block; }
+      .pane { border: 0; break-inside: avoid; }
+      .pane-body { overflow: visible; }
+      .manuscript { background: white; color: #111; }
+      mark { background: #e3e4f6; color: #111; }
+      .fact-gap { background: white; }
+      .fact-gap h4 { color: #5c3f19; }
+      .jump-source { display: none; }
     }
   </style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>Paper title</h1>
-      <p class="verdict">Identify the change that will make the paper’s central argument easier to follow.</p>
-    </header>
-    <figure class="map" aria-label="Paper structure">
-      <ol class="flow">
-          <li><button class="node" type="button" data-actions="abstract-edits" aria-controls="section-edits" aria-expanded="false">Abstract</button></li>
-          <li><button class="node" type="button" data-actions="introduction-edits" aria-controls="section-edits" aria-expanded="false">Introduction</button></li>
-          <li><button class="node" type="button" data-actions="method-edits" aria-controls="section-edits" aria-expanded="false">Method</button></li>
-          <li><button class="node" type="button" data-actions="setup-edits" aria-controls="section-edits" aria-expanded="false">Setup</button></li>
-        </ol>
-      <div class="between" aria-hidden="true"></div>
-      <section class="results" aria-labelledby="results-heading">
-        <h2 id="results-heading">Results</h2>
-        <ol class="flow">
-          <li><button class="node" type="button" data-actions="primary-edits" aria-controls="section-edits" aria-expanded="false">Main result</button></li>
-          <li><button class="node" type="button" data-actions="controls-edits" aria-controls="section-edits" aria-expanded="false">Controls</button></li>
-          <li><button class="node" type="button" data-actions="limits-edits" aria-controls="section-edits" aria-expanded="false">Secondary analysis</button></li>
-        </ol>
-      </section>
-      <div class="between" aria-hidden="true"></div>
-      <ol class="flow">
-          <li><button class="node" type="button" data-actions="discussion-edits" aria-controls="section-edits" aria-expanded="false">Discussion</button></li>
-          <li><button class="node" type="button" data-actions="conclusion-edits" aria-controls="section-edits" aria-expanded="false">Conclusion</button></li>
-          <li><button class="node" type="button" data-actions="appendix-edits" aria-controls="section-edits" aria-expanded="false">Appendix</button></li>
-        </ol>
-    </figure>
-    <section class="actions" id="section-edits" aria-label="Suggested edits" aria-live="polite" hidden></section>
+  <header class="intro">
+    <h1 id="paper-title">Paper structure review</h1>
+    <p class="verdict" id="verdict"></p>
+  </header>
+  <main class="workspace" id="workspace" hidden>
+    <section class="pane map-pane" aria-labelledby="map-heading">
+      <header class="pane-head"><h2 id="map-heading">Argument map</h2></header>
+      <div class="pane-body map-body"><ol class="argument-map" id="argument-map"></ol></div>
+    </section>
+    <section class="pane side review-pane" id="review" aria-labelledby="review-heading" tabindex="-1">
+      <header class="pane-head">
+        <h2 id="review-heading">Section review</h2>
+        <a class="jump-source" id="jump-source" href="#source">View source</a>
+      </header>
+      <div class="pane-body" id="review-body">
+        <article id="section-review">
+          <div class="review-number" id="review-number"></div>
+          <h3 class="review-title" id="review-title"></h3>
+          <p class="summary" id="review-summary"></p>
+          <div class="fact" id="support-block">
+            <h4 id="support-heading">What the draft supports</h4>
+            <p id="support"></p>
+          </div>
+          <div class="fact fact-gap" id="gap-block">
+            <h4 id="gap-heading">Gap</h4>
+            <p id="gap"></p>
+          </div>
+          <div class="fact" id="action-block">
+            <h4 id="action-heading">Revision</h4>
+            <ul id="actions"></ul>
+          </div>
+        </article>
+      </div>
+    </section>
+    <section class="pane side source-pane" id="source" aria-labelledby="source-heading" tabindex="-1">
+      <header class="pane-head">
+        <h2 id="source-heading">Manuscript</h2>
+        <a id="original" hidden target="_blank" rel="noopener">Open PDF</a>
+      </header>
+      <div class="pane-body" id="source-body">
+        <p class="locator" id="locator"></p>
+        <blockquote class="manuscript" id="excerpt"><span id="source-before"></span><mark id="highlight"></mark><span id="source-after"></span></blockquote>
+        <p class="empty" id="no-source" hidden></p>
+      </div>
+    </section>
   </main>
-  <template id="abstract-edits">
-    <ul>
-      <li>State the research question, approach, and strongest supported result.</li>
-    </ul>
-  </template>
-  <template id="introduction-edits">
-    <ul>
-      <li>Name the unresolved problem and the contribution the paper will establish.</li>
-    </ul>
-  </template>
-  <template id="method-edits">
-    <ul>
-      <li>Connect the key design choice to the research question.</li>
-    </ul>
-  </template>
-  <template id="setup-edits">
-    <ul>
-      <li>Briefly state each comparison’s cohort, metric, and relevant constraints.</li>
-    </ul>
-  </template>
-  <template id="primary-edits">
-    <ul>
-      <li>Put the primary comparison beside the claim it tests.</li>
-    </ul>
-  </template>
-  <template id="controls-edits">
-    <ul>
-      <li>Show which design choice each baseline or ablation isolates.</li>
-    </ul>
-  </template>
-  <template id="limits-edits">
-    <ul>
-      <li>Place follow-up evidence after the main comparison it qualifies.</li>
-    </ul>
-  </template>
-  <template id="discussion-edits">
-    <ul>
-      <li>Tie the most important limitation to the result it qualifies.</li>
-    </ul>
-  </template>
-  <template id="conclusion-edits">
-    <ul>
-      <li>Answer the opening question within the scope of the evidence.</li>
-    </ul>
-  </template>
-  <template id="appendix-edits">
-    <ul>
-      <li>Link each protocol or extended result to its first use in the paper.</li>
-    </ul>
-  </template>
-  <script>
-    const map = document.querySelector(".map");
-    const actions = document.querySelector(".actions");
-    let selectedNode;
+  <p class="sr-only" id="selection" role="status"></p>
+  <noscript><p class="intro">Enable JavaScript to open the interactive review.</p></noscript>
 
-    map.addEventListener("click", (event) => {
-      const node = event.target.closest("[data-actions]");
-      if (!node) return;
-      const wasSelected = node === selectedNode;
-      if (selectedNode) selectedNode.setAttribute("aria-expanded", "false");
-      selectedNode = wasSelected ? undefined : node;
-
-      actions.replaceChildren();
-      actions.hidden = !selectedNode;
-      if (!selectedNode) return;
-
-      selectedNode.setAttribute("aria-expanded", "true");
-      const edits = document.getElementById(selectedNode.dataset.actions);
-      actions.append(edits.content.cloneNode(true));
-      if (actions.getBoundingClientRect().bottom > window.innerHeight) {
-        actions.scrollIntoView({ block: "nearest" });
+  <!--
+    Replace report-data with one JSON object. Escape "<" in the serialized JSON as "\u003c".
+    Optional: lang ("en" or "zh-CN"), sourceLang, initialNode, manuscriptHref (local PDF),
+    sourceLabel (for example, "Source packet"). Set lang on html to the UI language.
+    sections is an ordered list of {id, title, nodes}. Each node has a unique subsection id
+    (e.g. "1.2"), title, optional summary, support, gap (string or null), and actions (1–2 strings).
+    source is null if unavailable, or {locator, pre, highlight, post, page?}. Use contiguous
+    verbatim source passages. Include spaces and paragraph breaks in pre/post where applicable.
+    page is the verified PDF file page index, starting at 1. The array order is the proposed
+    argument order. Derive numbering and stage boundaries from the structure you recommend.
+  -->
+  <script type="application/json" id="report-data">
+  {
+    "title": "Paper title",
+    "verdict": "State the most consequential change to the argument.",
+    "sections": [
+      {
+        "id": "1",
+        "title": "Introduction",
+        "nodes": [
+          {
+            "id": "1.1",
+            "title": "Research question",
+            "summary": "Establish the question the paper will answer.",
+            "support": "Record the strongest claim supported by the supplied draft.",
+            "gap": null,
+            "actions": ["State the research question in the opening. Name the comparison that will answer it."],
+            "source": null
+          }
+        ]
       }
+    ]
+  }
+  </script>
+  <script>
+    const el = id => document.getElementById(id);
+    const report = JSON.parse(el("report-data").textContent);
+    const labels = report.lang?.startsWith("zh")
+      ? {
+          map: "论证结构", review: "小节审阅", source: "原文", pdf: "打开 PDF",
+          jump: "查看原文", support: "已有证据", gap: "缺口", action: "修改建议",
+          noSource: "这一步缺少可以定位的原文。", hasGap: "有缺口"
+        }
+      : {
+          map: "Argument map", review: "Section review", source: "Manuscript", pdf: "Open PDF",
+          jump: "View source", support: "What the draft supports", gap: "Gap", action: "Revision",
+          noSource: "No source passage was available for this part of the argument.", hasGap: "Gap identified"
+        };
+
+    document.documentElement.lang = report.lang || "en";
+    document.title = report.title;
+    el("paper-title").textContent = report.title;
+    el("verdict").textContent = report.verdict;
+    el("map-heading").textContent = labels.map;
+    el("review-heading").textContent = labels.review;
+    el("source-heading").textContent = report.sourceLabel || labels.source;
+    el("original").textContent = labels.pdf;
+    el("jump-source").textContent = labels.jump;
+    el("support-heading").textContent = labels.support;
+    el("gap-heading").textContent = labels.gap;
+    el("action-heading").textContent = labels.action;
+    el("no-source").textContent = labels.noSource;
+    el("excerpt").lang = report.sourceLang || report.lang || "en";
+
+    const manuscript = report.manuscriptHref
+      ? new URL(report.manuscriptHref, location.href)
+      : null;
+    const pdf = manuscript && ["file:", "https:", "http:"].includes(manuscript.protocol)
+      ? manuscript : null;
+    const items = new Map();
+    let selected = null;
+
+    function make(tag, className, content) {
+      const element = document.createElement(tag);
+      if (className) element.className = className;
+      if (content != null) element.textContent = content;
+      return element;
+    }
+
+    for (const section of report.sections) {
+      const row = make("li", "stage-row");
+      const number = make("span", "stage-number", section.nodes[0]?.id.split(".")[0] || section.id);
+      number.setAttribute("aria-hidden", "true");
+      const heading = make("h3", "stage-title", section.title);
+      const branches = make("ol", "branches");
+      for (const node of section.nodes) {
+        const item = make("li");
+        const button = make("button", "node");
+        const badge = make("span", "", node.id);
+        badge.dataset.number = "";
+        button.type = "button";
+        button.setAttribute("aria-controls", "section-review source-body");
+        button.setAttribute("aria-pressed", "false");
+        button.append(badge, make("span", "node-label", node.title));
+        if (node.gap) {
+          const dot = make("span", "gap-dot");
+          dot.setAttribute("aria-hidden", "true");
+          button.append(dot, make("span", "sr-only", labels.hasGap));
+          button.title = labels.hasGap;
+        }
+        button.addEventListener("click", () => select(node.id, {navigate: true, reveal: true}));
+        item.append(button);
+        branches.append(item);
+        items.set(node.id, {node, button});
+      }
+      row.append(number, heading, branches);
+      el("argument-map").append(row);
+    }
+
+    function textBlock(id, value, container = id) {
+      el(id).textContent = value || "";
+      el(container).hidden = !value;
+    }
+
+    function select(id, {navigate = false, reveal = false} = {}) {
+      const item = items.get(id);
+      if (!item) return;
+      const {node, button} = item;
+      selected?.button.setAttribute("aria-pressed", "false");
+      selected = item;
+      button.setAttribute("aria-pressed", "true");
+
+      el("review-number").textContent = node.id;
+      el("review-title").textContent = node.title;
+      textBlock("review-summary", node.summary);
+      textBlock("support", node.support, "support-block");
+      textBlock("gap", node.gap, "gap-block");
+      el("actions").replaceChildren(...node.actions.map(action => make("li", "", action)));
+      el("action-block").hidden = node.actions.length === 0;
+
+      const source = node.source;
+      textBlock("locator", source?.locator);
+      el("source-before").textContent = source?.pre || "";
+      el("highlight").textContent = source?.highlight || "";
+      el("source-after").textContent = source?.post || "";
+      el("excerpt").hidden = !source;
+      el("no-source").hidden = Boolean(source);
+      el("original").hidden = !pdf;
+      if (pdf) {
+        pdf.hash = Number.isInteger(source?.page) && source.page > 0 ? "page=" + source.page : "";
+        el("original").href = pdf.href;
+      }
+      el("review-body").scrollTop = 0;
+      const sourceBody = el("source-body");
+      sourceBody.scrollTop = 0;
+      const pane = sourceBody.getBoundingClientRect();
+      const highlight = el("highlight").getBoundingClientRect();
+      if (source && highlight.top >= pane.bottom) {
+        sourceBody.scrollTop = highlight.top - pane.top - 24;
+      }
+
+      const hash = "#section-" + encodeURIComponent(id);
+      if (navigate && location.hash !== hash) history.pushState(null, "", hash);
+      if (navigate) el("selection").textContent = node.id + " " + node.title;
+      if (reveal && matchMedia("(max-width: 64.99em)").matches) {
+        el("review").focus({preventScroll: true});
+        el("review").scrollIntoView({block: "start"});
+      }
+    }
+
+    const order = Array.from(items.keys());
+    const fallback = report.initialNode || order[0];
+    function selectFromLocation() {
+      const linkedId = order.find(id => location.hash === "#section-" + encodeURIComponent(id));
+      select(linkedId || (items.has(fallback) ? fallback : order[0]));
+    }
+
+    el("argument-map").addEventListener("keydown", event => {
+      if (!event.target.matches(".node")) return;
+      const delta = {ArrowUp: -1, ArrowLeft: -1, ArrowDown: 1, ArrowRight: 1}[event.key];
+      if (delta === undefined) return;
+      event.preventDefault();
+      const current = order.findIndex(id => items.get(id).button === event.target);
+      const next = order[Math.max(0, Math.min(order.length - 1, current + delta))];
+      select(next, {navigate: true});
+      items.get(next).button.focus();
     });
+
+    window.addEventListener("hashchange", selectFromLocation);
+    el("workspace").hidden = false;
+    selectFromLocation();
   </script>
 </body>
 </html>
