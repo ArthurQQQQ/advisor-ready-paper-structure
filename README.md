@@ -18,7 +18,7 @@ Attach your paper as a PDF, even if the draft is incomplete. If the paper refers
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
-Start with a short verdict and the numbered argument map in the center. Select a node to highlight the corresponding manuscript passage on the left and see what it supports, what is missing, and how to revise it on the right.
+Start with a short verdict and the numbered argument map in the center. Select a node to see the evidence, gaps, and suggested edits on the left. On the right, the original PDF opens to the corresponding page and highlights the matching passage. When a passage cannot be matched on the PDF page, the panel shows the verified excerpt and explains the fallback.
 
 ## Review the argument section by section
 
@@ -52,5 +52,5 @@ Use $advisor-ready-paper-structure to review the attached PDF.
 Trace the argument through each section. Show which claims the evidence supports
 and where a step in the reasoning, a baseline comparison, or evidence is missing.
 Return one offline HTML review with a short verdict and a numbered argument map.
-Link each node to the corresponding source excerpt and one or two specific edits.
+Show one or two specific edits on the left and highlight the matching passage on the original PDF page on the right.
 ```

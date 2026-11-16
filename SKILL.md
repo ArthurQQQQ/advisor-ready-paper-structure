@@ -1,6 +1,6 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver a short verdict and an interactive argument map that connects sections to highlighted manuscript excerpts, evidence gaps, and concrete edits."
+description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver a short verdict and an interactive argument map that connects sections to highlighted original PDF passages, evidence gaps, and concrete edits."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
@@ -39,7 +39,7 @@ Plan only figures and tables needed for an argument. Reserve each at its intende
 ## 4. Deliver a compact review
 
 1. **Verdict.** Lead with one short sentence that states the most consequential structural change. Include an evidence boundary when it determines the recommendation.
-2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for one self-contained report that opens offline. Follow the schema documented above its inline `report-data` JSON block. Lead with the title, verdict, and central map. Selecting a numbered node by pointer, keyboard, or direct link highlights the source passage on the left and shows the support, precise gap if applicable, and edits on the right. On narrow screens, keep the map first, followed by the review and source. Include only navigation, source material, and actionable review content. Provide a full audit or review table when requested.
+2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) and follow the schema documented above its inline `report-data` JSON block. Lead with the title, verdict, and central map. Selecting a numbered node by pointer, keyboard, or direct link shows the support, precise gap if applicable, and edits on the left. For a PDF, use [the PDF bundler](scripts/bundle-pdf.py) to embed the source PDF and viewer in the report, which opens offline. The right panel opens the matching original page and highlights the verified passage. If the page match is unavailable, state that clearly and show the verified excerpt or source location when available. For draft or outline input, show the corresponding excerpt and locator. On narrow screens, keep the map first, followed by the review and source. Provide a full audit or review table when requested.
 3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, start with the same verdict and a compact map. Place the source location, evidence, any gap, and one or two edits under the relevant node.
 
-Check that the verdict and map are clear before opening a node. Verify that the source highlight and review match the selected node, every quoted span is in the draft, and each material gap has a next action. Keep each recommendation in one place.
+Check that the verdict and map are clear before opening a node. Verify that the PDF page, highlight, and review match the selected node, every quoted span is in the draft, and each material gap has a next action. Keep each recommendation in one place.
