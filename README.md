@@ -24,7 +24,9 @@ Start with a short verdict and the numbered argument map in the center. Select a
 
 Red marks a major information gap to address first. Yellow marks a revision or check that needs attention. Green marks a small edit. A node with no marker needs no change.
 
-Approve each suggestion from its node, or use **Approve all** at the top. Approval applies prepared text replacements to a working copy when editable source is available. Download the changed LaTeX or Markdown files and the revision record together as a ZIP. The record lists the applied changes and tasks that require new evidence or verification.
+Approve each suggestion from its node, or use **Approve all** at the top. Approval applies prepared text replacements to a working copy when editable source is available. The ZIP contains the changed LaTeX or Markdown files, a revision record, and the approval manifest.
+
+Click **Open in Codex** after reviewing the approvals. The Codex desktop app opens a new task with your selection. Review the prompt and click **Send** to have the skill prepare the revised source files and check the remaining items against available evidence. If the browser does not open Codex, use **Copy task**, paste it into a Codex chat, and send it.
 
 ## Review the argument section by section
 
