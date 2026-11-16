@@ -18,6 +18,9 @@
       --accent-bg: #232540;
       --gap: #ebc890;
       --gap-bg: #241f1a;
+      --red: #f79598;
+      --yellow: #ebc890;
+      --green: #84d6a7;
       --sans: "Geist", "Inter", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
       --serif: "STIX Two Text", "Iowan Old Style", Georgia, "Songti SC", serif;
       --mono: "IBM Plex Mono", ui-monospace, monospace;
@@ -39,7 +42,13 @@
     .intro {
       padding: 1.2rem clamp(1.2rem, 3vw, 2.75rem) 1.25rem;
       border-bottom: 1px solid var(--rule);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: .9rem 1.25rem;
     }
+    .intro-copy { flex: 1 1 34rem; }
     .intro h1 {
       max-width: 48ch;
       font-size: clamp(1.55rem, 2.45vw, 2.35rem);
@@ -49,6 +58,40 @@
       text-wrap: balance;
     }
     .verdict { max-width: 86ch; margin-top: .6rem; color: var(--muted); text-wrap: pretty; }
+    .approval-tools { display: flex; flex-direction: column; gap: .44rem; align-items: flex-start; }
+    .approval-buttons, .action-controls { display: flex; gap: .42rem; flex-wrap: wrap; align-items: baseline; }
+    .control {
+      border: 1px solid var(--rule);
+      border-radius: .35rem;
+      padding: .36rem .62rem;
+      background: var(--panel);
+      color: var(--ink);
+      font: 550 .86rem/1.3 var(--sans);
+      cursor: pointer;
+    }
+    .control:hover:not(:disabled) { border-color: var(--accent); }
+    .control.primary { border-color: #6166af; background: var(--accent-bg); }
+    .control:disabled { opacity: .48; cursor: default; }
+    .approval-status, .action-state { color: var(--muted); font-size: .82rem; }
+    .adopted { color: var(--green); }
+    .attention { color: var(--yellow); }
+    .action-item { list-style: none; padding-block: .48rem .65rem; }
+    .fact .action-list { padding-inline-start: 0; }
+    .action-item + .action-item { border-top: 1px solid var(--rule); }
+    .action-controls { margin-block-start: .45rem; }
+    .action-preview { margin-block-start: .42rem; }
+    .action-preview summary { color: var(--accent); font-size: .85rem; cursor: pointer; }
+    .action-preview pre {
+      margin: .26rem 0 .45rem;
+      padding: .46rem .55rem;
+      border: 1px solid var(--rule);
+      border-radius: .26rem;
+      background: var(--panel);
+      color: var(--ink);
+      font: .82rem/1.5 var(--mono);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
     .workspace {
       display: grid;
       grid-template-columns: minmax(15rem, .87fr) minmax(23rem, 1.25fr) minmax(17rem, 1.13fr);
@@ -153,15 +196,28 @@
     .node[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-bg); }
     .node [data-number], .review-number { color: var(--accent); font: 600 .85rem/1.2 var(--mono); }
     .node-label { min-width: 0; overflow-wrap: anywhere; }
-    .gap-dot {
+    .severity-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .28rem .85rem;
+      margin-block-end: .58rem;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+    .severity-key { display: inline-flex; align-items: center; gap: .3rem; }
+    [data-severity="red"] { --severity: var(--red); }
+    [data-severity="yellow"] { --severity: var(--yellow); }
+    [data-severity="green"] { --severity: var(--green); }
+    .severity-dot {
       flex: none;
       align-self: center;
-      margin-inline-start: auto;
-      width: .44rem;
-      height: .44rem;
+      width: .48rem;
+      height: .48rem;
       border-radius: 50%;
-      background: var(--gap);
+      background: var(--severity);
     }
+    .node .severity-dot { margin-inline-start: auto; }
+    .severity-label { color: var(--severity, var(--muted)); font-size: .82rem; }
     .locator {
       margin-block-end: .85rem;
       color: var(--muted);
@@ -204,7 +260,7 @@
       border-radius: .42rem;
       background: var(--gap-bg);
     }
-    .fact-gap h4 { color: var(--gap); }
+    .fact-gap h4 { color: var(--severity, var(--gap)); }
     .jump-source { display: none; }
     .empty { max-width: 55ch; color: var(--muted); }
     .pdf-status {
@@ -332,18 +388,31 @@
       .fact-gap { background: white; }
       .fact-gap h4 { color: #5c3f19; }
       .jump-source { display: none; }
+      .approval-buttons, .action-controls button { display: none; }
     }
   </style>
 </head>
 <body>
   <header class="intro">
-    <h1 id="paper-title">Paper structure review</h1>
-    <p class="verdict" id="verdict"></p>
+    <div class="intro-copy">
+      <h1 id="paper-title">Paper structure review</h1>
+      <p class="verdict" id="verdict"></p>
+    </div>
+    <div class="approval-tools" id="approval-tools" hidden>
+      <div class="approval-buttons">
+        <button class="control primary" id="approve-all" type="button"></button>
+        <button class="control" id="download-revisions" type="button" disabled></button>
+      </div>
+      <output class="approval-status" id="approval-status" role="status"></output>
+    </div>
   </header>
   <main class="workspace" id="workspace" hidden>
     <section class="pane map-pane" aria-labelledby="map-heading">
       <header class="pane-head"><h2 id="map-heading">Argument map</h2></header>
-      <div class="pane-body map-body"><ol class="argument-map" id="argument-map"></ol></div>
+      <div class="pane-body map-body">
+        <div class="severity-legend" id="severity-legend"></div>
+        <ol class="argument-map" id="argument-map"></ol>
+      </div>
     </section>
     <section class="pane side review-pane" id="review" aria-labelledby="review-heading" tabindex="-1">
       <header class="pane-head">
@@ -354,6 +423,7 @@
         <article id="section-review">
           <div class="review-number" id="review-number"></div>
           <h3 class="review-title" id="review-title"></h3>
+          <p class="severity-label" id="review-severity"></p>
           <p class="summary" id="review-summary"></p>
           <div class="fact" id="support-block">
             <h4 id="support-heading">What the draft supports</h4>
@@ -365,7 +435,7 @@
           </div>
           <div class="fact" id="action-block">
             <h4 id="action-heading">Revision</h4>
-            <ul id="actions"></ul>
+            <ul class="action-list" id="actions"></ul>
           </div>
         </article>
       </div>
@@ -400,7 +470,13 @@
     Optional: lang ("en" or "zh-CN"), sourceLang, initialNode, manuscriptHref (local PDF),
     sourceLabel (for example, "Source packet"). Set lang on html to the UI language.
     sections is an ordered list of {id, title, nodes}. Each node has a unique subsection id
-    (e.g. "1.2"), title, optional summary, support, gap (string or null), and actions (1–2 strings).
+    (e.g. "1.2"), title, optional summary, support, gap (string or null), severity
+    ("red", "yellow", "green", or null), and actions.
+    Each action is a label string or {label, edits:[{file,before,after}], reason?}. To queue a
+    proposal that needs more evidence, omit edits and explain why in reason. An action with
+    multiple edits applies only if every exact, unique source match succeeds.
+    Set report.adoption to {id, files:{"relative/draft.tex":"original text"}} for an editable
+    snapshot. Use a stable version-specific ID. Embed only reviewed text files, never credentials.
     source is null if unavailable, or {locator, pre, highlight, post, page?}. Use contiguous
     verbatim source passages. Include spaces and paragraph breaks in pre/post where applicable.
     page is the verified PDF file page index, starting at 1. The array order is the proposed
@@ -422,14 +498,24 @@
             "support": "The paired pilot measures exact matches at rank 1 on 24 single-column PDF questions (E01, E02).",
             "gap": "The draft claims better answer accuracy across layouts and attributes it to section headings. Each part requires a different comparison: answer generation, a matched multi-layout cohort, or a feature ablation.",
             "actions": [
-              "Replace the abstract claim with the observed top-ranked passage result: 15/24 with the combined layout cues and 12/24 with text only."
+              {
+                "label": "Scope the abstract to the observed single-column retrieval pilot.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "Our layout-aware model improves answer accuracy across scientific PDF layouts because it uses section headings to find the right evidence.",
+                    "after": "In a paired pilot on 24 questions from single-column PDFs, adding page position and section headings yielded 15 exact matches at rank 1, compared with 12 using text alone."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · Draft claim to check",
               "pre": "Our layout-aware model ",
               "highlight": "improves answer accuracy across scientific PDF layouts",
               "post": " because it uses section headings to find the right evidence."
-            }
+            },
+            "severity": "red"
           },
           {
             "id": "1.2",
@@ -438,14 +524,24 @@
             "support": "The draft asks whether adding page and section information changes which passage the same reranker retrieves. The exact-match pilot directly tests that question within its single-column cohort (E01, E02).",
             "gap": null,
             "actions": [
-              "Use the draft question in the first paragraph and preview the paired retrieval pilot immediately after the design idea."
+              {
+                "label": "Put the retrieval question and paired pilot in the opening paragraph.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "Passage rerankers often see text separately from document structure. We compare layout-aware and text-only inputs in a pilot.",
+                    "after": "On scientific PDFs, does giving a passage reranker page and section information improve which passage it retrieves? We add page position and section headings to the existing text input, then compare the two configurations in a paired single-column pilot."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · Draft question",
               "pre": "On scientific PDFs, ",
               "highlight": "does giving a passage reranker page and section information improve which passage it retrieves?",
               "post": " Proposed manuscript in English, editorial notes in Simplified Chinese."
-            }
+            },
+            "severity": "green"
           }
         ]
       },
@@ -460,14 +556,24 @@
             "support": "The comparison uses the same reranker, and the layout-aware configuration adds page position and section headings together (E01, E04).",
             "gap": null,
             "actions": [
-              "Describe the text-only input first, then show where page position and section headings enter together in the layout-aware configuration."
+              {
+                "label": "Name both layout cues and keep the reranker fixed.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "We run the reranker in text-only and layout-aware configurations.",
+                    "after": "The baseline gives the reranker passage text. The layout-aware configuration gives the same reranker passage text plus page position and section headings together."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E01 Protocol note",
               "pre": "The test compares the same text-only reranker ",
               "highlight": "with and without page position and section headings as a combined input.",
               "post": " The intended endpoint is exact match of the top-ranked passage to an annotated gold passage."
-            }
+            },
+            "severity": "green"
           },
           {
             "id": "2.2",
@@ -475,15 +581,14 @@
             "summary": "Locate the endpoint and shared pool before the result.",
             "support": "Each pilot question has the same candidate pool for both conditions, and success is exact match of the first-ranked passage to the gold annotation (E01, E02).",
             "gap": null,
-            "actions": [
-              "Put the exact-match definition, single-column cohort and shared per-question pool in the setup so readers can interpret both columns of the main results table."
-            ],
+            "actions": [],
             "source": {
               "locator": "Fictional source packet · E01 Protocol note",
               "pre": "The test compares the same text-only reranker with and without page position and section headings as a combined input. ",
               "highlight": "The intended endpoint is exact match of the top-ranked passage to an annotated gold passage.",
               "post": " The candidate pool is meant to be shared for each question. The test has no answer generator."
-            }
+            },
+            "severity": null
           }
         ]
       },
@@ -498,14 +603,24 @@
             "support": "On the same 24 questions, the text-only run retrieved 12 exact matches and the layout-aware run retrieved 15, using a shared candidate pool for each question (E02).",
             "gap": null,
             "actions": [
-              "Label the result as a single-column pilot and write the counts as top-ranked passage exact matches out of 24 in the same table row."
+              {
+                "label": "Label the pilot cohort and put the two counts in one table row.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "The text-only configuration retrieved 12 exact matches. The layout-aware configuration retrieved 15.",
+                    "after": "| Single-column pilot | Text only | Text with page position and headings |\n| --- | ---: | ---: |\n| Rank-1 passage exact matches | 12/24 | 15/24 |"
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E02 Paired pilot record",
               "pre": "On the same 24 annotated questions from single-column PDFs, with a shared candidate pool for each question, ",
               "highlight": "the text-only run retrieved 12 exact matches and the layout-aware run retrieved 15.",
               "post": " The record here gives aggregate counts. Per-question outcomes and uncertainty estimates are absent from this packet."
-            }
+            },
+            "severity": "green"
           },
           {
             "id": "3.2",
@@ -514,15 +629,28 @@
             "support": "The aggregate counts give a three-match difference on the observed cohort (E02).",
             "gap": "The packet lacks the joint per-question outcomes. The marginals alone leave the number of questions that switched in each direction undetermined.",
             "actions": [
-              "Recover both question-level outputs, tabulate the discordant pairs and report a paired uncertainty interval if those outputs can be matched.",
-              "If the paired outcomes remain unavailable, report the observed counts as a descriptive pilot result."
+              {
+                "label": "Recover the paired outcomes and calculate an interval.",
+                "reason": "The aggregate counts omit which questions changed outcome under each configuration."
+              },
+              {
+                "label": "Describe the observed difference without implying an uncertainty estimate.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "This improvement is reliable across questions.",
+                    "after": "The layout-aware configuration returned three more exact matches in this pilot. The aggregate counts do not provide a paired uncertainty estimate."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E02 Paired pilot record",
               "pre": "The record here gives aggregate counts. ",
               "highlight": "Per-question outcomes and uncertainty estimates are absent from this packet.",
               "post": ""
-            }
+            },
+            "severity": "yellow"
           },
           {
             "id": "3.3",
@@ -531,15 +659,28 @@
             "support": "The export extends the layout-aware run to a cohort that includes two-column PDFs, while the text-only numbers came from the single-column pilot (E03).",
             "gap": "Missing question IDs, pool hashes and gold membership leave it open whether both configurations saw the same questions and retrievable gold passages (E03, E04).",
             "actions": [
-              "Recover question IDs, gold annotations and candidate-pool memberships, then compare both configurations on the same questions and pools within each layout.",
-              "Reserve this table slot for the matched results."
+              {
+                "label": "Run a matched comparison for each layout.",
+                "reason": "Recover the question IDs, gold annotations and candidate-pool memberships for both runs before comparing layouts."
+              },
+              {
+                "label": "Mark the cross-layout evidence as pending in the results.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "The mixed-layout export confirms the pattern on two-column PDFs.",
+                    "after": "The mixed-layout export includes two-column PDFs. A matched comparison by layout is pending because the available export omits question IDs and candidate-pool hashes."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E03 Mixed-cohort export",
               "pre": "A draft spreadsheet compares the earlier text-only pilot on single-column PDFs with a layout-aware export that also includes two-column PDFs. ",
               "highlight": "The question IDs and candidate-pool hashes were omitted from the export",
               "post": ", so it cannot establish a paired comparison. A lab note says this export looked more favorable than the pilot."
-            }
+            },
+            "severity": "red"
           }
         ]
       },
@@ -554,15 +695,28 @@
             "support": "Page position and section headings were added together in the evaluated configuration (E04).",
             "gap": "The comparison varies both cues at once, so the contribution of section headings alone is unresolved.",
             "actions": [
-              "Attribute the pilot observation to the combined input.",
-              "For a feature-level claim, compare position only, headings only and both against the same text-only configuration with matched pools."
+              {
+                "label": "Attribute the observation to the combined input.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "Section headings explain the improvement in passage selection.",
+                    "after": "The pilot compares passage text alone with the joint addition of page position and section headings."
+                  }
+                ]
+              },
+              {
+                "label": "Measure the contribution of each layout cue.",
+                "reason": "The available runs only compare text alone with both cues. The individual cue conditions still need matched runs."
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E04 Implementation note",
               "pre": "The current layout-aware configuration adds page position and section headings together. ",
               "highlight": "Separate runs for the two features are planned.",
               "post": " The per-question gold candidate membership is unavailable for the mixed-cohort export."
-            }
+            },
+            "severity": "yellow"
           },
           {
             "id": "4.2",
@@ -571,19 +725,35 @@
             "support": "The experiment evaluates the first-ranked passage against its gold annotation. The supported conclusion is specific to observed retrieval on the single-column pilot (E01, E02).",
             "gap": "The link from improved passage ranking to improved answer accuracy would require an answer-generation evaluation.",
             "actions": [
-              "End with the observed single-column retrieval result and identify matched layout coverage and downstream answer quality as separate follow-up evaluations."
+              {
+                "label": "Close with the observed retrieval result and name the follow-up evaluations.",
+                "edits": [
+                  {
+                    "file": "draft.md",
+                    "before": "Layout cues improve answer accuracy across scientific PDF layouts.",
+                    "after": "The layout-aware configuration retrieved more exact first-ranked passages on the 24-question single-column pilot. Follow-up evaluations can test matched comparisons across layouts and measure downstream answer accuracy separately."
+                  }
+                ]
+              }
             ],
             "source": {
               "locator": "Fictional source packet · E01 Protocol note",
               "pre": "The intended endpoint is exact match of the top-ranked passage to an annotated gold passage. The candidate pool is meant to be shared for each question. ",
               "highlight": "The test has no answer generator.",
               "post": ""
-            }
+            },
+            "severity": "yellow"
           }
         ]
       }
     ],
-    "sourceLabel": "Fictional source packet"
+    "sourceLabel": "Fictional source packet",
+    "adoption": {
+      "id": "layout-cues-fictional-v1",
+      "files": {
+        "draft.md": "# Layout cues for passage retrieval\n\n## Abstract\n\nOur layout-aware model improves answer accuracy across scientific PDF layouts because it uses section headings to find the right evidence.\n\n## Introduction\n\nPassage rerankers often see text separately from document structure. We compare layout-aware and text-only inputs in a pilot.\n\n## Method and protocol\n\nWe run the reranker in text-only and layout-aware configurations.\n\nThe pilot uses 24 annotated questions from single-column PDFs. Both configurations rerank the same candidate pool for each question. A success is an exact match between the first-ranked passage and the annotated gold passage. The pilot has no answer generator.\n\n## Results\n\nThe text-only configuration retrieved 12 exact matches. The layout-aware configuration retrieved 15.\n\nThis improvement is reliable across questions.\n\nThe mixed-layout export confirms the pattern on two-column PDFs.\n\n## Discussion and conclusion\n\nSection headings explain the improvement in passage selection.\n\nLayout cues improve answer accuracy across scientific PDF layouts.\n"
+      }
+    }
   }
   </script>
   <script type="text/plain" id="pdfjs-license">
@@ -1119,12 +1289,28 @@ function createPdfPanel(lang) {
       ? {
           map: "论证结构", review: "小节审阅", source: "原文", pdf: "打开 PDF",
           jump: "查看原文", support: "已有证据", gap: "缺口", action: "修改建议",
-          noSource: "这一步缺少可以定位的原文。", hasGap: "有缺口"
+          noSource: "这一步缺少可以定位的原文。",
+          severity: {red: "优先补关键证据", yellow: "需修改或核对", green: "小改动", none: "无需修改"},
+          approve: "批准", undo: "撤销批准", all: "一键批准",
+          download: "下载修订包", preview: "查看拟议改动", before: "原文", after: "改为",
+          applied: "已写入修订稿", pending: "已批准 · 待人工补充", unmatched: "已批准 · 需核对原文",
+          noEdits: "需要可编辑原稿或进一步核查。",
+          receipt: "修订记录", files: "已修改的文件", emptyFiles: "本次没有写入源文件。",
+          progress: (accepted, total, applied, pending) =>
+            "已批准 " + accepted + " / " + total + " · 已写入 " + applied + " · 待处理 " + pending
         }
       : {
           map: "Argument map", review: "Section review", source: "Manuscript", pdf: "Open PDF",
           jump: "View source", support: "What the draft supports", gap: "Gap", action: "Revision",
-          noSource: "No source passage was available for this part of the argument.", hasGap: "Gap identified"
+          noSource: "No source passage was available for this part of the argument.",
+          severity: {red: "Key evidence missing", yellow: "Revise or verify", green: "Small edit", none: "No change needed"},
+          approve: "Approve", undo: "Undo approval", all: "Approve all",
+          download: "Download revisions", preview: "Preview change", before: "Before", after: "After",
+          applied: "Written to draft", pending: "Approved · needs follow-up", unmatched: "Approved · check source match",
+          noEdits: "Requires editable source or further verification.",
+          receipt: "Revision record", files: "Changed files", emptyFiles: "No source files were changed.",
+          progress: (accepted, total, applied, pending) =>
+            accepted + " / " + total + " approved · " + applied + " written · " + pending + " pending"
         };
 
     document.documentElement.lang = report.lang || "en";
@@ -1158,6 +1344,22 @@ function createPdfPanel(lang) {
       return element;
     }
 
+    function severity(node) {
+      if (node.severity === null) return "none";
+      if (["red", "yellow", "green"].includes(node.severity)) return node.severity;
+      return node.gap ? "yellow" : node.actions?.length ? "green" : "none";
+    }
+
+    for (const [level, label] of Object.entries(labels.severity)) {
+      const key = make("span", "severity-key");
+      key.dataset.severity = level;
+      if (level !== "none") key.append(make("span", "severity-dot"));
+      key.append(document.createTextNode(level === "none" ? "— " + label : label));
+      el("severity-legend").append(key);
+    }
+
+    const proposals = new Map();
+    const proposalsByNode = new Map();
     for (const section of report.sections) {
       const row = make("li", "stage-row");
       const number = make("span", "stage-number", section.nodes[0]?.id.split(".")[0] || section.id);
@@ -1173,12 +1375,23 @@ function createPdfPanel(lang) {
         button.setAttribute("aria-controls", "section-review source-body");
         button.setAttribute("aria-pressed", "false");
         button.append(badge, make("span", "node-label", node.title));
-        if (node.gap) {
-          const dot = make("span", "gap-dot");
+        const level = severity(node);
+        button.dataset.severity = level;
+        if (level !== "none") {
+          const dot = make("span", "severity-dot");
           dot.setAttribute("aria-hidden", "true");
-          button.append(dot, make("span", "sr-only", labels.hasGap));
-          button.title = labels.hasGap;
+          button.append(dot);
         }
+        button.append(make("span", "sr-only", labels.severity[level]));
+        button.title = labels.severity[level];
+        const actions = level === "none" ? [] : (node.actions || []).map((action, index) => {
+          const proposal = typeof action === "string" ? {label: action} : action;
+          const key = node.id + ":" + (index + 1);
+          const entry = {...proposal, key, nodeId: node.id, nodeTitle: node.title};
+          proposals.set(key, entry);
+          return entry;
+        });
+        proposalsByNode.set(node.id, actions);
         button.addEventListener("click", () => select(node.id, {navigate: true, reveal: true}));
         item.append(button);
         branches.append(item);
@@ -1187,6 +1400,168 @@ function createPdfPanel(lang) {
       row.append(number, heading, branches);
       el("argument-map").append(row);
     }
+
+    const validFile = name => typeof name === "string" && name !== "" &&
+      !/[:\\\u0000]/.test(name) && name.split("/").every(part => part && part !== "." && part !== "..");
+    const originalFiles = new Map(Object.entries(report.adoption?.files || {}).filter(
+      ([name, text]) => validFile(name) && typeof text === "string"
+    ));
+    const storageKey = report.adoption?.id ? "paper-review-approved:" + report.adoption.id : null;
+    let approvals = [];
+    try {
+      const saved = storageKey && JSON.parse(localStorage.getItem(storageKey));
+      if (Array.isArray(saved)) approvals = [...new Set(saved.filter(key => proposals.has(key)))];
+    } catch (error) {
+      // File previews can disable storage. The working copy still lives in this tab.
+    }
+
+    let workingFiles;
+    let outcomes;
+
+    function applyProposal(proposal) {
+      if (!Array.isArray(proposal.edits) || !proposal.edits.length) return "pending";
+      const staged = new Map();
+      for (const {file, before, after} of proposal.edits) {
+        const text = staged.has(file) ? staged.get(file) : workingFiles.get(file);
+        if (typeof text !== "string" || typeof before !== "string" || !before ||
+            typeof after !== "string" || before === after) return "unmatched";
+        const start = text.indexOf(before);
+        if (start < 0 || text.indexOf(before, start + 1) !== -1) return "unmatched";
+        staged.set(file, text.slice(0, start) + after + text.slice(start + before.length));
+      }
+      for (const [file, text] of staged) workingFiles.set(file, text);
+      return "applied";
+    }
+
+    function refreshWorkingCopy() {
+      workingFiles = new Map(originalFiles);
+      outcomes = new Map();
+      for (const key of approvals) outcomes.set(key, applyProposal(proposals.get(key)));
+      const applied = Array.from(outcomes.values()).filter(state => state === "applied").length;
+      el("approval-status").textContent = labels.progress(approvals.length, proposals.size, applied, approvals.length - applied);
+      el("approve-all").disabled = approvals.length === proposals.size;
+      el("download-revisions").disabled = approvals.length === 0;
+    }
+
+    function updateApprovals(next, focusKey) {
+      approvals = next;
+      if (storageKey) {
+        try { localStorage.setItem(storageKey, JSON.stringify(approvals)); } catch (error) {}
+      }
+      refreshWorkingCopy();
+      if (selected) renderActions(selected.node);
+      if (focusKey) el("approve-" + focusKey)?.focus({preventScroll: true});
+    }
+
+    function renderActions(node) {
+      const actions = proposalsByNode.get(node.id);
+      el("actions").replaceChildren(...actions.map(proposal => {
+        const item = make("li", "action-item");
+        item.append(make("p", "", proposal.label));
+        const state = outcomes.get(proposal.key);
+        const controls = make("div", "action-controls");
+        const button = make("button", "control", state ? labels.undo : labels.approve);
+        button.type = "button";
+        button.id = "approve-" + proposal.key;
+        button.addEventListener("click", () => {
+          const next = state ? approvals.filter(key => key !== proposal.key) : [...approvals, proposal.key];
+          updateApprovals(next, proposal.key);
+        });
+        controls.append(button);
+        if (state) controls.append(make("span", "action-state " + (state === "applied" ? "adopted" : "attention"), labels[state]));
+        item.append(controls);
+        if (proposal.edits?.length) {
+          const preview = make("details", "action-preview");
+          preview.append(make("summary", "", labels.preview));
+          for (const {file, before, after} of proposal.edits) {
+            preview.append(make("p", "action-state", file),
+              make("pre", "", labels.before + "\n" + before),
+              make("pre", "", labels.after + "\n" + after));
+          }
+          item.append(preview);
+        } else {
+          item.append(make("p", "action-state", proposal.reason || labels.noEdits));
+        }
+        return item;
+      }));
+      el("action-block").hidden = actions.length === 0;
+    }
+
+    // Store reviewed text and its receipt in a ZIP without runtime dependencies.
+    function revisionArchive(entries) {
+      const encoder = new TextEncoder();
+      const localParts = [];
+      const directory = [];
+      let offset = 0;
+      function header(length, signature) {
+        const bytes = new Uint8Array(length);
+        const view = new DataView(bytes.buffer);
+        view.setUint32(0, signature, true);
+        return {bytes, view};
+      }
+      for (const [path, text] of entries) {
+        const name = encoder.encode(path);
+        const data = encoder.encode(text);
+        let crc = 0xffffffff;
+        for (const byte of data) {
+          crc ^= byte;
+          for (let bit = 0; bit < 8; bit++) crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+        }
+        crc ^= 0xffffffff;
+        const local = header(30, 0x04034b50);
+        const central = header(46, 0x02014b50);
+        local.view.setUint16(4, 20, true);
+        local.view.setUint16(6, 0x800, true);
+        local.view.setUint16(12, 33, true);
+        local.view.setUint32(14, crc, true);
+        local.view.setUint32(18, data.length, true);
+        local.view.setUint32(22, data.length, true);
+        local.view.setUint16(26, name.length, true);
+        central.view.setUint16(4, 20, true);
+        central.bytes.set(local.bytes.subarray(4, 30), 6);
+        central.view.setUint32(42, offset, true);
+        localParts.push(local.bytes, name, data);
+        directory.push(central.bytes, name);
+        offset += local.bytes.length + name.length + data.length;
+      }
+      const end = header(22, 0x06054b50);
+      end.view.setUint16(8, entries.length, true);
+      end.view.setUint16(10, entries.length, true);
+      end.view.setUint32(12, directory.reduce((sum, part) => sum + part.length, 0), true);
+      end.view.setUint32(16, offset, true);
+      return new Blob([...localParts, ...directory, end.bytes], {type: "application/zip"});
+    }
+
+    function downloadRevisions() {
+      const changed = [...workingFiles].filter(([path, text]) => text !== originalFiles.get(path));
+      const record = ["# " + labels.receipt, report.title, "## " + labels.files,
+        changed.length ? changed.map(([path]) => "- revised/" + path).join("\n") : labels.emptyFiles];
+      for (const [key, state] of outcomes) {
+        const proposal = proposals.get(key);
+        const reason = state === "pending" ? proposal.reason || labels.noEdits : "";
+        record.push("### " + proposal.nodeId + " " + proposal.nodeTitle + " · " + labels[state],
+          proposal.label + (reason ? "\n\n" + reason : ""));
+      }
+      const entries = changed.map(([path, text]) => ["revised/" + path, text]);
+      entries.push(["review-receipt.md", record.join("\n\n") + "\n"]);
+      const url = URL.createObjectURL(revisionArchive(entries));
+      const anchor = make("a");
+      anchor.href = url;
+      anchor.download = "approved-paper-revisions.zip";
+      document.body.append(anchor);
+      anchor.click();
+      anchor.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    }
+
+    el("approval-tools").hidden = proposals.size === 0;
+    el("approve-all").textContent = labels.all;
+    el("download-revisions").textContent = labels.download;
+    el("approve-all").addEventListener("click", () => {
+      updateApprovals([...new Set([...approvals, ...proposals.keys()])]);
+    });
+    el("download-revisions").addEventListener("click", downloadRevisions);
+    refreshWorkingCopy();
 
     function textBlock(id, value, container = id) {
       el(id).textContent = value || "";
@@ -1203,11 +1578,12 @@ function createPdfPanel(lang) {
 
       el("review-number").textContent = node.id;
       el("review-title").textContent = node.title;
+      el("review").dataset.severity = severity(node);
+      el("review-severity").textContent = labels.severity[severity(node)];
       textBlock("review-summary", node.summary);
       textBlock("support", node.support, "support-block");
       textBlock("gap", node.gap, "gap-block");
-      el("actions").replaceChildren(...node.actions.map(action => make("li", "", action)));
-      el("action-block").hidden = node.actions.length === 0;
+      renderActions(node);
 
       const source = node.source;
       textBlock("locator", source?.locator);
