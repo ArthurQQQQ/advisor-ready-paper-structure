@@ -3,303 +3,218 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paper structure review | Advisor-Ready Paper Structure</title>
+  <title>Paper structure review</title>
   <style>
     :root {
       color-scheme: light;
-      --paper: #f6f8fb;
-      --white: #fff;
-      --ink: #14243b;
-      --accent: #00747a;
-      --rule: #cad5e0;
-      --tint: #eff7f7;
-      --note: #49586b;
-      --serif: Spectral, "Iowan Old Style", Georgia, "Songti SC", serif;
-      --sans: "Source Sans 3", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
-      --mono: "IBM Plex Mono", ui-monospace, monospace;
+      --ink: #172b40;
+      --blue: #355a85;
+      --keyline: #9daebc;
+      --sky: #e6effa;
+      --mint: #e5f3ec;
+      --teal: #147766;
+      --serif: "STIX Two Text", "Iowan Old Style", Georgia, "Songti SC", "Noto Serif CJK SC", serif;
+      --body: "Source Sans 3", system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
     }
 
     * { box-sizing: border-box; }
-    body { margin: 0; color: var(--ink); background: var(--paper); font: 1rem/1.5 var(--sans); }
-    main { width: min(73rem, 100% - 2rem); margin: clamp(1.25rem, 4vw, 3rem) auto; }
-    h1, h2, h3, p, ol, ul, dl, figure { margin: 0; }
-    h1, h2, h3 { line-height: 1.18; }
-    h1, h2 { font-family: var(--serif); }
-    h1 { font-size: clamp(1.9rem, 4.2vw, 3rem); font-weight: 620; }
-    h2 { font-size: clamp(1.3rem, 2.1vw, 1.8rem); }
-    a { color: var(--accent); text-underline-offset: .18em; }
-    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-    [id] { scroll-margin-block: 1rem; }
-
-    header { display: grid; gap: .45rem; border-block-start: 3px solid var(--ink); padding-block: .9rem 1rem; }
-    .masthead { color: var(--accent); font-size: .82rem; font-weight: 700; }
-    .masthead span { margin-inline-start: .45rem; }
-    .identity { color: var(--note); font-size: .86rem; }
-    .overview {
+    body { margin: 0; background: #fff; color: var(--ink); font: 1.0625rem/1.55 var(--body); }
+    main { width: min(65rem, 100% - 2.5rem); margin: clamp(1.75rem, 5vw, 4.25rem) auto; }
+    h1, h2, p, ol, ul, figure { margin: 0; }
+    h1, h2, .node { font-family: var(--serif); }
+    h1 { font-size: clamp(2.3rem, 6vw, 4rem); font-weight: 700; line-height: 1.08; letter-spacing: -.025em; }
+    .verdict { max-width: 64ch; margin: .8rem 0 1.6rem; font-size: clamp(1.0625rem, 2.2vw, 1.25rem); }
+    .map { --gap: clamp(1rem, 2.8vw, 2.35rem); }
+    .flow {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
-      gap: 1rem;
-      margin-block-end: 1.45rem;
-    }
-    .verdict, .priorities { padding: .95rem 1rem; }
-    .verdict { background: var(--tint); border-inline-start: 3px solid var(--accent); }
-    .verdict p { margin-block-start: .4rem; max-inline-size: 65ch; font-weight: 530; }
-    .priorities { border-block-start: 1px solid var(--rule); }
-    .priorities h2 { font: 700 .88rem/1.35 var(--sans); }
-    .priority-list { padding-inline-start: 1.1rem; margin-block-start: .38rem; font-size: .9rem; }
-    .priority-list li + li { margin-block-start: .25rem; }
-
-    .argument-map {
-      padding: clamp(.8rem, 2.5vw, 1.5rem);
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-block-start: 2px solid var(--ink);
-    }
-    .map-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .35rem 1rem; }
-    .map-help { color: var(--note); font-size: .83rem; }
-    .stage { margin-block-start: .8rem; }
-    .map-flow, .result-grid {
-      display: grid;
+      grid-auto-flow: column;
       grid-auto-columns: minmax(0, 1fr);
-      gap: 1.7rem;
-      list-style: none;
+      gap: var(--gap);
       padding: 0;
-      align-items: start;
+      list-style: none;
     }
-    .map-flow { grid-auto-flow: column; }
-    .map-flow > li { min-width: 0; position: relative; }
-    .map-flow > li:not(:last-child)::after {
-      content: "";
+    .flow > li { position: relative; min-width: 0; }
+    .flow > li:not(:last-child)::after {
       position: absolute;
-      inset-block-start: 1.42rem;
-      inset-inline-end: -1.55rem;
-      width: 1.4rem;
-      height: .57rem;
-      background: var(--accent);
-      clip-path: polygon(0 43%, 76% 43%, 76% 0, 100% 50%, 76% 100%, 76% 57%, 0 57%);
+      content: "";
+      inset-block-start: 50%;
+      inset-inline-end: calc(-1 * var(--gap) + .16rem);
+      width: calc(var(--gap) - .32rem);
+      height: .65rem;
+      background: var(--blue);
+      clip-path: polygon(0 40%, 72% 40%, 72% 0, 100% 50%, 72% 100%, 72% 60%, 0 60%);
+      transform: translateY(-50%);
       pointer-events: none;
     }
-    .handoff {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .45rem;
-      color: var(--accent);
-      margin-block: .65rem;
-      font-size: .78rem;
-      text-align: center;
-    }
-    .handoff::before {
-      content: "";
-      width: .55rem;
-      height: .55rem;
-      flex-shrink: 0;
-      border: solid currentColor;
-      border-width: 0 1px 1px 0;
-      transform: rotate(45deg) translateY(-.14rem);
-    }
-    .stage-results {
-      padding: .75rem;
-      border: 1px solid var(--rule);
-      background: var(--tint);
-    }
-    .stage-title { margin: 0 0 .55rem; font-size: .95rem; }
-    .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
-    .result-grid > li { min-width: 0; }
-
     .node {
-      background: var(--white);
-      border: 1px solid var(--rule);
-      border-inline-start: 2px solid var(--accent);
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 3.15rem;
+      padding: .5rem .55rem;
+      border: 1px solid var(--blue);
+      border-radius: .3rem;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.0625rem;
+      font-weight: 680;
+      line-height: 1.25;
       overflow-wrap: anywhere;
+      cursor: pointer;
     }
-    .node summary, .appendix summary { cursor: pointer; min-height: 2.75rem; }
-    .node summary { padding: .55rem .65rem; }
-    .node summary::marker, .appendix summary::marker { color: var(--accent); }
-    .node summary:hover, .appendix summary:hover { background: var(--tint); }
-    .node-label { color: var(--ink); font-weight: 710; line-height: 1.2; }
-    .node-role { display: block; color: var(--note); font-size: .83rem; line-height: 1.35; margin-block-start: .15rem; }
-    .node-body { border-block-start: 1px solid var(--rule); padding: .63rem .7rem; font-size: .86rem; }
-    .node-body dl { display: grid; gap: .28rem; }
-    .node-body dt { font-weight: 700; }
-    .node-body dd { margin-inline-start: 0; margin-block-end: .25rem; }
-    .node-body p + p { margin-block-start: .4rem; }
-    .ref-id { font: .85em/1.4 var(--mono); color: var(--accent); }
-    .editor-note { margin-block-start: .6rem; padding-inline-start: .55rem; border-inline-start: 2px solid var(--rule); color: var(--note); }
-    .figure-slot { min-block-size: 6rem; border: 1px dashed var(--rule); margin-block: .5rem; }
-    .support { margin-block-start: 1rem; border-block-start: 1px solid var(--rule); }
-    .appendix { border-block-end: 1px solid var(--rule); }
-    .appendix summary { padding: .55rem .35rem; font-weight: 680; font-size: .87rem; }
-    .appendix .node-body { border: 0; }
-    .table-wrap { overflow-x: auto; }
-    table { border-collapse: collapse; inline-size: 100%; font-size: .85rem; }
-    caption { font-weight: 700; text-align: start; padding-block: .3rem; }
-    th, td { vertical-align: top; text-align: start; border-block-start: 1px solid var(--rule); padding: .45rem .55rem; }
-    thead th { background: var(--tint); }
+    .node:hover { background: var(--sky); }
+    .node:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    .node[aria-expanded="true"] { border-color: var(--teal); background: var(--mint); box-shadow: inset 0 0 0 1px var(--teal); }
+    .between {
+      width: .56rem;
+      height: 1.45rem;
+      margin: .18rem auto;
+      background: var(--blue);
+      clip-path: polygon(42% 0, 58% 0, 58% 68%, 100% 68%, 50% 100%, 0 68%, 42% 68%);
+    }
+    .results { padding: .78rem .88rem .88rem; background: var(--sky); border: 1px solid var(--blue); border-radius: .32rem; }
+    .results h2 { margin-block-end: .65rem; font-size: 1.35rem; line-height: 1.2; }
+    .actions[hidden] { display: none; }
+    .actions {
+      margin-block-start: 1.05rem;
+      padding: .65rem 1rem .7rem;
+      border: 1px solid var(--teal);
+      border-radius: .3rem;
+      background: var(--mint);
+    }
+    .actions ul { padding-inline-start: 1.35rem; }
+    .actions li + li { margin-block-start: .3rem; }
 
-    @media (max-width: 49rem) {
-      .overview { grid-template-columns: 1fr; gap: .35rem; }
-      .map-flow { grid-auto-flow: row; gap: 1.2rem; }
-      .map-flow > li:not(:last-child)::after {
+    @media (max-width: 38rem) {
+      main { width: calc(100% - 1.35rem); margin-block-start: 1.65rem; }
+      .map { --gap: .82rem; }
+      .node { padding: .45rem .18rem; }
+      .results { padding-inline: .45rem; }
+      .results h2 { margin-inline-start: .25rem; }
+    }
+    @media (max-width: 27rem) {
+      .results .flow { grid-auto-flow: row; grid-template-columns: 1fr; gap: .95rem; }
+      .results .flow > li:not(:last-child)::after {
         inset-block-start: auto;
-        inset-block-end: -.94rem;
-        inset-inline-start: 50%;
-        inset-inline-end: auto;
-        width: .75rem;
-        height: .5rem;
-        transform: rotate(90deg);
+        inset-block-end: -.78rem;
+        inset-inline: 50% auto;
+        width: .56rem;
+        height: .62rem;
+        clip-path: polygon(42% 0, 58% 0, 58% 60%, 100% 60%, 50% 100%, 0 60%, 42% 60%);
+        transform: translateX(-50%);
       }
-      .result-grid { grid-template-columns: 1fr; }
-      .handoff { justify-content: flex-start; text-align: start; }
     }
     @media print {
-      @page { size: landscape; margin: 11mm; }
-      body { background: white; }
+      @page { size: landscape; margin: 12mm; }
       main { width: 100%; margin: 0; }
-      h1 { font-size: 22pt; }
-      .overview { grid-template-columns: 1.45fr 1fr; }
-      .argument-map, .node, .overview { break-inside: avoid; }
-      .argument-map { print-color-adjust: exact; }
-      .map-help { display: none; }
-      .map-flow { grid-auto-flow: column; gap: 1.7rem; }
-      .map-flow > li:not(:last-child)::after {
-        inset: 1.42rem -1.55rem auto auto;
-        width: 1.4rem;
-        height: .57rem;
-        transform: none;
-      }
-      .result-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .handoff { justify-content: center; text-align: center; }
-      .table-wrap { overflow: visible; }
+      .map { break-inside: avoid; print-color-adjust: exact; }
     }
   </style>
 </head>
 <body>
   <main>
     <header>
-      <p class="masthead">Advisor-Ready Paper Structure <span lang="zh-Hans">不烧心的论文结构审阅</span></p>
-      <h1>Paper structure review</h1>
-      <p class="identity"><!-- Manuscript title and version. --></p>
+      <h1>Paper title</h1>
+      <p class="verdict">Identify the change that will make the paper’s central argument easier to follow.</p>
     </header>
-
-    <section class="overview" aria-label="Review decisions">
-      <div class="verdict">
-        <h2>Conclusion</h2>
-        <p><!-- One or two direct sentences naming the paper's strongest supported argument and the structural change that matters most. --></p>
-      </div>
-      <div class="priorities">
-        <h2>Revise first</h2>
-        <!-- Keep one to three actions. Link each to its node. -->
-        <ol class="priority-list">
-          <li><a href="#result-primary">Place the primary comparison next to the claim it tests.</a></li>
+    <figure class="map" aria-label="Paper structure">
+      <ol class="flow">
+          <li><button class="node" type="button" data-actions="abstract-edits" aria-controls="section-edits" aria-expanded="false">Abstract</button></li>
+          <li><button class="node" type="button" data-actions="introduction-edits" aria-controls="section-edits" aria-expanded="false">Introduction</button></li>
+          <li><button class="node" type="button" data-actions="method-edits" aria-controls="section-edits" aria-expanded="false">Method</button></li>
+          <li><button class="node" type="button" data-actions="setup-edits" aria-controls="section-edits" aria-expanded="false">Setup</button></li>
         </ol>
-      </div>
-    </section>
-
-    <figure class="argument-map" aria-labelledby="map-heading">
-      <figcaption class="map-head">
-        <h2 id="map-heading">Paper argument map</h2>
-        <p class="map-help">Open a section to see the suggested edit and its evidence.</p>
-      </figcaption>
-      <!-- Use the manuscript's section names and roles. Label handoffs with real dependencies, and add or remove nodes as needed. -->
-      <ol class="stage map-flow" aria-label="Question and approach">
-        <li>
-          <details class="node" id="abstract">
-            <summary><span class="node-label">Title and Abstract</span><span class="node-role">Preview the question, approach, and supported answer.</span></summary>
-            <div class="node-body">
-              <p><!-- State the present finding, an edit at a concrete location, and its evidence. --></p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="introduction">
-            <summary><span class="node-label">Introduction</span><span class="node-role">Define the problem the paper will answer.</span></summary>
-            <div class="node-body"><p><!-- Identify the opening question and the claim that needs support. --></p></div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="related-work">
-            <summary><span class="node-label">Related Work</span><span class="node-role">Locate the closest existing approaches.</span></summary>
-            <div class="node-body"><p><!-- Name the supplied evidence for the gap. Remove this node if the manuscript does not need it. --></p></div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="method">
-            <summary><span class="node-label">Method</span><span class="node-role">Turn the gap into a testable design choice.</span></summary>
-            <div class="node-body"><p><!-- Show where the design creates a comparison for Results. --></p></div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="setup">
-            <summary><span class="node-label">Experimental Setup</span><span class="node-role">Define the comparisons and evaluation conditions.</span></summary>
-            <div class="node-body"><p><!-- Give cohort, metric, baseline, and protocol limits when they change the interpretation. --></p></div>
-          </details>
-        </li>
-      </ol>
-
-      <p class="handoff">Design claims become comparisons under the stated conditions.</p>
-
-      <section class="stage stage-results" aria-labelledby="results-heading">
-        <h3 class="stage-title" id="results-heading">Results and analysis</h3>
-        <ol class="result-grid" aria-label="Ordered evidence panels">
-          <li>
-            <details class="node" id="result-primary">
-              <summary><span class="node-label">Primary result</span><span class="node-role">Answer the research question with the main comparison.</span></summary>
-              <div class="node-body">
-                <dl>
-                  <dt>Evidence</dt><dd><!-- Link the result and baseline to their exact source locators. --></dd>
-                  <dt>Revision</dt><dd><!-- Name the current and proposed locations for the main result. --></dd>
-                </dl>
-              </div>
-            </details>
-          </li>
-          <li>
-            <details class="node" id="result-controls">
-              <summary><span class="node-label">Controls and ablations</span><span class="node-role">Check the design choices that the claim depends on.</span></summary>
-              <div class="node-body"><p><!-- Distinguish observed comparisons, missing exposition, and experiments needed for stronger claims. --></p></div>
-            </details>
-          </li>
-          <li>
-            <details class="node" id="result-limits">
-              <summary><span class="node-label">Secondary analysis</span><span class="node-role">Identify the conditions and limits of the result.</span></summary>
-              <div class="node-body"><p><!-- Identify where this evidence changes the claim or belongs in the appendix. --></p></div>
-            </details>
-          </li>
+      <div class="between" aria-hidden="true"></div>
+      <section class="results" aria-labelledby="results-heading">
+        <h2 id="results-heading">Results</h2>
+        <ol class="flow">
+          <li><button class="node" type="button" data-actions="primary-edits" aria-controls="section-edits" aria-expanded="false">Main result</button></li>
+          <li><button class="node" type="button" data-actions="controls-edits" aria-controls="section-edits" aria-expanded="false">Controls</button></li>
+          <li><button class="node" type="button" data-actions="limits-edits" aria-controls="section-edits" aria-expanded="false">Secondary analysis</button></li>
         </ol>
       </section>
-
-      <p class="handoff">The comparisons set the scope of the interpretation.</p>
-
-      <ol class="stage map-flow" aria-label="Interpretation and closure">
-        <li>
-          <details class="node" id="discussion">
-            <summary><span class="node-label">Discussion and Limitations</span><span class="node-role">Interpret the findings within their measured scope.</span></summary>
-            <div class="node-body"><p><!-- Map each limitation to the result it qualifies. --></p></div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="conclusion">
-            <summary><span class="node-label">Conclusion</span><span class="node-role">Return to the opening question with a bounded answer.</span></summary>
-            <div class="node-body"><p><!-- State which answer the evidence supports and which question remains open. --></p></div>
-          </details>
-        </li>
-        <li>
-          <details class="node" id="appendices">
-            <summary><span class="node-label">Appendices</span><span class="node-role">Make protocols and supporting analyses traceable.</span></summary>
-            <div class="node-body"><p><!-- Map appendix material to the node that uses it. --></p></div>
-          </details>
-        </li>
-      </ol>
+      <div class="between" aria-hidden="true"></div>
+      <ol class="flow">
+          <li><button class="node" type="button" data-actions="discussion-edits" aria-controls="section-edits" aria-expanded="false">Discussion</button></li>
+          <li><button class="node" type="button" data-actions="conclusion-edits" aria-controls="section-edits" aria-expanded="false">Conclusion</button></li>
+          <li><button class="node" type="button" data-actions="appendix-edits" aria-controls="section-edits" aria-expanded="false">Appendix</button></li>
+        </ol>
     </figure>
-
-    <aside class="support" aria-label="Optional supporting material">
-      <details class="appendix">
-        <summary>Evidence and checks across sections</summary>
-        <div class="node-body">
-          <!-- Add shared evidence IDs, precise locators, and comparison limits only where they support multiple nodes. -->
-        </div>
-      </details>
-    </aside>
+    <section class="actions" id="section-edits" aria-label="Suggested edits" aria-live="polite" hidden></section>
   </main>
+  <template id="abstract-edits">
+    <ul>
+      <li>State the research question, approach, and strongest supported result.</li>
+    </ul>
+  </template>
+  <template id="introduction-edits">
+    <ul>
+      <li>Name the unresolved problem and the contribution the paper will establish.</li>
+    </ul>
+  </template>
+  <template id="method-edits">
+    <ul>
+      <li>Connect the key design choice to the research question.</li>
+    </ul>
+  </template>
+  <template id="setup-edits">
+    <ul>
+      <li>Briefly state each comparison’s cohort, metric, and relevant constraints.</li>
+    </ul>
+  </template>
+  <template id="primary-edits">
+    <ul>
+      <li>Put the primary comparison beside the claim it tests.</li>
+    </ul>
+  </template>
+  <template id="controls-edits">
+    <ul>
+      <li>Show which design choice each baseline or ablation isolates.</li>
+    </ul>
+  </template>
+  <template id="limits-edits">
+    <ul>
+      <li>Place follow-up evidence after the main comparison it qualifies.</li>
+    </ul>
+  </template>
+  <template id="discussion-edits">
+    <ul>
+      <li>Tie the most important limitation to the result it qualifies.</li>
+    </ul>
+  </template>
+  <template id="conclusion-edits">
+    <ul>
+      <li>Answer the opening question within the scope of the evidence.</li>
+    </ul>
+  </template>
+  <template id="appendix-edits">
+    <ul>
+      <li>Link each protocol or extended result to its first use in the paper.</li>
+    </ul>
+  </template>
+  <script>
+    const map = document.querySelector(".map");
+    const actions = document.querySelector(".actions");
+    let selectedNode;
+
+    map.addEventListener("click", (event) => {
+      const node = event.target.closest("[data-actions]");
+      if (!node) return;
+      const wasSelected = node === selectedNode;
+      if (selectedNode) selectedNode.setAttribute("aria-expanded", "false");
+      selectedNode = wasSelected ? undefined : node;
+
+      actions.replaceChildren();
+      actions.hidden = !selectedNode;
+      if (!selectedNode) return;
+
+      selectedNode.setAttribute("aria-expanded", "true");
+      const edits = document.getElementById(selectedNode.dataset.actions);
+      actions.append(edits.content.cloneNode(true));
+      if (actions.getBoundingClientRect().bottom > window.innerHeight) {
+        actions.scrollIntoView({ block: "nearest" });
+      }
+    });
+  </script>
 </body>
 </html>
