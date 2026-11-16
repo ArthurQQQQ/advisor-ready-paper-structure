@@ -2,25 +2,23 @@
 
 **Restructure your paper with logic.**
 
-Advisor-Ready Paper Structure gives you a short verdict and a clickable outline that shows how each section moves the argument forward.
+I put this guide together after doing research with professors at several top-30 universities and studying how papers at major machine learning conferences are organized. It helps you organize the evidence behind your claims, make the argument easier to follow, and see exactly where it needs another step, a comparison, or more evidence.
+
+Upload your paper as a PDF and get an interactive HTML review.
 
 [简体中文](README.zh-CN.md) · [Worked example](examples/plan.html)
-
-I built this Codex skill from paper discussions with senior advisors who had different styles across several Top 30 CS departments. One recommendation kept coming up. State the research problem in the opening paragraph, then explain why it matters.
 
 ## What to provide
 
 ![Inputs for a paper structure review, including the topic, draft, results and baselines, and optional venue, alongside the skill's ML paper template](assets/advisor-ready-input.jpg)
 
-Provide your topic or research question and a draft or outline, even if it is incomplete. Attach any experiment notes, results, figures, or tables you have, including the baselines and how you evaluated them. Add the target venue if it affects the structure.
-
-The skill brings an ML paper structure template drawn from those advisor discussions. It adapts the template to your topic and checks how each section supports the paper's argument.
+Attach your paper as a PDF, even if the draft is incomplete. If the paper refers to evidence or comparisons outside the PDF, attach the relevant notes, figures, or tables. Include your target venue if it affects how the paper should be structured.
 
 ## What you get back
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
-Start with one short verdict and a clickable map of the revised paper structure. Each section opens one or two concrete edits, grounded in the evidence and baseline comparisons that matter there.
+Open the HTML review for a short verdict and a clickable map of the proposed structure. Select a section to see how it supports the argument, where the reasoning or evidence falls short, and what to change.
 
 ## Review the argument section by section
 
@@ -47,11 +45,11 @@ Clone into your Codex skills directory, then open a new chat.
 git clone https://github.com/ArthurQQQQ/advisor-ready-paper-structure.git "${CODEX_HOME:-$HOME/.codex}/skills/advisor-ready-paper-structure"
 ```
 
-Share the topic, draft or outline, and any results or baseline details you want the review to use.
+Attach your paper PDF and send this prompt.
 
 ```text
-Use $advisor-ready-paper-structure to review this paper.
-Adapt the ML paper template to my topic and trace the argument through each section.
-Check which claims the evidence supports and whether the baseline comparisons are complete.
-Lead with one short verdict. Show the revised outline as a clickable paper map with one or two concrete edits per section.
+Use $advisor-ready-paper-structure to review the attached PDF.
+Trace the argument through each section. Show which claims the evidence supports
+and where a step in the reasoning, a baseline comparison, or evidence is missing.
+Return one interactive HTML review with a short verdict and a clickable outline.
 ```
