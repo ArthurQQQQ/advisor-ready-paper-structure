@@ -1,6 +1,6 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review the structure of a paper or outline, especially empirical ML/AI. Check the logic and order of each section, map claims to supplied evidence and baseline comparisons, and prioritize revisions."
+description: "Review and restructure a paper or outline, especially empirical ML/AI. Lead with a concise verdict and the first edits, then show a clickable whole-paper argument map with evidence, baseline checks, and specific revisions inside each section."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
@@ -12,13 +12,17 @@ Start with the topic or research question and a draft or outline. Use experiment
 ## 1. Establish what the evidence supports
 
 - Read the supplied notes, draft, figures, tables, protocol and results in scope. Give each distinct evidence item an ID such as `E01` and a source locator such as a filename and heading, table row, or figure panel. Record what it directly shows, relevant population/split, comparison and protocol, and where it can support a claim. Classify it as usable, limited, conflicting, or unavailable. A draft assertion, recollection, or analysis plan stays so labeled. Separate direct observation from interpretation.
-- For each material comparative claim, identify which baseline tests it and whether the draft explains why that comparison matters. Use the supplied sources to identify the closest or strongest relevant alternatives. Check whether the comparison uses compatible datasets, splits, metrics, and training or inference budgets where those affect the claim. Record the exact source and comparison limits in the evidence map. A missing explanation may call for a revision using existing evidence. A comparison whose support cannot be verified calls for a source check or a narrower claim. A comparison confirmed missing and needed for the claim calls for a new experiment or a narrower claim. Leave completeness open when the supplied sources cannot establish it. Do not invent baselines, results, or literature claims.
+- For each material comparative claim, identify which baseline tests it and whether the draft explains why that comparison matters. Use the supplied sources to identify the closest or strongest relevant alternatives. Check whether the comparison uses compatible datasets, splits, metrics, and training or inference budgets where those affect the claim. Record the exact source and comparison limits in the relevant node. A missing explanation may call for a revision using existing evidence. A comparison whose support cannot be verified calls for a source check or a narrower claim. A comparison confirmed missing and needed for the claim calls for a new experiment or a narrower claim. Leave completeness open when the supplied sources cannot establish it. Do not invent baselines, results, or literature claims.
 - State the strongest defensible conclusion in one or two sentences. Link it to evidence IDs and state its scope. Identify the intended claim if it exceeds the evidence. When a source is ambiguous or contradictory, say what remains open and how it affects the proposed placement or wording of the claim. Report conflicting, null, or unfavorable evidence that changes the conclusion.
 - Mark missing evidence or reasoning with gap IDs such as `G01`. Distinguish edits the author can make from the current draft from checks that affect a structural choice or a claim's scope. For each check, name the material, the comparison or verification, and what finding would change the recommendation. Prioritize provenance and comparability when they determine which results belong together. If a check is blocked, give a defensible fallback the author can use now.
 
-## 2. Outline the paper section by section
+## 2. Map the whole argument
 
-Use [the section playbook](references/section-playbook.md) as the built-in template for empirical ML papers. Adapt it to the paper's topic, contribution, and venue. For each proposed section or subsection, identify the question it answers, the steps in its argument, the evidence it needs, and what the next section depends on. Flag skipped reasoning or comparisons at the responsible section. For existing drafts, anchor feedback to a section and specific heading, paragraph, or display. For a move or split, name both the current location and the destination. For a new outline, name where the recommendation belongs.
+Use [the section playbook](references/section-playbook.md) to adapt the map to the manuscript's topic, contribution, and venue. For a whole-paper review, cover the title and abstract, introduction, related work where relevant, method, experimental setup, substantive results in the proposed order, discussion, conclusion, and appendices as applicable. Use the paper's actual section names or concrete proposed headings. Group minor subsections under the node where their material belongs. For narrower reviews, map the requested sections and include adjacent context where a handoff depends on it.
+
+Give each node a short visible statement of the question it answers or the job it does. Show how it hands an assumption, design choice, result, or limitation to another node. Use a connection only where the paper's logic warrants it. Keep parallel experiments and supporting analyses distinct, especially when they test different populations, outcomes, or claims. Use cross-links for appendices and evidence that serves more than one section.
+
+Inside each node, describe its proposed argument and the edit that makes it work. Anchor recommendations to the current heading, paragraph, figure, or table. Include exact evidence and gap IDs and the comparison boundaries that matter. For a move or split, name both the current location and the destination. For a new outline, name where material belongs. Give a completion check for a proposed edit and a practical fallback for an unresolved dependency.
 
 The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method explains the key idea and follows the actual flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
 
@@ -30,18 +34,10 @@ At the exact location of a substantive gap, leave the missing prose blank and sh
 
 Plan only figures and tables needed for an argument. Reserve each at its intended section with a provisional title, the claim it would support, source or gap IDs, and enough specification to build it. For a figure give panels, axes/units or diagram components and the intended comparison. For a table give rows, columns, metric, analysis set, and uncertainty where applicable. Leave missing data cells and plot regions empty. Mark them with an adjacent note, never with dummy numbers, fabricated panels, or a claim that assumes the result.
 
-## 4. Deliver the review
+## 4. Deliver a compact review
 
-Organize the recommendations as one review, with these components in order.
+1. **Verdict and first edits.** Lead with one or two sentences that state the structural diagnosis, the strongest supported conclusion, and any uncertainty that materially changes it. Give one to three priority edits in execution order and link each to its node.
+2. **Interactive argument map.** Use [the HTML scaffold](assets/annotated-outline.html) for a standalone file when file output is available. Use the conventions of a research-paper figure, with short labels, a consistent reading direction, evidence IDs, and explicit handoffs. Use native `<details>` and focusable `<summary>` so each node starts closed and opens with a click or keyboard. The map supplies the proposed outline. Put section rationale, source locators, baseline checks, editor notes, and display plans inside the node that uses them. Put shared checks or a source index in a separate collapsed panel when multiple nodes need them.
+3. **Markdown fallback.** If HTML output is unavailable or the user requests Markdown, lead with the same verdict and priorities. Use a compact map with explicit handoffs, followed by details grouped by node. Honor requests for a different format or for a full review table.
 
-1. **Review summary** with the main structural finding, the strongest conclusion supported by the supplied evidence, and the highest-impact uncertainty or conflict.
-2. **Evidence map** with IDs, source locators, present support, and boundaries, including baseline coverage for material comparisons.
-3. **Priority checks** with the evidence or gap to start from, the action and its completion check, and what the outcome would change. For blocked actions, give the dependency and a defensible fallback.
-4. **Suggested structure and annotated outline**, including blank figure/table slots where required. If file output is available, use [the HTML scaffold](assets/annotated-outline.html) for the styled working copy. Otherwise use the Markdown conventions above. Honor requests for a different document format.
-5. **Section-by-section review table**, last. Give one row per proposed section and substantive subsection, including those ready to write. Multiple rows may cover a section with independent gaps. Use the following columns, translated as needed.
-
-| Section | Job in the argument | Evidence and location | Logic or evidence gap | Recommended revision | Priority and completion check |
-|---|---|---|---|---|---|
-| Section or subsection | What the reader should understand | E IDs and exact draft location when present | G ID and concrete issue, or ready | Specific edit or check and where it belongs | Order or dependency and an observable check |
-
-Before delivery, check that each substantive claim in the review points to supplied evidence, every open gap has a row and a next action, every planned display is linked to a claim or gap, and the table agrees with the outline and priority checks. Mark missing material in the review and keep notes with their original locations. A structure review uses the supplied draft and evidence.
+Check the initial view on its own: the verdict, priority edits, and paper structure should be clear before opening any node. Verify that material claims have source locators, gaps have next actions, links land on their nodes, and planned displays connect to a claim or gap. Keep each detailed recommendation in one place.

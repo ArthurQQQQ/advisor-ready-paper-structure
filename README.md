@@ -2,7 +2,7 @@
 
 **Restructure your paper with logic.**
 
-Advisor-Ready Paper Structure gives you a revised outline that shows how each section moves the argument forward.
+Advisor-Ready Paper Structure gives you a short verdict and a clickable outline that shows how each section moves the argument forward.
 
 [简体中文](README.zh-CN.md) · [Worked example](examples/plan.html)
 
@@ -20,7 +20,7 @@ The skill brings an ML paper structure template drawn from those advisor discuss
 
 ![A single annotated review with recommended section order, an evidence and baseline comparison check, and prioritized edits](assets/advisor-ready-output.jpg)
 
-You get one integrated review. It proposes an outline for your topic, explains the role of each section, and connects key claims to the material you provided. For each baseline comparison the argument relies on, it checks what question the comparison answers, whether the setup and metric are clear, and which claims still need evidence. A final section-by-section table prioritizes what to keep, move, split, or add and gives a completion check for each edit.
+The review opens with its conclusion and up to three edits to make first. The clickable paper map shows the proposed section order and how each section hands off to the next. Open a section to see the evidence, baseline checks, what to keep or move, and how to verify the edit.
 
 ## Review the argument section by section
 
@@ -37,9 +37,9 @@ In the worked example, the introduction can open with “Can page position and s
 
 In the fictional example, a layout-aware reranker improves top-ranked passage matches from 12 to 15 on the same 24 questions from single-column PDFs (`E02`). A larger export includes two-column PDFs and omits question IDs and candidate-pool hashes (`E03`). The review keeps the pilot result in the paper and marks the cross-layout comparison as pending. The first check (`G01`) is to recover the matching question IDs, gold annotations, and candidate pools.
 
-Gray notes show the next action at each gap, with space reserved for pending figures and tables.
+Open a node for its gray editor notes and any pending figure or table.
 
-[Example source packet](examples/source-packet.md) · [Full annotated review](examples/plan.html) (download the HTML and open it in a browser)
+[Example source packet](examples/source-packet.md) · [Interactive review](examples/plan.html) (download the HTML and open it in a browser)
 
 ## Run in Codex
 
@@ -55,5 +55,5 @@ Share the topic, draft or outline, and any results or baseline details you want 
 Use $advisor-ready-paper-structure to review this paper.
 Adapt the ML paper template to my topic and trace the argument through each section.
 Check which claims the evidence supports and whether the baseline comparisons are complete.
-Suggest an outline and give me a prioritized section-by-section revision table.
+Start with your verdict and the edits to make first. Show the revised outline as a clickable paper map with details inside each section.
 ```
