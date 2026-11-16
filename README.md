@@ -1,6 +1,8 @@
 # The Paper Structure That Your Advisor Would Like to Read | 不烧心的论文结构审阅
 
-**Advisor-Ready Paper Structure** reviews how a research paper organizes its argument and evidence.
+**Restructure your paper with logic.**
+
+Advisor-Ready Paper Structure gives you a revised outline that shows how each section moves the argument forward.
 
 [简体中文](README.zh-CN.md) · [Worked example](examples/plan.html)
 
