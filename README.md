@@ -2,7 +2,7 @@
 
 **Restructure your paper with logic.**
 
-I put this guide together after doing research with professors at several top-30 universities and studying how papers at major machine learning conferences are organized. It helps you organize the evidence behind your claims, make the argument easier to follow, and see exactly where it needs another step, a comparison, or more evidence.
+I put this guide together from my experience doing research with professors at leading universities around the world and writing papers for major machine learning and AI conferences. It helps you educate your readers with a clear, logical paper structure.
 
 Upload your paper as a PDF and get an interactive HTML review.
 
