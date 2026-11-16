@@ -982,7 +982,11 @@ function createPdfPanel(lang) {
       for (const [key, value] of Object.entries(rect)) marker.style[key] = value + "px";
       overlay.append(marker);
     }
-    return rectangles[0];
+    if (rectangles.length === 0) return null;
+    return {
+      left: Math.min(...rectangles.map(rect => rect.left)),
+      top: Math.min(...rectangles.map(rect => rect.top))
+    };
   }
 
   async function draw(pageNumber, match, token) {
@@ -1090,8 +1094,9 @@ function createPdfPanel(lang) {
       const match = source?.highlight ? await matches.get(source) : null;
       if (token !== generation) return;
       target = match;
-      const page = match?.pageNumber || source?.page || 1;
-      await draw(page >= 1 && page <= pdf.numPages ? page : 1, match, token);
+      const page = match?.pageNumber || source?.page;
+      const validPage = Number.isInteger(page) && page >= 1 && page <= pdf.numPages;
+      await draw(validPage ? page : 1, match, token);
     } catch (error) {
       if (token === generation) fallback(source, words.error);
     }
