@@ -220,7 +220,8 @@
 
     @media (min-width: 65em) {
       body { display: flex; flex-direction: column; height: 100dvh; }
-      .workspace { flex: 1; }
+      .workspace { flex: 1; grid-template-rows: minmax(0, 1fr); }
+      .pane { min-height: 0; }
       .pane-body { min-height: 0; flex: 1; overflow: auto; scrollbar-color: #424550 transparent; }
     }
     @media (max-width: 64.99em) {
