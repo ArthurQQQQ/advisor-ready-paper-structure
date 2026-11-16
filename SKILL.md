@@ -3,7 +3,7 @@ name: advisor-ready-paper-structure
 description: "Review the structure of a paper or outline, especially empirical ML/AI. Use when the author wants to check section order, map claims to supplied evidence, locate gaps in the argument, or get a prioritized section-by-section revision plan."
 ---
 
-# No-Burn Paper Structure · 不烧型论文结构审阅
+# Advisor-Ready Paper Structure · 不烧心的论文结构审阅
 
 Review how the draft or outline makes its argument from the supplied material. Identify where the paper makes its central claim, where the reader finds its evidence, and which changes would make that sequence clearer. Respect the author's research question, scientific scope, and target format. Work on the requested sections, using wider context only when it changes their role.
 
