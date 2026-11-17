@@ -8,6 +8,21 @@
 
 [English](README.md) · [完整审阅示例](examples/plan.html)
 
+## 从一个想法开始
+
+在 Codex 里用一句话说出你大概想研究什么。
+
+```text
+用 $advisor-ready-paper-structure 跟我讨论这个研究想法。
+检索长文档时，能不能提前停读，又找齐需要的证据？
+```
+
+1. **讨论想法。** 留在同一个对话里。Codex 每轮追问一个会改变研究设计的问题，并更新简报里的研究问题、主指标、对照条件和什么结果会推翻假设。
+2. **确认题目。** 简报符合你想验证的问题后，说“确认这个题目，开始找基线”。Codex 核对原论文和官方实现，给出来源，说明哪些比较可以公平地做、哪些条件还需要对齐。
+3. **填写 Quick Paper。** Codex 把已确认的研究问题、实验方案和核实的引用放进可编辑的 Markdown 提纲，并给待补的方法细节、数据集、实验结果和结论留下填写位置。你可以把补好的内容带回对话，继续处理剩下的问题。
+
+打开生成的 `research-workspace.html` 查看当前简报，Codex 更新文件后刷新即可。写作时直接编辑 `quick-paper.md`。把两份示例 HTML 下载到同一目录，再用浏览器打开。 [交互式想法示例](examples/research-idea-workbench.html) · [带已核查基线的工作台](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+
 ## 需要提供什么
 
 ![审阅所需材料包括主题、草稿、结果与基线，以及可选的目标会议或期刊，旁边是技能内置的 ML 论文结构模板](assets/advisor-ready-input.jpg)

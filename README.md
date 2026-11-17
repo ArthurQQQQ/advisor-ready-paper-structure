@@ -8,6 +8,21 @@ Upload your paper as a PDF and get an interactive HTML review you can open offli
 
 [简体中文](README.zh-CN.md) · [Worked example](examples/plan.html)
 
+## Develop a research idea
+
+Start with one rough idea in Codex.
+
+```text
+Use $advisor-ready-paper-structure to help me develop this idea.
+Can a retriever stop reading a long document early and still recover the evidence?
+```
+
+1. **Discuss the idea.** Stay in the same chat. Codex challenges one assumption at a time and updates a brief with the research question, primary metric, controls, and what result would overturn the hypothesis.
+2. **Confirm the topic.** When the brief reflects what you want to test, say “Confirm this topic and search for baselines.” Codex checks original papers and official implementations, links the sources, and explains which comparisons can be run fairly and which conditions still need alignment.
+3. **Fill in the Quick Paper.** Codex puts the confirmed question, experimental plan, and verified citations into an editable Markdown outline. Labeled blanks show where to add missing method details, dataset choices, results, and conclusions. Bring back a section or an update to continue working on the gaps.
+
+Open the generated `research-workspace.html` to see your current brief and refresh it after Codex updates the files. Edit `quick-paper.md` as your draft develops. Download the two example HTML files to the same folder and open them in your browser. [Interactive idea example](examples/research-idea-workbench.html) · [Workspace with checked baselines](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+
 ## What to provide
 
 ![Inputs for a paper structure review, including the topic, draft, results and baselines, and optional venue, alongside the skill's ML paper template](assets/advisor-ready-input.jpg)

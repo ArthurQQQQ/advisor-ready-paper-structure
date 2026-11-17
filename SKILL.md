@@ -1,15 +1,16 @@
 ---
 name: advisor-ready-paper-structure
-description: "Review and restructure a paper PDF, draft, or outline, especially empirical ML/AI. Deliver an interactive argument map with prioritized issues, highlighted original PDF passages, and editable revisions the author can approve."
+description: "Develop a rough research idea through debate, confirm the topic, find sourced baselines, and generate an editable Quick Paper. Review and restructure a paper PDF, draft, or outline with an interactive argument map, original PDF highlights, and approvable edits. Especially useful for empirical ML/AI."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
 
-Review how the draft or outline makes its argument from the supplied material. Identify where the paper makes its central claim, where the reader finds its evidence, and which changes would make that sequence clearer. Respect the author's research question, scientific scope, and target format. Work on the requested sections, using wider context only when it changes their role.
+Respect the author's research question, scientific scope, and target format. Choose the workflow that matches what they want to do now.
 
-Start with the paper PDF, draft, or outline and identify its research question. Use experiment notes, results, baseline descriptions, figures, and tables when supplied. A target venue is optional. Review what the author has and record material gaps.
+- When the user sends an approved selection from **Open in Codex** or supplies an approval manifest, follow [the approved revision workflow](references/approved-revisions.md) to produce the revised files and a change record.
+- When the user wants to develop a rough idea, debate a research design, find baselines for a newly confirmed topic, or create or fill a Quick Paper, follow [the research ideation workflow](references/research-ideation.md). Start from the user's idea or current brief, ask one consequential question per round, and get their explicit confirmation of the topic before searching for baselines.
+- When the user asks to review an existing PDF, draft, or outline, start below. Identify the research question, where the paper makes its central claim and presents its evidence, and what would clarify the argument. Use experiment notes, results, baseline descriptions, figures, and tables when supplied. A target venue is optional. Work on the requested sections, using wider context when it changes their role.
 
-When the user sends an approved selection from **Open in Codex** or supplies an approval manifest, follow [the approved revision workflow](references/approved-revisions.md) to produce the revised files and a change record.
 
 ## 1. Establish what the evidence supports
 
