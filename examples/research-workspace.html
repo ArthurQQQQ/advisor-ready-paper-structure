@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>研究工作台</title>
+<style>
+  :root {
+    color-scheme: dark;
+    --page: #111116;
+    --panel: #191920;
+    --line: #353543;
+    --ink: #f0f0f6;
+    --muted: #b9bac8;
+    --accent: #d2ccff;
+    --paper: #f4f1ea;
+    --paper-ink: #302d39;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--page);
+    color: var(--ink);
+    font: 15px/1.62 Geist, Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  h1, h2, h3, p, dl, dd { margin: 0; }
+  [hidden] { display: none !important; }
+  .shell { width: min(1320px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 52px); }
+  .masthead, .section-head, .actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem .8rem; }
+  .masthead { justify-content: space-between; padding-block: .9rem; border-bottom: 1px solid var(--line); }
+  .brand { font-weight: 680; }
+  .status, .muted { color: var(--muted); font-size: .88rem; }
+  .progress { display: flex; flex-wrap: wrap; gap: .4rem .9rem; padding-block: .65rem; border-bottom: 1px solid var(--line); }
+  .progress span, .progress a { font-size: .86rem; color: var(--muted); }
+  .progress a[href] { color: var(--accent); }
+  .progress a:not([href]) { text-decoration: none; }
+  .progress [aria-current] { font-weight: 650; color: var(--accent); }
+  .workspace { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(18rem, 1fr); gap: clamp(18px, 3vw, 38px); padding-block: 1.8rem 3rem; }
+  .main, .brief { min-width: 0; }
+  .brief { align-self: start; padding: 1.1rem 1.2rem; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
+  @media (min-width: 52.01rem) { .brief { position: sticky; top: 1rem; } }
+  h1 { max-width: 38ch; font-size: clamp(1.75rem, 3.1vw, 2.65rem); line-height: 1.22; letter-spacing: -.03em; text-wrap: balance; overflow-wrap: anywhere; }
+  h2 { font-size: 1.16rem; line-height: 1.35; }
+  h3 { font-size: 1rem; }
+  .description { margin-top: .65rem; }
+  .section { margin-block-start: 1.3rem; }
+  .section-head { justify-content: space-between; margin-block-end: .65rem; }
+  .question { margin-top: 1.15rem; background: var(--panel); padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 9px; }
+  .question p { margin-top: .24rem; }
+  .brief dl { margin-top: .65rem; border-top: 1px solid var(--line); }
+  .brief dt { margin-top: .72rem; color: var(--muted); font-size: .82rem; }
+  .brief dd { margin-block-start: .18rem; overflow-wrap: anywhere; }
+  .brief dd:empty::after { content: "待明确"; color: var(--muted); }
+  .brief p { margin-top: .85rem; }
+  .baseline-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .baseline-list li { padding: .74rem 0; border-bottom: 1px solid var(--line); }
+  .baseline-list p { margin-top: .16rem; overflow-wrap: anywhere; }
+  .baseline-list .match { color: var(--accent); }
+  a { color: var(--accent); text-underline-offset: .18em; }
+  .actions { margin-top: .65rem; }
+  button {
+    border: 1px solid #555367; border-radius: 5px; background: #252437; color: var(--ink);
+    padding: .45rem .65rem; font: inherit; font-weight: 550; font-size: .9rem; cursor: pointer;
+  }
+  button:hover { border-color: var(--accent); }
+  button:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  button:disabled { opacity: .55; cursor: default; }
+  details { margin-top: .65rem; }
+  summary { color: var(--accent); cursor: pointer; }
+  textarea {
+    display: block; width: 100%; margin-top: .45rem; resize: vertical; padding: .7rem;
+    background: #101116; color: var(--ink); border: 1px solid var(--line); border-radius: 5px; font: inherit;
+  }
+  #outline {
+    min-height: 26rem; background: var(--paper); color: var(--paper-ink); color-scheme: light;
+    padding: .95rem 1rem; border-color: #beb8ad;
+    font: .88rem/1.6 "IBM Plex Mono", ui-monospace, "PingFang SC", monospace;
+  }
+  @media (max-width: 52rem) {
+    .workspace { grid-template-columns: minmax(0, 1fr); }
+    .brief { grid-row: 1; }
+    #outline { min-height: 20rem; }
+  }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="masthead"><div class="brand">研究工作台</div><p class="status" id="status" role="status"></p></header>
+  <nav class="progress" aria-label="研究进度">
+    <span id="step-discussion">讨论想法</span><span id="step-confirmation">确认题目</span><a id="step-baseline">核查 Baseline</a><a id="step-outline">Quick Paper</a>
+  </nav>
+  <main class="workspace">
+    <div class="main">
+      <h1 id="title"></h1>
+      <p class="muted description" id="description"></p>
+
+      <section class="question" id="question-section" hidden>
+        <h2 id="question-heading">现在要想清楚的问题</h2>
+        <p id="question"></p>
+      </section>
+      <details id="confirmation" hidden>
+        <summary>取出定题指令</summary>
+        <textarea readonly rows="5" id="confirmation-text" aria-label="定题指令"></textarea>
+        <div class="actions"><button type="button" id="copy-confirmation">复制到当前 Codex 对话</button><output class="muted" id="copy-feedback" role="status"></output></div>
+      </details>
+
+      <section class="section" id="baseline-section" hidden>
+        <div class="section-head"><h2>Baseline 与对照</h2></div>
+        <p id="baseline-empty" class="muted" hidden>当前还没有可展示的核查记录。</p>
+        <ul id="baselines" class="baseline-list"></ul>
+      </section>
+
+      <section class="section" id="outline-section" hidden>
+        <div class="section-head">
+          <h2>Quick Paper</h2>
+          <div class="actions">
+            <button type="button" id="switch-draft" hidden>查看 Codex 保存版</button>
+            <button type="button" id="download">下载 Markdown</button>
+          </div>
+        </div>
+        <p id="draft-notice" class="muted"></p>
+        <textarea id="outline" spellcheck="false" aria-label="Quick Paper Markdown"></textarea>
+      </section>
+    </div>
+    <aside class="brief" aria-labelledby="brief-title">
+      <h2 id="brief-title">研究简报</h2>
+      <dl>
+        <dt>原始想法</dt><dd id="idea"></dd>
+        <dt>研究问题</dt><dd id="topic"></dd>
+        <dt>主指标</dt><dd id="metric"></dd>
+        <dt>公平对照条件</dt><dd id="controls"></dd>
+        <dt>什么结果会推翻假设</dt><dd id="failure"></dd>
+      </dl>
+      <p class="muted" id="refresh-note">在当前 Codex 对话里继续，保存后刷新这页查看更新。</p>
+    </aside>
+  </main>
+</div>
+
+<script id="research-state" type="application/json">
+{
+  "id": "qasper-early-stop-example",
+  "idea": "长文档找证据，能不能读到一半就停？",
+  "topic": "在 QASPER 的同一批可由正文段落回答的问题上，与读到固定 token 上限相比，按段落排名稳定度停读能否在相近的平均阅读预算下提高金标证据段落召回率？",
+  "metric": "段落 Recall@5，另报金标证据出现在后半段的子集和平均阅读 token。",
+  "controls": "冻结评分器、正文筛选和候选顺序。用开发集选择停止阈值及固定前缀上限，在测试集报告实际预算差。",
+  "failure": "若达到预算匹配后稳定度停读仍未提高 Recall@5，当前假设得不到支持。",
+  "openQuestion": "填入可接受的预算差，并定义多份证据标注的汇总规则。",
+  "status": "ready",
+  "baselines": [
+    {
+      "name": "固定 token 前缀",
+      "role": "主对照",
+      "source": "",
+      "match": "可直接设置",
+      "notes": "问题、评分器、候选顺序与 top-5 固定。用开发集选全局前缀上限，在测试集记录实际预算差。"
+    },
+    {
+      "name": "同一评分器读完整篇",
+      "role": "完整输入质量参考",
+      "source": "",
+      "match": "同协议的成本参考",
+      "notes": "沿用同一问题、评分器、候选顺序和 top-5。单列阅读成本。"
+    },
+    {
+      "name": "QASPER TF-IDF",
+      "role": "原论文的证据选择基线",
+      "source": "https://aclanthology.org/2021.naacl-main.365.pdf",
+      "match": "需对齐",
+      "notes": "原论文表 3 报告 Evidence F1。用本例的文本子集、前缀预算和 Recall@5 重跑后才可比较。"
+    },
+    {
+      "name": "Answer-Convergence Stopping（ACS）",
+      "role": "最接近的动态停读方法",
+      "source": "https://arxiv.org/abs/2609.34590",
+      "match": "需改造",
+      "notes": "作者的方法观察生成答案的置信度与稳定度。需让它输出段落 ID，并对齐文档输入、标注和阅读预算，另计生成开销。"
+    },
+    {
+      "name": "FLARE",
+      "role": "主动检索的相关工作",
+      "source": "https://aclanthology.org/2023.emnlp-main.495/",
+      "match": "机制参考",
+      "notes": "在生成过程中，以低置信度触发外部检索。这个决策与单篇文档的顺序停读不同，引用时说明设计关系。"
+    }
+  ],
+  "outline": "# 用段落排名稳定度决定长文档证据检索何时停读\n\n这是一个已定题的工作示例。下列外部来源已核对，结果栏等待本例的实验。\n\n## 摘要\n\n[待填：实验设定、预算与证据召回的主要观察，以及适用范围。]\n\n## 引言\n\n**问题。** 在 QASPER 的同一批可由正文段落回答的问题上，与读到固定 token 上限相比，按段落排名稳定度停读能否在相近的平均阅读预算下提高金标证据段落召回率？\n\n**假设。** 逐段判断排序是否稳定，可以为需要更多正文的问题分配更高预算。[待填：为什么排名稳定度应该反映证据已充分，以及哪种情况会误停。]\n\n## 方法\n\n按文档原序逐段开放正文，使用同一段落评分器更新前五名。每个问题的评分器和候选顺序对各策略一致。\n\n- [待填：正文筛选、拆段、tokenizer、段落 ID 与金标映射。]\n- [待填：稳定度定义、最小读取量、连续稳定步数、阈值与并列排名规则。]\n- [待填：所用评分器、冻结条件和新增正文以外的开销。]\n\n## 实验\n\n以 QASPER 原始标注为证据来源。预先定义可由正文段落回答的样本、图表证据的处理和多份标注的汇总规则。主指标为段落 Recall@5，另报金标证据出现在后半段的子集结果。[QASPER 原论文](https://aclanthology.org/2021.naacl-main.365/)\n\n| 对照或来源 | 对本问题的作用 | 比较条件 |\n| --- | --- | --- |\n| 固定 token 前缀 | 主对照，检验随问题调整阅读量的收益 | 用开发集选择全局上限以匹配平均预算，测试集报告实际预算差。 |\n| 同一评分器读完整篇 | 完整输入下的质量参考 | 同一数据、评分器、候选顺序与 top-5。单列实际阅读成本。 |\n| QASPER 的 TF-IDF | 原论文的简单证据检索参照 | 原论文报告 Evidence F1。需在同一子集、前缀、预算及 Recall@5 下重跑。[原论文表 3](https://aclanthology.org/2021.naacl-main.365.pdf) |\n| Answer-Convergence Stopping（ACS） | 最接近的动态停读方法 | 衡量生成答案的置信度与稳定度。要纳入比较，需在相同输入和预算下输出可评分的段落 ID，并另报生成开销。[作者预印本](https://arxiv.org/abs/2609.34590) |\n| FLARE | 置信度触发额外检索的相关工作线索 | 生成时从外部语料发起检索，输入与停止决策不同。单列为相关工作。[原论文](https://aclanthology.org/2023.emnlp-main.495/) |\n\n**事前约定。** 对所有采用的停止策略固定数据划分和评分器。停止规则在开发集设定，冻结后评估测试集。预先填入可接受的预算差和按题配对的不确定性报告方式。若达到预算匹配后稳定度停读仍未提高 Recall@5，当前假设得不到支持。\n\n[待填：数据版本、开发集阈值选择、预算容差、置信区间和后半段子集定义。]\n\n## 结果\n\n| 方法 | 平均阅读 token | 段落 Recall@5 | 后半段证据子集 Recall@5 |\n| --- | ---: | ---: | ---: |\n| 固定 token 前缀 | | | |\n| 同一评分器读完整篇 | | | |\n| 按排名稳定度停读 | | | |\n\n[待填：匹配预算的实测差、按题配对的不确定性和误停案例。]\n\n## 讨论与结论\n\n[待填：能否回答研究问题，哪些错误来自证据未被读到，哪些来自评分器未把已读证据排进前五。]\n"
+}
+</script>
+<script>
+  (() => {
+    const byId = id => document.getElementById(id);
+    const state = JSON.parse(byId("research-state").textContent);
+    const discussing = state.status === "discussing";
+    const ready = state.status === "ready";
+    const briefFields = ["idea", "topic", "metric", "controls", "failure"];
+    const canConfirm = discussing && briefFields.slice(1).every(field => state[field]?.trim());
+    const addText = (tag, text, style) => {
+      const item = document.createElement(tag);
+      item.textContent = text;
+      if (style) item.className = style;
+      return item;
+    };
+
+    for (const field of briefFields) byId(field).textContent = state[field] || "";
+    byId("status").textContent = discussing ? "讨论中 · 等你定题" : ready ? "题目已确认 · 提纲可填写" : "题目已确认 · 正在核查对照";
+    const workingTitle = state.outline.match(/^# +(.+)$/m)?.[1].trim();
+    byId("title").textContent = discussing ? "把想法问清楚" : ready
+      ? workingTitle && workingTitle.length <= 64 ? workingTitle : "研究提纲"
+      : "核查 Baseline";
+    byId("description").textContent = discussing
+      ? "把你的判断说给 Codex，研究简报会记录你们已经聊清楚的内容。"
+      : ready ? "核对下面的方式与证据，从一个待填写的小节继续。" : "已按这版研究简报进入 baseline 检索。";
+    const step = canConfirm ? "step-confirmation" : discussing ? "step-discussion" : ready ? "step-outline" : "step-baseline";
+    byId(step).setAttribute("aria-current", "step");
+    if (!discussing) byId("step-baseline").href = "#baseline-section";
+    if (ready) byId("step-outline").href = "#outline-section";
+    if (state.openQuestion) {
+      byId("question-section").hidden = false;
+      byId("question").textContent = state.openQuestion;
+    }
+
+    const confirmation = "我确认以下研究题目和检索条件，请在这条对话中继续查 baseline，并生成留白的 Quick Paper。\n\n" +
+      ["研究问题", "主指标", "公平对照", "推翻条件"].map((label, index) => label + "：" + (state[briefFields[index + 1]] || "")).join("\n");
+    byId("confirmation").hidden = !canConfirm;
+    byId("confirmation-text").value = confirmation;
+    byId("copy-confirmation").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(confirmation);
+        byId("copy-feedback").textContent = "已复制。粘贴到当前 Codex 对话发送。";
+      } catch {
+        const text = byId("confirmation-text");
+        text.focus();
+        text.select();
+        byId("copy-feedback").textContent = "已选中指令，可以手动复制。";
+      }
+    });
+
+    byId("baseline-section").hidden = discussing;
+    byId("baseline-empty").hidden = state.baselines.length > 0;
+    if (!discussing) for (const baseline of state.baselines) {
+      const row = document.createElement("li");
+      row.append(addText("h3", baseline.name));
+      row.append(addText("p", [baseline.role, baseline.match].filter(Boolean).join(" · "), "match"));
+      if (baseline.notes) row.append(addText("p", baseline.notes, "muted"));
+      if (baseline.source) {
+        const url = new URL(baseline.source);
+        if (["https:", "http:"].includes(url.protocol)) {
+          const link = addText("a", "查看来源");
+          link.href = url.href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          row.append(link);
+        }
+      }
+      byId("baselines").append(row);
+    }
+
+    if (!ready) return;
+    const outline = byId("outline");
+    const notice = byId("draft-notice");
+    const hint = "可以在这里填写。下载后把修改回传给 Codex，它会接着检查证据和空缺。";
+    const key = typeof state.id === "string" && state.id ? "advisor-ready-draft:" + state.id : null;
+    outline.value = state.outline;
+    notice.textContent = hint;
+    byId("outline-section").hidden = false;
+    let savedDraft = null;
+    try {
+      const saved = key && JSON.parse(localStorage.getItem(key));
+      if (typeof saved?.edited === "string" && saved.edited !== saved.base && saved.edited !== state.outline) {
+        outline.value = saved.edited;
+        if (saved.base !== state.outline) savedDraft = saved;
+      }
+    } catch { /* Local storage may be disabled. The editor and download still work. */ }
+
+    const switchDraft = byId("switch-draft");
+    if (savedDraft) {
+      notice.textContent = "Codex 已更新提纲。当前显示你此前在浏览器里的填写版。";
+      switchDraft.hidden = false;
+      switchDraft.addEventListener("click", () => {
+        if (outline.readOnly) {
+          outline.value = savedDraft.edited;
+          outline.readOnly = false;
+          switchDraft.textContent = "查看 Codex 保存版";
+          notice.textContent = "当前显示你的填写版。";
+        } else {
+          savedDraft.edited = outline.value;
+          outline.value = state.outline;
+          outline.readOnly = true;
+          switchDraft.textContent = "回到我的填写版";
+          notice.textContent = "当前显示 Codex 保存版。";
+        }
+      });
+    }
+
+    outline.addEventListener("input", () => {
+      if (!key) return;
+      try { localStorage.setItem(key, JSON.stringify({base: savedDraft?.base ?? state.outline, edited: outline.value})); }
+      catch { /* Download remains available. */ }
+    });
+    byId("download").addEventListener("click", () => {
+      const url = URL.createObjectURL(new Blob([outline.value], {type: "text/markdown;charset=utf-8"}));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "quick-paper.md";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    });
+  })();
+</script>
+</body>
+</html>
