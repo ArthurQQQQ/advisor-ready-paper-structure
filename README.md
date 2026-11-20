@@ -21,7 +21,13 @@ Can a retriever stop reading a long document early and still recover the evidenc
 2. **Confirm the topic.** When the brief reflects what you want to test, say “Confirm this topic and search for baselines.” Codex checks original papers and official implementations, links the sources, and explains which comparisons can be run fairly and which conditions still need alignment.
 3. **Fill in the Quick Paper.** Codex puts the confirmed question, experimental plan, and verified citations into an editable Markdown outline. Labeled blanks show where to add missing method details, dataset choices, results, and conclusions. Bring back a section or an update to continue working on the gaps.
 
-Open the generated `research-workspace.html` to see your current brief and refresh it after Codex updates the files. Edit `quick-paper.md` as your draft develops. Download the two example HTML files to the same folder and open them in your browser. [Interactive idea example](examples/research-idea-workbench.html) · [Workspace with checked baselines](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+Open the Research Wall to follow the key point from each turn, the paper blocks it changes, and the evidence still needed. Ask Codex for a live preview that updates as the conversation progresses. The generated `research-workspace.html` also opens as an offline snapshot. Edit `quick-paper.md` as your draft develops. Download the two example HTML files to the same folder and open them in your browser. [Interactive idea example](examples/research-idea-workbench.html) · [Workspace with checked baselines](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+
+## Research case study
+
+The long-document evidence case includes the live Research Wall workflow, a frozen OpenRouter evidence pipeline, and a fresh QASPER check. The new batch produced seven early-PASS checkpoints, and source review found 14 insufficient answers among 30 PASS responses. The case records the failed API checkpoint and the questions excluded before evaluation.
+
+[Read the case and run the frozen protocol](examples/long-document-early-stop/README.md)
 
 ## What to provide
 

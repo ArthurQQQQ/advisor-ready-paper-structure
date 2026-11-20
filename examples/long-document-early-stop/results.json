@@ -1,0 +1,710 @@
+{
+  "protocol": "citation-protocol-v1",
+  "freeze_manifest_sha256": "178dc08378e53969b3a3647f336d05a06516e6592875c9c2fbde5863bfd9e239",
+  "dataset": {
+    "name": "allenai/qasper",
+    "config": "qasper",
+    "split": "validation",
+    "revision": "fdc9d8214fbab5dd782958601db4d678e6934a54"
+  },
+  "step": 256,
+  "screened_documents": 3,
+  "screened_questions": 6,
+  "included_documents": 2,
+  "included_questions": 3,
+  "initial_rows": [
+    240,
+    320,
+    400
+  ],
+  "validation_documents": 281,
+  "effective_rows": [
+    240,
+    39,
+    119
+  ],
+  "selection_amendment": "The requested rows 320 and 400 were outside the verified 281-document split and returned no rows. Before opening replacement documents, map all initial indices modulo 281, preserving the fixed stride. No question-outcome replacement.",
+  "checkpoint_count": 45,
+  "completed_decisions": 44,
+  "reviewer_kind": "independent Codex source-and-prefix review, not an external human annotator",
+  "references_sealed_before_reviewing_model_outputs": true,
+  "totals": {
+    "model_continue": 14,
+    "unsupported_model_pass": 14,
+    "supported_model_pass": 16,
+    "api_error": 1,
+    "early_pass_checkpoint": 7,
+    "missed_pass_checkpoint": 0
+  },
+  "questions": [
+    {
+      "row": 240,
+      "question_order": 2,
+      "qid": "4a4ce942a7a6efd1fa1d6c91dedf7a89af64b729",
+      "paper_id": "1608.08188",
+      "question": "How is the data used for training annotated?",
+      "checkpoint_count": 19,
+      "counts": {
+        "model_continue": 4,
+        "unsupported_model_pass": 6,
+        "supported_model_pass": 8,
+        "api_error": 1,
+        "early_pass_checkpoint": 0,
+        "missed_pass_checkpoint": 0
+      },
+      "source": "https://huggingface.co/datasets/allenai/qasper/viewer/qasper/validation?row=240",
+      "reference_first_pass": {
+        "body_tokens": 1280,
+        "paragraphs": [
+          "S04P01"
+        ]
+      },
+      "model_first_pass": {
+        "body_tokens": 1280,
+        "paragraphs": [
+          "S04P01"
+        ]
+      },
+      "model_first_supported_pass": {
+        "body_tokens": 1536,
+        "paragraphs": [
+          "S00P04",
+          "S04P01"
+        ]
+      },
+      "checks": [
+        {
+          "body_tokens": 256,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 512,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 768,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 1024,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 1280,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "missing_qualifier",
+          "missing_conditions": [
+            "答案精确匹配发生在预处理之后"
+          ]
+        },
+        {
+          "body_tokens": 1536,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 1792,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2048,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2304,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2560,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2816,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S01P00",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 3072,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "每题十份众包答案",
+            "预处理后的精确匹配",
+            "至少九份一致的阈值及否则不一致"
+          ]
+        },
+        {
+          "body_tokens": 3328,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "每题十份众包答案",
+            "预处理后的精确匹配",
+            "至少九份一致的阈值及否则不一致"
+          ]
+        },
+        {
+          "body_tokens": 3584,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "每题十份众包答案",
+            "预处理后的精确匹配",
+            "至少九份一致的阈值及否则不一致"
+          ]
+        },
+        {
+          "body_tokens": 3840,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 4096,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "每题十份众包答案",
+            "预处理后的精确匹配",
+            "至少九份一致的阈值及否则不一致"
+          ]
+        },
+        {
+          "body_tokens": 4352,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "每题十份众包答案",
+            "预处理后的精确匹配",
+            "至少九份一致的阈值及否则不一致"
+          ]
+        },
+        {
+          "body_tokens": 4608,
+          "reference_verdict": "PASS",
+          "model_verdict": null,
+          "model_paragraphs": [],
+          "assessed": false,
+          "answer_sufficient": null,
+          "issue": "api_error",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 4792,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P04",
+            "S04P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        }
+      ]
+    },
+    {
+      "row": 119,
+      "question_order": 1,
+      "qid": "7ae38f51243cb80b16a1df14872b72a1f8a2048f",
+      "paper_id": "1904.04358",
+      "question": "How do they demonstrate that this type of EEG has discriminative information about the intended articulatory movements responsible for speech?",
+      "checkpoint_count": 13,
+      "counts": {
+        "model_continue": 8,
+        "early_pass_checkpoint": 2,
+        "unsupported_model_pass": 3,
+        "supported_model_pass": 2,
+        "missed_pass_checkpoint": 0,
+        "api_error": 0
+      },
+      "source": "https://huggingface.co/datasets/allenai/qasper/viewer/qasper/validation?row=119",
+      "reference_first_pass": {
+        "body_tokens": 2816,
+        "paragraphs": [
+          "S09P02"
+        ]
+      },
+      "model_first_pass": {
+        "body_tokens": 1024,
+        "paragraphs": [
+          "S00P02"
+        ]
+      },
+      "model_first_supported_pass": {
+        "body_tokens": 2816,
+        "paragraphs": [
+          "S09P01"
+        ]
+      },
+      "checks": [
+        {
+          "body_tokens": 256,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 512,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 768,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 1024,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P02"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须回答当前研究的想象语音 EEG 展示，保留与前人多模态研究的区分。"
+          ]
+        },
+        {
+          "body_tokens": 1280,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P02"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须回答当前研究的想象语音 EEG 展示，保留与前人多模态研究的区分。"
+          ]
+        },
+        {
+          "body_tokens": 1536,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 1792,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2048,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2304,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2560,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2816,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S09P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 3072,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S09P01",
+            "S09P02"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "unsupported_claim",
+          "missing_conditions": [
+            "已读正文没有给出答案新增的 tSNE 比较任务名称。"
+          ]
+        },
+        {
+          "body_tokens": 3094,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S09P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        }
+      ]
+    },
+    {
+      "row": 119,
+      "question_order": 2,
+      "qid": "deb89bca0925657e0f91ab5daca78b9e548de2bd",
+      "paper_id": "1904.04358",
+      "question": "What are the five different binary classification tasks?",
+      "checkpoint_count": 13,
+      "counts": {
+        "model_continue": 2,
+        "early_pass_checkpoint": 5,
+        "unsupported_model_pass": 5,
+        "supported_model_pass": 6,
+        "missed_pass_checkpoint": 0,
+        "api_error": 0
+      },
+      "source": "https://huggingface.co/datasets/allenai/qasper/viewer/qasper/validation?row=119",
+      "reference_first_pass": {
+        "body_tokens": 2048,
+        "paragraphs": [
+          "S07P00"
+        ]
+      },
+      "model_first_pass": {
+        "body_tokens": 768,
+        "paragraphs": [
+          "S00P01"
+        ]
+      },
+      "model_first_supported_pass": {
+        "body_tokens": 2048,
+        "paragraphs": [
+          "S07P00"
+        ]
+      },
+      "checks": [
+        {
+          "body_tokens": 256,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 512,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "CONTINUE",
+          "model_paragraphs": [],
+          "assessed": true,
+          "answer_sufficient": null,
+          "issue": "continue",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 768,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须列举当前研究的五个有／无音系分类任务，不能改成前人任务类别。"
+          ]
+        },
+        {
+          "body_tokens": 1024,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须列举当前研究的五个有／无音系分类任务，不能改成前人任务类别。"
+          ]
+        },
+        {
+          "body_tokens": 1280,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须列举当前研究的五个有／无音系分类任务，不能改成前人任务类别。"
+          ]
+        },
+        {
+          "body_tokens": 1536,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须列举当前研究的五个有／无音系分类任务，不能改成前人任务类别。"
+          ]
+        },
+        {
+          "body_tokens": 1792,
+          "reference_verdict": "CONTINUE",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S00P01"
+          ],
+          "assessed": true,
+          "answer_sufficient": false,
+          "issue": "wrong_target",
+          "missing_conditions": [
+            "必须列举当前研究的五个有／无音系分类任务，不能改成前人任务类别。"
+          ]
+        },
+        {
+          "body_tokens": 2048,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2304,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2560,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 2816,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 3072,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        },
+        {
+          "body_tokens": 3094,
+          "reference_verdict": "PASS",
+          "model_verdict": "PASS",
+          "model_paragraphs": [
+            "S07P00"
+          ],
+          "assessed": true,
+          "answer_sufficient": true,
+          "issue": "okay",
+          "missing_conditions": []
+        }
+      ]
+    }
+  ]
+}

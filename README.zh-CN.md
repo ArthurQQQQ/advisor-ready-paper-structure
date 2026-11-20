@@ -21,7 +21,13 @@
 2. **确认题目。** 简报符合你想验证的问题后，说“确认这个题目，开始找基线”。Codex 核对原论文和官方实现，给出来源，说明哪些比较可以公平地做、哪些条件还需要对齐。
 3. **填写 Quick Paper。** Codex 把已确认的研究问题、实验方案和核实的引用放进可编辑的 Markdown 提纲，并给待补的方法细节、数据集、实验结果和结论留下填写位置。你可以把补好的内容带回对话，继续处理剩下的问题。
 
-打开生成的 `research-workspace.html` 查看当前简报，Codex 更新文件后刷新即可。写作时直接编辑 `quick-paper.md`。把两份示例 HTML 下载到同一目录，再用浏览器打开。 [交互式想法示例](examples/research-idea-workbench.html) · [带已核查基线的工作台](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+在研究墙上查看每轮的对话摘录、更新的论文积木和待补证据。让 Codex 打开实时预览，页面会随对话更新。生成的 `research-workspace.html` 也可以离线打开。写作时直接编辑 `quick-paper.md`。把两份示例 HTML 下载到同一目录，再用浏览器打开。 [交互式想法示例](examples/research-idea-workbench.html) · [带已核查基线的工作台](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+
+## 研究案例
+
+长文档证据案例展示了研究墙、冻结的 OpenRouter 证据流程和独立新题检查。新批次出现 7 个提前通过点，30 个通过答案中有 14 个经原文审读不充分。案例同时记录运行失败和评估前排除的题目。
+
+[查看案例与冻结流程](examples/long-document-early-stop/README.zh-CN.md)
 
 ## 需要提供什么
 

@@ -7,6 +7,102 @@
   "failure": "若达到预算匹配后稳定度停读仍未提高 Recall@5，当前假设得不到支持。",
   "openQuestion": "填入可接受的预算差，并定义多份证据标注的汇总规则。",
   "status": "ready",
+  "rounds": [
+    {
+      "id": "R01",
+      "label": "只看当前已读的正文，长文档找证据能提前停吗？",
+      "author": "示例研究者",
+      "decision": "把问题限定在顺序读取。每次只对已读段落更新排名，停止后直接返回证据段落。",
+      "blockIds": ["question", "method"]
+    },
+    {
+      "id": "R02",
+      "label": "用固定 token 前缀做主对照，所有方法共用同一个评分器。",
+      "author": "示例研究者",
+      "decision": "这个对照可以分离预算分配和评分器变化。补上实际预算容差与后半段证据子集，才好判断漏读和漏排。",
+      "blockIds": ["question", "comparisons", "evaluation"]
+    },
+    {
+      "id": "R03",
+      "label": "能把 QASPER 原论文的 TF-IDF 分数直接填进对照表吗？",
+      "author": "示例研究者",
+      "decision": "原表报告 Evidence F1，本例主指标是段落 Recall@5。保留来源，在统一协议下重跑后再填表。",
+      "blockIds": ["comparisons", "evaluation", "results"]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "question",
+      "label": "研究问题",
+      "status": "supported",
+      "detail": "固定输入顺序与评分器、对齐平均预算，可以检验按题分配阅读量的收益。这是对照设计能够回答的问题，实际收益有待测量。",
+      "roundIds": ["R01", "R02"],
+      "evidenceIds": ["E01"]
+    },
+    {
+      "id": "method",
+      "label": "停读方法",
+      "status": "suggestion",
+      "detail": "用前五名段落排名的稳定度决定停读。先定义最少读取量、连续稳定步数和排名并列规则。",
+      "roundIds": ["R01"],
+      "evidenceIds": []
+    },
+    {
+      "id": "comparisons",
+      "label": "对照与指标",
+      "status": "conflict",
+      "detail": "QASPER 原论文报告 Evidence F1，本例使用段落 Recall@5。需要在本例的正文子集和预算条件下重跑 TF-IDF，才可放进同一结果表。",
+      "roundIds": ["R02", "R03"],
+      "evidenceIds": ["E01", "E02", "E03"]
+    },
+    {
+      "id": "evaluation",
+      "label": "评估协议",
+      "status": "open",
+      "detail": "还需给出预算容差和多份金标的汇总规则，并据此定义后半段证据子集。",
+      "roundIds": ["R02", "R03"],
+      "evidenceIds": ["E01", "E03"]
+    },
+    {
+      "id": "results",
+      "label": "结果与结论",
+      "status": "open",
+      "detail": "等待统一协议下的预算和召回率实测。结果表和结论先留空。",
+      "roundIds": ["R03"],
+      "evidenceIds": ["E04"]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E01",
+      "label": "示例中确定的对照条件",
+      "status": "provided",
+      "detail": "两种停读策略共用问题集合、正文筛选、评分器和段落顺序。",
+      "roundId": "R02"
+    },
+    {
+      "id": "E02",
+      "label": "QASPER 原论文表 3",
+      "status": "verified",
+      "source": "https://aclanthology.org/2021.naacl-main.365.pdf",
+      "detail": "外部来源核对到 TF-IDF 基线和 Evidence F1 指标。",
+      "roundId": "R03"
+    },
+    {
+      "id": "E03",
+      "label": "同口径对照结果",
+      "status": "needed",
+      "detail": "将 TF-IDF 放到相同数据子集和预算协议下，计算段落 Recall@5。",
+      "roundId": "R03"
+    },
+    {
+      "id": "E04",
+      "label": "停读策略实测",
+      "status": "needed",
+      "detail": "补平均阅读 token、段落 Recall@5、后半段证据子集结果和按题配对的不确定性。",
+      "roundId": "R03"
+    }
+  ],
   "baselines": [
     {
       "name": "固定 token 前缀",

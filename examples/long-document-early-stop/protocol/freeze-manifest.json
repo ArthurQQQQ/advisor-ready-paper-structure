@@ -1,0 +1,50 @@
+{
+  "protocol": "citation-protocol-v1",
+  "frozen_at_utc": "2026-11-20T05:19:41.816310+00:00",
+  "semantic_version": "v5c plus the recorded effective aspect-schema recovery",
+  "files": {
+    "citation_workflow.py": "8538ed321c916b41b94444ae10ed43d3063b71ac334b518800c441c41a651ea9",
+    "citation_conflict_v3.py": "d04d813f4caaefb7fe7351b081041fcd790772de9bee5b1319e62c6c8038fcd7",
+    "citation_conflict_v4.py": "b844f075e1cd131294409d9d1acd412f81baeb4d088cedbc6d8fa66ad129e6eb",
+    "citation_inputs_v5.py": "ac6fd87bd56d4918d3f892162cca645bb179f78f9f6775a71eaf41deaa638c3f",
+    "citation_inputs_v5c.py": "910cbec951a47d623749263fb124bb3669281cd77f913b856c14b19e6004a651",
+    "citation_openrouter_v2.py": "f404b490fa041de763613065661ab0f78876b4da3c1851db186ce9edfcdf562b",
+    "citation_openrouter_v3.py": "2aa2de19c83a402afe11a82869af7a8393757db3d9464f9bdd5baa9b30e3457d",
+    "citation_openrouter_v4.py": "f5d6ba0c1a1d6883115e8cb5bbba2e93ece84e7593cc99ed0ff781f198c4cc82",
+    "citation_openrouter_v5c.py": "67e8dacde26479530f3eeb27a0df5ab694a30ca7db896b408fb40e390708bd59",
+    "run-openrouter-citations.py": "9adc14bd8a3471f0c3e3a32c858bde45aeaf5f9f84548b348d5d1cc85a651405",
+    "run-openrouter-citations-v5c.py": "48c2e3edda13f115cb1357d8e1666d1fde4bfeb15dca63e54302bf54f5f437f4",
+    "run-frozen-citations.py": "9f9537ede8d03af31b9674e40a633705460b1bfaf7667147a0846d1a56a79497"
+  },
+  "settings": {
+    "endpoint": "https://openrouter.ai/api/v1/chat/completions",
+    "model": "google/gemini-2.5-flash-lite",
+    "provider": {
+      "only": [
+        "google-ai-studio"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    },
+    "seed": 42,
+    "temperature": 0,
+    "max_output_tokens": 1536,
+    "step": 256,
+    "aspect_schema": {
+      "drop_gap": true,
+      "max_items": 8
+    },
+    "dataset_revision": "fdc9d8214fbab5dd782958601db4d678e6934a54",
+    "stream_encoding": "cl100k_base",
+    "tiktoken_version": "0.8.0",
+    "scope": "original main-body paragraphs, stripped outside whitespace, joined with two newlines"
+  },
+  "preselected_new_documents": {
+    "split": "validation",
+    "rows": [
+      240,
+      320,
+      400
+    ]
+  }
+}

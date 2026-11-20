@@ -3,127 +3,199 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>研究工作台</title>
+<title>研究墙</title>
 <style>
   :root {
     color-scheme: dark;
-    --page: #111116;
-    --panel: #191920;
-    --line: #353543;
-    --ink: #f0f0f6;
-    --muted: #b9bac8;
-    --accent: #d2ccff;
-    --paper: #f4f1ea;
-    --paper-ink: #302d39;
+    --page: #101016;
+    --surface: #181820;
+    --line: #31313d;
+    --ink: #f2f0f7;
+    --muted: #b8b6c6;
+    --accent: #d7cbff;
+    --open: #b8b6c6;
+    --open-fill: #25252f;
+    --supported: #a6e3c1;
+    --supported-fill: #19352b;
+    --conflict: #ffb1b3;
+    --conflict-fill: #44292f;
+    --suggestion: #f8d48d;
+    --suggestion-fill: #3c3024;
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     background: var(--page);
     color: var(--ink);
-    font: 15px/1.62 Geist, Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    font: 15px/1.55 Geist, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   }
   h1, h2, h3, p, dl, dd { margin: 0; }
-  [hidden] { display: none !important; }
-  .shell { width: min(1320px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 52px); }
-  .masthead, .section-head, .actions { display: flex; flex-wrap: wrap; align-items: baseline; gap: .45rem .8rem; }
-  .masthead { justify-content: space-between; padding-block: .9rem; border-bottom: 1px solid var(--line); }
-  .brand { font-weight: 680; }
-  .status, .muted { color: var(--muted); font-size: .88rem; }
-  .progress { display: flex; flex-wrap: wrap; gap: .4rem .9rem; padding-block: .65rem; border-bottom: 1px solid var(--line); }
-  .progress span, .progress a { font-size: .86rem; color: var(--muted); }
-  .progress a[href] { color: var(--accent); }
-  .progress a:not([href]) { text-decoration: none; }
-  .progress [aria-current] { font-weight: 650; color: var(--accent); }
-  .workspace { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(18rem, 1fr); gap: clamp(18px, 3vw, 38px); padding-block: 1.8rem 3rem; }
-  .main, .brief { min-width: 0; }
-  .brief { align-self: start; padding: 1.1rem 1.2rem; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; }
-  @media (min-width: 52.01rem) { .brief { position: sticky; top: 1rem; } }
-  h1 { max-width: 38ch; font-size: clamp(1.75rem, 3.1vw, 2.65rem); line-height: 1.22; letter-spacing: -.03em; text-wrap: balance; overflow-wrap: anywhere; }
-  h2 { font-size: 1.16rem; line-height: 1.35; }
-  h3 { font-size: 1rem; }
-  .description { margin-top: .65rem; }
-  .section { margin-block-start: 1.3rem; }
-  .section-head { justify-content: space-between; margin-block-end: .65rem; }
-  .question { margin-top: 1.15rem; background: var(--panel); padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 9px; }
-  .question p { margin-top: .24rem; }
-  .brief dl { margin-top: .65rem; border-top: 1px solid var(--line); }
-  .brief dt { margin-top: .72rem; color: var(--muted); font-size: .82rem; }
-  .brief dd { margin-block-start: .18rem; overflow-wrap: anywhere; }
-  .brief dd:empty::after { content: "待明确"; color: var(--muted); }
-  .brief p { margin-top: .85rem; }
-  .baseline-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-  .baseline-list li { padding: .74rem 0; border-bottom: 1px solid var(--line); }
-  .baseline-list p { margin-top: .16rem; overflow-wrap: anywhere; }
-  .baseline-list .match { color: var(--accent); }
+  p, dd, summary, a { overflow-wrap: anywhere; }
   a { color: var(--accent); text-underline-offset: .18em; }
-  .actions { margin-top: .65rem; }
+  a, summary, button { -webkit-tap-highlight-color: transparent; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ::selection { color: var(--page); background: var(--accent); }
+  :target { scroll-margin-block-start: 1rem; }
+  .shell { width: min(1160px, 100%); margin-inline: auto; padding-inline: clamp(16px, 4vw, 44px); }
+  .masthead, .section-head, .actions, .lifecycle, .links {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: .45rem .75rem;
+  }
+  .masthead, .section-head { justify-content: space-between; }
+  .masthead { padding-block: .8rem; border-bottom: 1px solid var(--line); }
+  .brand { font-weight: 680; }
+  .muted, .lifecycle, .links { color: var(--muted); font-size: .86rem; }
+  .lifecycle { padding-block: .65rem; }
+  .lifecycle [aria-current] { font-weight: 650; color: var(--accent); }
+  main { padding-block: 1.35rem 3rem; }
+  h1 { font-size: clamp(1.65rem, 3.8vw, 2.55rem); line-height: 1.24; letter-spacing: -.025em; text-wrap: balance; }
+  h2 { font-size: 1rem; line-height: 1.35; font-weight: 680; }
+  h3 { font-size: .94rem; line-height: 1.42; }
+  .section-head { margin-block-end: .6rem; }
+  .progress-section { margin-top: 1.25rem; }
+  .progress-count { font-variant-numeric: tabular-nums; }
+  .segments {
+    list-style: none; margin: 0; padding: 0; display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.1rem), 1fr)); gap: 4px;
+  }
+  .segments a {
+    display: flex; flex-direction: column; gap: .15rem; height: 100%;
+    padding: .52rem .6rem; border: 1px solid var(--line); border-radius: 5px;
+    border-top: 2px solid var(--mark); background: var(--fill); color: var(--ink);
+    font-size: .87rem; font-weight: 600; text-decoration: none;
+  }
+  .segments a:hover { border-color: var(--mark); }
+  .segments .label { font-size: .75rem; font-weight: 500; }
+  [data-status="open"], [data-status="needed"] { --mark: var(--open); --fill: var(--open-fill); }
+  [data-status="supported"], [data-status="verified"] { --mark: var(--supported); --fill: var(--supported-fill); }
+  [data-status="conflict"] { --mark: var(--conflict); --fill: var(--conflict-fill); }
+  [data-status="suggestion"], [data-status="provided"] { --mark: var(--suggestion); --fill: var(--suggestion-fill); }
+  .label { color: var(--mark); font-size: .76rem; }
+  .wall { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem; margin-top: 1.45rem; align-items: start; }
+  @media (min-width: 44rem) {
+    .wall { grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr); gap: clamp(18px, 4vw, 42px); }
+  }
+  .question { padding: .8rem .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; }
+  .question h2 { color: var(--accent); }
+  .question p { white-space: pre-line; margin-top: .36rem; }
+  .wall-column > section + section, .wall-column > details + section { margin-top: 1.25rem; }
+  .list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .list > li { padding-block: .65rem; border-bottom: 1px solid var(--line); }
+  .list p { margin-top: .27rem; }
+  .round-meta { display: flex; align-items: baseline; gap: .55rem; margin-bottom: .25rem; }
+  .round-id { font-size: .8rem; font-variant-numeric: tabular-nums; color: var(--accent); }
+  .round-copy { color: var(--muted); }
+  .links { margin-top: .42rem; }
+  .block > summary {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .5rem;
+    color: var(--ink); list-style: none; cursor: pointer; font-size: .93rem; font-weight: 570;
+  }
+  .block > summary::-webkit-details-marker { display: none; }
+  .block > summary:hover .block-name { color: var(--accent); }
+  .block-name { display: flex; align-items: baseline; gap: .48rem; }
+  .block-name::before {
+    content: ""; width: .35rem; height: .35rem; flex: none; align-self: center;
+    border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: rotate(-45deg);
+  }
+  .block[open] .block-name::before { transform: rotate(45deg) translateY(-2px); }
+  .block p, .block .links { padding-inline-start: .85rem; }
+  .list li:target, .block:target { background: var(--surface); }
+  .evidence-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .6rem; }
+  .tail { margin-top: 1.5rem; padding-top: .9rem; border-top: 1px solid var(--line); }
+  .tail > summary, #confirmation > summary { cursor: pointer; color: var(--accent); }
+  .brief dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: .4rem .9rem; margin-top: .6rem; }
+  .brief dt { color: var(--muted); }
+  .brief dd:empty::after { content: "待明确"; color: var(--muted); }
+  #confirmation { margin-top: .75rem; }
+  .actions { margin-top: .55rem; }
   button {
     border: 1px solid #555367; border-radius: 5px; background: #252437; color: var(--ink);
-    padding: .45rem .65rem; font: inherit; font-weight: 550; font-size: .9rem; cursor: pointer;
+    padding: .4rem .62rem; font: inherit; font-weight: 550; font-size: .87rem; cursor: pointer;
   }
   button:hover { border-color: var(--accent); }
-  button:focus-visible, textarea:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-  button:disabled { opacity: .55; cursor: default; }
-  details { margin-top: .65rem; }
-  summary { color: var(--accent); cursor: pointer; }
   textarea {
     display: block; width: 100%; margin-top: .45rem; resize: vertical; padding: .7rem;
-    background: #101116; color: var(--ink); border: 1px solid var(--line); border-radius: 5px; font: inherit;
+    background: var(--page); color: var(--ink); border: 1px solid var(--line); border-radius: 5px; font: inherit;
   }
   #outline {
-    min-height: 26rem; background: var(--paper); color: var(--paper-ink); color-scheme: light;
-    padding: .95rem 1rem; border-color: #beb8ad;
-    font: .88rem/1.6 "IBM Plex Mono", ui-monospace, "PingFang SC", monospace;
+    min-height: 22rem; background: #f4f1ea; color: #302d39; color-scheme: light;
+    border-color: #beb8ad; font: .88rem/1.6 "IBM Plex Mono", ui-monospace, "PingFang SC", monospace;
   }
-  @media (max-width: 52rem) {
-    .workspace { grid-template-columns: minmax(0, 1fr); }
-    .brief { grid-row: 1; }
-    #outline { min-height: 20rem; }
+  @media (max-width: 26rem) {
+    .brief dl { display: block; }
+    .brief dd { margin-block: .09rem .48rem; }
   }
 </style>
 </head>
 <body>
 <div class="shell">
-  <header class="masthead"><div class="brand">研究工作台</div><p class="status" id="status" role="status"></p></header>
-  <nav class="progress" aria-label="研究进度">
+  <header class="masthead">
+    <div class="brand">研究墙</div>
+    <span class="muted" id="sync">离线快照</span>
+  </header>
+  <nav class="lifecycle" aria-label="研究阶段">
     <span id="step-discussion">讨论想法</span><span id="step-confirmation">确认题目</span><a id="step-baseline">核查 Baseline</a><a id="step-outline">Quick Paper</a>
   </nav>
-  <main class="workspace">
-    <div class="main">
-      <h1 id="title"></h1>
-      <p class="muted description" id="description"></p>
+  <main>
+    <h1 id="title"></h1>
+    <section class="progress-section" id="progress-section" aria-labelledby="progress-title">
+      <div class="section-head">
+        <h2 id="progress-title">论文积木</h2>
+        <p class="muted progress-count" id="progress-count"></p>
+      </div>
+      <ul class="segments" id="progress"></ul>
+    </section>
 
-      <section class="question" id="question-section" hidden>
-        <h2 id="question-heading">现在要想清楚的问题</h2>
-        <p id="question"></p>
-      </section>
-      <details id="confirmation" hidden>
-        <summary>取出定题指令</summary>
-        <textarea readonly rows="5" id="confirmation-text" aria-label="定题指令"></textarea>
-        <div class="actions"><button type="button" id="copy-confirmation">复制到当前 Codex 对话</button><output class="muted" id="copy-feedback" role="status"></output></div>
-      </details>
-
-      <section class="section" id="baseline-section" hidden>
-        <div class="section-head"><h2>Baseline 与对照</h2></div>
-        <p id="baseline-empty" class="muted" hidden>当前还没有可展示的核查记录。</p>
-        <ul id="baselines" class="baseline-list"></ul>
-      </section>
-
-      <section class="section" id="outline-section" hidden>
-        <div class="section-head">
-          <h2>Quick Paper</h2>
-          <div class="actions">
-            <button type="button" id="switch-draft" hidden>查看 Codex 保存版</button>
-            <button type="button" id="download">下载 Markdown</button>
-          </div>
-        </div>
-        <p id="draft-notice" class="muted"></p>
-        <textarea id="outline" spellcheck="false" aria-label="Quick Paper Markdown"></textarea>
-      </section>
+    <div class="wall">
+      <div class="wall-column">
+        <section class="question" id="question-section" aria-labelledby="question-heading" hidden>
+          <h2 id="question-heading">下一步要决定</h2>
+          <p id="question"></p>
+        </section>
+        <details id="confirmation" hidden>
+          <summary>复制定题指令</summary>
+          <textarea readonly rows="5" id="confirmation-text" aria-label="定题指令"></textarea>
+          <div class="actions"><button type="button" id="copy-confirmation">复制到当前 Codex 对话</button><output class="muted" id="copy-feedback" role="status"></output></div>
+        </details>
+        <section aria-labelledby="rounds-title">
+          <div class="section-head"><h2 id="rounds-title">对话摘录</h2><p class="muted" id="round-count"></p></div>
+          <p id="rounds-empty" class="muted">开始讨论后，关键消息和本轮要点会记在这里。</p>
+          <ol class="list" id="rounds"></ol>
+        </section>
+      </div>
+      <div class="wall-column">
+        <section id="block-section" aria-labelledby="blocks-title" hidden>
+          <div class="section-head"><h2 id="blocks-title">积木详情</h2></div>
+          <ul class="list" id="blocks"></ul>
+        </section>
+        <section aria-labelledby="evidence-title">
+          <div class="section-head"><h2 id="evidence-title">证据</h2><p class="muted" id="evidence-count"></p></div>
+          <p id="evidence-empty" class="muted">已提供、已核查和待补的证据会显示在这里。</p>
+          <ul class="list" id="evidence"></ul>
+        </section>
+      </div>
     </div>
-    <aside class="brief" aria-labelledby="brief-title">
-      <h2 id="brief-title">研究简报</h2>
+
+    <section class="tail" id="baseline-section" hidden>
+      <div class="section-head"><h2>Baseline 与对照</h2></div>
+      <p id="baseline-empty" class="muted" hidden>当前还没有可展示的核查记录。</p>
+      <ul id="baselines" class="list"></ul>
+    </section>
+
+    <section class="tail" id="outline-section" hidden>
+      <div class="section-head">
+        <h2>Quick Paper</h2>
+        <div class="actions">
+          <button type="button" id="switch-draft" hidden>查看 Codex 保存版</button>
+          <button type="button" id="download">下载 Markdown</button>
+        </div>
+      </div>
+      <p id="draft-notice" class="muted"></p>
+      <textarea id="outline" spellcheck="false" aria-label="Quick Paper Markdown"></textarea>
+    </section>
+
+    <details class="tail brief" id="brief" hidden>
+      <summary>研究简报</summary>
       <dl>
         <dt>原始想法</dt><dd id="idea"></dd>
         <dt>研究问题</dt><dd id="topic"></dd>
@@ -131,8 +203,7 @@
         <dt>公平对照条件</dt><dd id="controls"></dd>
         <dt>什么结果会推翻假设</dt><dd id="failure"></dd>
       </dl>
-      <p class="muted" id="refresh-note">在当前 Codex 对话里继续，保存后刷新这页查看更新。</p>
-    </aside>
+    </details>
   </main>
 </div>
 
@@ -146,6 +217,137 @@
   "failure": "若达到预算匹配后稳定度停读仍未提高 Recall@5，当前假设得不到支持。",
   "openQuestion": "填入可接受的预算差，并定义多份证据标注的汇总规则。",
   "status": "ready",
+  "rounds": [
+    {
+      "id": "R01",
+      "label": "只看当前已读的正文，长文档找证据能提前停吗？",
+      "author": "示例研究者",
+      "decision": "把问题限定在顺序读取。每次只对已读段落更新排名，停止后直接返回证据段落。",
+      "blockIds": [
+        "question",
+        "method"
+      ]
+    },
+    {
+      "id": "R02",
+      "label": "用固定 token 前缀做主对照，所有方法共用同一个评分器。",
+      "author": "示例研究者",
+      "decision": "这个对照可以分离预算分配和评分器变化。补上实际预算容差与后半段证据子集，才好判断漏读和漏排。",
+      "blockIds": [
+        "question",
+        "comparisons",
+        "evaluation"
+      ]
+    },
+    {
+      "id": "R03",
+      "label": "能把 QASPER 原论文的 TF-IDF 分数直接填进对照表吗？",
+      "author": "示例研究者",
+      "decision": "原表报告 Evidence F1，本例主指标是段落 Recall@5。保留来源，在统一协议下重跑后再填表。",
+      "blockIds": [
+        "comparisons",
+        "evaluation",
+        "results"
+      ]
+    }
+  ],
+  "blocks": [
+    {
+      "id": "question",
+      "label": "研究问题",
+      "status": "supported",
+      "detail": "固定输入顺序与评分器、对齐平均预算，可以检验按题分配阅读量的收益。这是对照设计能够回答的问题，实际收益有待测量。",
+      "roundIds": [
+        "R01",
+        "R02"
+      ],
+      "evidenceIds": [
+        "E01"
+      ]
+    },
+    {
+      "id": "method",
+      "label": "停读方法",
+      "status": "suggestion",
+      "detail": "用前五名段落排名的稳定度决定停读。先定义最少读取量、连续稳定步数和排名并列规则。",
+      "roundIds": [
+        "R01"
+      ],
+      "evidenceIds": []
+    },
+    {
+      "id": "comparisons",
+      "label": "对照与指标",
+      "status": "conflict",
+      "detail": "QASPER 原论文报告 Evidence F1，本例使用段落 Recall@5。需要在本例的正文子集和预算条件下重跑 TF-IDF，才可放进同一结果表。",
+      "roundIds": [
+        "R02",
+        "R03"
+      ],
+      "evidenceIds": [
+        "E01",
+        "E02",
+        "E03"
+      ]
+    },
+    {
+      "id": "evaluation",
+      "label": "评估协议",
+      "status": "open",
+      "detail": "还需给出预算容差和多份金标的汇总规则，并据此定义后半段证据子集。",
+      "roundIds": [
+        "R02",
+        "R03"
+      ],
+      "evidenceIds": [
+        "E01",
+        "E03"
+      ]
+    },
+    {
+      "id": "results",
+      "label": "结果与结论",
+      "status": "open",
+      "detail": "等待统一协议下的预算和召回率实测。结果表和结论先留空。",
+      "roundIds": [
+        "R03"
+      ],
+      "evidenceIds": [
+        "E04"
+      ]
+    }
+  ],
+  "evidence": [
+    {
+      "id": "E01",
+      "label": "示例中确定的对照条件",
+      "status": "provided",
+      "detail": "两种停读策略共用问题集合、正文筛选、评分器和段落顺序。",
+      "roundId": "R02"
+    },
+    {
+      "id": "E02",
+      "label": "QASPER 原论文表 3",
+      "status": "verified",
+      "source": "https://aclanthology.org/2021.naacl-main.365.pdf",
+      "detail": "外部来源核对到 TF-IDF 基线和 Evidence F1 指标。",
+      "roundId": "R03"
+    },
+    {
+      "id": "E03",
+      "label": "同口径对照结果",
+      "status": "needed",
+      "detail": "将 TF-IDF 放到相同数据子集和预算协议下，计算段落 Recall@5。",
+      "roundId": "R03"
+    },
+    {
+      "id": "E04",
+      "label": "停读策略实测",
+      "status": "needed",
+      "detail": "补平均阅读 token、段落 Recall@5、后半段证据子集结果和按题配对的不确定性。",
+      "roundId": "R03"
+    }
+  ],
   "baselines": [
     {
       "name": "固定 token 前缀",
@@ -189,124 +391,276 @@
 <script>
   (() => {
     const byId = id => document.getElementById(id);
-    const state = JSON.parse(byId("research-state").textContent);
-    const discussing = state.status === "discussing";
-    const ready = state.status === "ready";
     const briefFields = ["idea", "topic", "metric", "controls", "failure"];
-    const canConfirm = discussing && briefFields.slice(1).every(field => state[field]?.trim());
-    const addText = (tag, text, style) => {
+    const steps = ["step-discussion", "step-confirmation", "step-baseline", "step-outline"];
+    const blockLabels = {open: "待补", supported: "逻辑通过", conflict: "冲突", suggestion: "建议"};
+    const evidenceLabels = {provided: "已提供", verified: "已核查", needed: "待补"};
+    const outline = byId("outline");
+    const notice = byId("draft-notice");
+    const switchDraft = byId("switch-draft");
+    const hint = "填写后可下载 Markdown，或交回当前 Codex 对话继续讨论。";
+    let state = JSON.parse(byId("research-state").textContent);
+    let editorKey = null;
+    let editorBase = null;
+    let draftBase = null;
+    let edited = "";
+    let confirmation = "";
+
+    function node(tag, text, style) {
       const item = document.createElement(tag);
-      item.textContent = text;
+      if (text) item.textContent = text;
       if (style) item.className = style;
       return item;
-    };
-
-    for (const field of briefFields) byId(field).textContent = state[field] || "";
-    byId("status").textContent = discussing ? "讨论中 · 等你定题" : ready ? "题目已确认 · 提纲可填写" : "题目已确认 · 正在核查对照";
-    const workingTitle = state.outline.match(/^# +(.+)$/m)?.[1].trim();
-    byId("title").textContent = discussing ? "把想法问清楚" : ready
-      ? workingTitle && workingTitle.length <= 64 ? workingTitle : "研究提纲"
-      : "核查 Baseline";
-    byId("description").textContent = discussing
-      ? "把你的判断说给 Codex，研究简报会记录你们已经聊清楚的内容。"
-      : ready ? "核对下面的方式与证据，从一个待填写的小节继续。" : "已按这版研究简报进入 baseline 检索。";
-    const step = canConfirm ? "step-confirmation" : discussing ? "step-discussion" : ready ? "step-outline" : "step-baseline";
-    byId(step).setAttribute("aria-current", "step");
-    if (!discussing) byId("step-baseline").href = "#baseline-section";
-    if (ready) byId("step-outline").href = "#outline-section";
-    if (state.openQuestion) {
-      byId("question-section").hidden = false;
-      byId("question").textContent = state.openQuestion;
     }
 
-    const confirmation = "我确认以下研究题目和检索条件，请在这条对话中继续查 baseline，并生成留白的 Quick Paper。\n\n" +
-      ["研究问题", "主指标", "公平对照", "推翻条件"].map((label, index) => label + "：" + (state[briefFields[index + 1]] || "")).join("\n");
-    byId("confirmation").hidden = !canConfirm;
-    byId("confirmation-text").value = confirmation;
+    function sourceLink(source) {
+      try {
+        const url = new URL(source);
+        if (!["https:", "http:"].includes(url.protocol)) return null;
+        const link = node("a", "查看来源");
+        link.href = url.href;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        return link;
+      } catch {
+        return null;
+      }
+    }
+
+    const anchor = (type, id) => type + "-" + id;
+
+    function addLinks(container, groups, source) {
+      const links = node("div", "", "links");
+      for (const [type, ids, labels] of groups) {
+        for (const id of ids || []) {
+          if (!labels.has(id)) continue;
+          const link = node("a", labels.get(id));
+          link.href = "#" + encodeURIComponent(anchor(type, id));
+          links.append(link);
+        }
+      }
+      const link = sourceLink(source);
+      if (link) links.append(link);
+      if (links.childElementCount) container.append(links);
+    }
+
+    function showCollection(id, items) {
+      byId(id).replaceChildren(...items);
+      const empty = byId(id + "-empty");
+      if (empty) empty.hidden = items.length > 0;
+    }
+
+    function renderWall() {
+      const {blocks = [], rounds = [], evidence = []} = state;
+      const blockNames = new Map(blocks.map(block => [block.id, block.label]));
+      const roundNames = new Map(rounds.map(round => [round.id, round.id]));
+      const evidenceNames = new Map(evidence.map(item => [item.id, item.label]));
+      const previouslyOpen = new Set(Array.from(byId("blocks").querySelectorAll("details[open]"), detail => detail.id));
+      const supported = blocks.filter(block => block.status === "supported").length;
+      byId("progress-section").hidden = !blocks.length;
+      byId("block-section").hidden = !blocks.length;
+      byId("progress-count").textContent = supported + " / " + blocks.length + " 已通过";
+      byId("round-count").textContent = rounds.length ? rounds.length + " 轮" : "";
+      const knownEvidence = evidence.filter(item => item.status !== "needed").length;
+      byId("evidence-count").textContent = evidence.length
+        ? knownEvidence + " 条已有 · " + (evidence.length - knownEvidence) + " 条待补"
+        : "";
+
+      showCollection("progress", blocks.map(block => {
+        const row = node("li");
+        const link = node("a");
+        link.href = "#" + encodeURIComponent(anchor("block", block.id));
+        link.dataset.status = block.status;
+        link.append(node("span", block.label), node("span", blockLabels[block.status], "label"));
+        row.append(link);
+        return row;
+      }));
+
+      showCollection("blocks", blocks.map(block => {
+        const row = node("li");
+        const detail = node("details", "", "block");
+        detail.id = anchor("block", block.id);
+        detail.dataset.status = block.status;
+        detail.open = previouslyOpen.has(detail.id);
+        const summary = node("summary");
+        summary.append(node("span", block.label, "block-name"), node("span", blockLabels[block.status], "label"));
+        detail.append(summary, node("p", block.detail, "muted"));
+        addLinks(detail, [["round", block.roundIds, roundNames], ["evidence", block.evidenceIds, evidenceNames]]);
+        row.append(detail);
+        return row;
+      }));
+
+      showCollection("rounds", rounds.slice().reverse().map(round => {
+        const row = node("li");
+        row.id = anchor("round", round.id);
+        const meta = node("div", "", "round-meta");
+        meta.append(node("span", round.id, "round-id"), node("span", round.author, "muted"));
+        row.append(meta, node("h3", round.label), node("p", round.decision, "round-copy"));
+        addLinks(row, [["block", round.blockIds, blockNames]]);
+        return row;
+      }));
+
+      showCollection("evidence", evidence.map(item => {
+        const row = node("li");
+        row.id = anchor("evidence", item.id);
+        row.dataset.status = item.status;
+        const head = node("div", "", "evidence-head");
+        head.append(node("h3", item.label), node("span", evidenceLabels[item.status], "label"));
+        row.append(head, node("p", item.detail, "muted"));
+        addLinks(row, [["round", item.roundId ? [item.roundId] : [], roundNames]], item.source);
+        return row;
+      }));
+    }
+
+    function showDraft() {
+      const hasNewBase = draftBase !== editorBase && edited !== editorBase;
+      outline.value = edited;
+      outline.readOnly = false;
+      switchDraft.hidden = !hasNewBase;
+      switchDraft.textContent = "查看 Codex 保存版";
+      notice.textContent = hasNewBase ? "Codex 已更新提纲。当前是你的填写版。" : hint;
+    }
+
+    function renderEditor() {
+      const key = state.id ? "advisor-ready-draft:" + state.id : null;
+      if (editorBase === state.outline && editorKey === key) return;
+      let previous = editorBase !== null && editorKey === key ? {base: draftBase, edited} : null;
+      if (!previous && key) {
+        try { previous = JSON.parse(localStorage.getItem(key)); }
+        catch { /* Editing and download also work without storage. */ }
+      }
+      editorBase = state.outline;
+      editorKey = key;
+      edited = editorBase;
+      draftBase = editorBase;
+      if (typeof previous?.edited === "string" && previous.edited !== previous.base && previous.edited !== editorBase) {
+        edited = previous.edited;
+        draftBase = previous.base;
+      }
+      showDraft();
+    }
+
+    function render() {
+      const discussing = state.status === "discussing";
+      const ready = state.status === "ready";
+      const canConfirm = discussing && briefFields.slice(1).every(field => state[field]?.trim());
+      const title = state.outline?.match(/^# +(.+)$/m)?.[1].trim();
+      byId("title").textContent = (title && title.length <= 64 ? title : "") || state.topic || state.idea || "开始一项研究";
+      byId("question-section").hidden = !state.openQuestion;
+      byId("question").textContent = state.openQuestion || "";
+      const currentStep = canConfirm ? 1 : discussing ? 0 : ready ? 3 : 2;
+      steps.forEach((id, index) => {
+        if (currentStep === index) byId(id).setAttribute("aria-current", "step");
+        else byId(id).removeAttribute("aria-current");
+      });
+      if (!discussing) byId("step-baseline").href = "#baseline-section";
+      else byId("step-baseline").removeAttribute("href");
+      if (ready) byId("step-outline").href = "#outline-section";
+      else byId("step-outline").removeAttribute("href");
+
+      for (const field of briefFields) byId(field).textContent = state[field] || "";
+      byId("brief").hidden = !briefFields.some(field => state[field]);
+      confirmation = "我确认以下研究题目和检索条件，请在这条对话中继续查 baseline，并生成留白的 Quick Paper。\n\n" +
+        ["研究问题", "主指标", "公平对照", "推翻条件"].map((label, index) => label + "：" + (state[briefFields[index + 1]] || "")).join("\n");
+      byId("confirmation").hidden = !canConfirm;
+      const confirmationText = byId("confirmation-text");
+      if (confirmationText.value !== confirmation) confirmationText.value = confirmation;
+      renderWall();
+
+      byId("baseline-section").hidden = discussing;
+      showCollection("baselines", (discussing ? [] : state.baselines || []).map(baseline => {
+        const row = node("li");
+        row.append(node("h3", baseline.name), node("p", [baseline.role, baseline.match].filter(Boolean).join(" · ")));
+        if (baseline.notes) row.append(node("p", baseline.notes, "muted"));
+        addLinks(row, [], baseline.source);
+        return row;
+      }));
+      byId("baseline-empty").hidden = discussing || Boolean(state.baselines?.length);
+      byId("outline-section").hidden = !ready;
+      if (ready) renderEditor();
+    }
+
+    function revealTarget(hash, focus = false) {
+      let target;
+      try { target = byId(decodeURIComponent(hash.slice(1))); }
+      catch { return; }
+      if (target?.matches("details.block")) {
+        target.open = true;
+        if (focus) target.querySelector("summary").focus({preventScroll: true});
+      }
+      if (target && focus) target.scrollIntoView({block: "start"});
+    }
+
+    document.addEventListener("click", event => {
+      const link = event.target.closest('a[href^="#"]');
+      if (link?.hash && !event.defaultPrevented && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey) {
+        revealTarget(link.hash, true);
+      }
+    });
+    window.addEventListener("hashchange", () => revealTarget(location.hash));
     byId("copy-confirmation").addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(confirmation);
         byId("copy-feedback").textContent = "已复制。粘贴到当前 Codex 对话发送。";
       } catch {
-        const text = byId("confirmation-text");
-        text.focus();
-        text.select();
+        const input = byId("confirmation-text");
+        input.focus();
+        input.select();
         byId("copy-feedback").textContent = "已选中指令，可以手动复制。";
       }
     });
-
-    byId("baseline-section").hidden = discussing;
-    byId("baseline-empty").hidden = state.baselines.length > 0;
-    if (!discussing) for (const baseline of state.baselines) {
-      const row = document.createElement("li");
-      row.append(addText("h3", baseline.name));
-      row.append(addText("p", [baseline.role, baseline.match].filter(Boolean).join(" · "), "match"));
-      if (baseline.notes) row.append(addText("p", baseline.notes, "muted"));
-      if (baseline.source) {
-        const url = new URL(baseline.source);
-        if (["https:", "http:"].includes(url.protocol)) {
-          const link = addText("a", "查看来源");
-          link.href = url.href;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          row.append(link);
-        }
-      }
-      byId("baselines").append(row);
-    }
-
-    if (!ready) return;
-    const outline = byId("outline");
-    const notice = byId("draft-notice");
-    const hint = "可以在这里填写。下载后把修改回传给 Codex，它会接着检查证据和空缺。";
-    const key = typeof state.id === "string" && state.id ? "advisor-ready-draft:" + state.id : null;
-    outline.value = state.outline;
-    notice.textContent = hint;
-    byId("outline-section").hidden = false;
-    let savedDraft = null;
-    try {
-      const saved = key && JSON.parse(localStorage.getItem(key));
-      if (typeof saved?.edited === "string" && saved.edited !== saved.base && saved.edited !== state.outline) {
-        outline.value = saved.edited;
-        if (saved.base !== state.outline) savedDraft = saved;
-      }
-    } catch { /* Local storage may be disabled. The editor and download still work. */ }
-
-    const switchDraft = byId("switch-draft");
-    if (savedDraft) {
-      notice.textContent = "Codex 已更新提纲。当前显示你此前在浏览器里的填写版。";
-      switchDraft.hidden = false;
-      switchDraft.addEventListener("click", () => {
-        if (outline.readOnly) {
-          outline.value = savedDraft.edited;
-          outline.readOnly = false;
-          switchDraft.textContent = "查看 Codex 保存版";
-          notice.textContent = "当前显示你的填写版。";
-        } else {
-          savedDraft.edited = outline.value;
-          outline.value = state.outline;
-          outline.readOnly = true;
-          switchDraft.textContent = "回到我的填写版";
-          notice.textContent = "当前显示 Codex 保存版。";
-        }
-      });
-    }
-
+    switchDraft.addEventListener("click", () => {
+      if (outline.readOnly) return showDraft();
+      outline.value = editorBase;
+      outline.readOnly = true;
+      switchDraft.textContent = "回到我的填写版";
+      notice.textContent = "当前显示 Codex 保存版。";
+    });
     outline.addEventListener("input", () => {
-      if (!key) return;
-      try { localStorage.setItem(key, JSON.stringify({base: savedDraft?.base ?? state.outline, edited: outline.value})); }
+      edited = outline.value;
+      if (!editorKey) return;
+      try { localStorage.setItem(editorKey, JSON.stringify({base: draftBase, edited})); }
       catch { /* Download remains available. */ }
     });
     byId("download").addEventListener("click", () => {
       const url = URL.createObjectURL(new Blob([outline.value], {type: "text/markdown;charset=utf-8"}));
-      const link = document.createElement("a");
+      const link = node("a");
       link.href = url;
       link.download = "quick-paper.md";
-      document.body.append(link);
       link.click();
-      link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
     });
+
+    render();
+    revealTarget(location.hash);
+
+    if (location.protocol === "http:" && location.hostname === "127.0.0.1") {
+      let revision = null;
+      const sync = byId("sync");
+      async function poll() {
+        try {
+          const response = await fetch("./research-state.json", {cache: "no-store", signal: AbortSignal.timeout(4000)});
+          if (!response.ok) throw new Error("State unavailable");
+          const payload = await response.text();
+          if (payload !== revision) {
+            const next = JSON.parse(payload);
+            if (!["discussing", "confirmed", "ready"].includes(next?.status)) throw new Error("Invalid state");
+            if (revision !== null || JSON.stringify(next) !== JSON.stringify(state)) {
+              state = next;
+              render();
+              revealTarget(location.hash);
+            }
+            revision = payload;
+          }
+          sync.textContent = "随对话更新";
+        } catch {
+          sync.textContent = "连接中断，正在重连";
+        } finally {
+          setTimeout(poll, 1600);
+        }
+      }
+      poll();
+    }
   })();
 </script>
 </body>

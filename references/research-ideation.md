@@ -1,12 +1,12 @@
 # Research idea to Quick Paper
 
-Follow this workflow when the author needs to shape a research question before writing or wants to continue a Quick Paper. Discuss the work in the current Codex conversation and keep a workspace artifact that the author can refresh and reopen. Use the author's language and wording where possible.
+Follow this workflow when the author needs to shape a research question before writing or wants to continue a Quick Paper. Discuss the work in the current Codex conversation and keep a Research Wall that shows how each round fills the paper. Use the author's language and wording where possible.
 
 ## Keep the workspace current
 
-On the first substantive exchange, create `research-state.json` and `research-workspace.html` in the author-selected output directory or the current project's chat artifact directory. On subsequent turns, read and update the existing files. The HTML is a snapshot of the working brief, sources, and outline.
+On the first substantive exchange, create `research-state.json` and `research-workspace.html` in the author-selected output directory or the current project's chat artifact directory. Seed them with the author's actual idea, the first question or takeaway, and the first relevant paper blocks. On subsequent turns, update the same files. If an older state lacks the Research Wall arrays, add them and seed from the existing brief and known messages. Preserve the existing brief, baselines, and outline.
 
-Maintain one JSON object with this shape. Use empty strings and an empty baseline list for unknown values.
+Maintain one JSON object with this shape. Use empty strings for unknown brief fields and empty arrays where there are no entries yet.
 
 ```json
 {
@@ -18,7 +18,10 @@ Maintain one JSON object with this shape. Use empty strings and an empty baselin
   "openQuestion": "",
   "status": "discussing",
   "baselines": [],
-  "outline": ""
+  "outline": "",
+  "rounds": [],
+  "blocks": [],
+  "evidence": []
 }
 ```
 
@@ -28,7 +31,18 @@ Maintain one JSON object with this shape. Use empty strings and an empty baselin
 - An optional string `id` can identify the workspace's browser draft. Keep it stable for the same project and topic.
 - Once the author has an outline, keep `outline` in sync with the current Quick Paper Markdown. Read any author changes to the Markdown before updating its HTML snapshot. If the topic changes materially, clear the baseline and outline fields for the new brief. Preserve the prior Quick Paper on disk for reference where needed.
 
-After each substantive change to the brief, confirmation, baseline results, or outline, run [the workspace renderer](../scripts/render-research-workspace.py) as `python3 <skill-dir>/scripts/render-research-workspace.py research-state.json research-workspace.html` from the artifact directory. Link the refreshed HTML and, when available, the editable Markdown in the conversation. The author can download Markdown edits from the workspace. Read the updated Markdown when they want Codex to carry those edits forward.
+## Add a round to the Research Wall
+
+Before replying to every substantive author message, read the existing state and append a round. Capture the part of the message that moves the research forward: a choice, correction, objection, evidence, or new constraint. Add the takeaway and the next decision or action where useful. Record open proposals as proposals; a round can advance the discussion without settling anything. Leave out greetings and unrelated chat.
+
+- Each round is an object with `id`, `label`, `author`, `decision`, and `blockIds`. Use a stable ID, paraphrase the author's point in `label`, and put their display name in `author`. In `decision`, state what you concluded, what changed, or what remains undecided. Put the IDs of blocks changed by this round in `blockIds`.
+- Each block has `id`, `label`, `status`, `detail`, `roundIds`, and `evidenceIds`. Reuse the ID for the same question, metric, control, method, result, or other paper component. Update its status and reason, append the round ID to `roundIds`, and link current evidence or gaps by ID in `evidenceIds`. If the author revises a decision, update the block and record why in the new round so past decisions stay traceable.
+- Use `open` for a question or slot still to fill, `suggestion` for a proposed change or next action, `conflict` when linked claims, assumptions, or evidence cannot all hold, and `supported` when the stated scope is supported by reasoning or evidence. In `detail`, identify what is missing, why the action helps, which two things conflict and what would resolve them, or exactly what is supported. Distinguish a design choice that follows logically from a claim established by data; explain what still requires a test even if the design is settled.
+- Each evidence entry has `id`, `label`, `status`, and `detail`, plus optional `source` and `roundId`. Use `provided` for actual material the author supplied, `verified` for evidence you checked against its source, and `needed` for an absent or hypothetical result, or a source you still need to locate. State the claim the evidence bears on, its scope or locator, and what remains unknown. Include the original source URL when available and the originating round ID when applicable. A plan, candidate citation, or result nobody has supplied or checked stays a gap. Update the same evidence entry when the missing material arrives.
+
+Save the updated state by replacing the completed JSON file in one operation, then run [the workspace renderer](../scripts/render-research-workspace.py) as `python3 <skill-dir>/scripts/render-research-workspace.py research-state.json research-workspace.html` from the artifact directory. Do this on each substantive round, including confirmation, new baseline findings, and Quick Paper updates.
+
+When the author wants the research wall to update while open, run `python3 <skill-dir>/scripts/serve-research-workspace.py research-workspace.html research-state.json` from the artifact directory and give the author its loopback URL. Reuse a running preview for the same artifact. Keep updating the same state files so the live board can read them. Without the service, link the refreshed HTML and tell the author they can reload it. Link the editable Markdown when available. The author can download Markdown edits from the workspace; read the updated Markdown when they want Codex to carry those edits forward.
 
 ## Debate the idea and maintain the brief
 
@@ -52,6 +66,12 @@ For each selected candidate, record a stable ID, its original source link and lo
 | B01 | Link to paper section, table, or implementation | Which claim it can test | Matched conditions, mismatches, and unknowns | What to align or verify |
 
 Use the table in the Quick Paper. Scope descriptions to what the source supports and leave reported scores out of the new study's results. If sources are inaccessible or comparison conditions cannot be verified, record the specific missing source or comparison and retain a labeled slot for it. An incomplete search can yield a usable outline with those gaps visible.
+
+## Keep development checks traceable
+
+When the author asks to test a workflow, preserve its code and parameters before checking new documents. Record the sampling rule, exclusions, source versions, and the actual answers returned at each checkpoint. Check attribution to the current study, the question's target, and necessary qualifiers against the cited passages. Keep API failures visible alongside the completed decisions.
+
+The [long-document evidence case](../examples/long-document-early-stop/README.md) records a development result and a frozen new-document check with different outcomes.
 
 ## Create the editable Quick Paper
 
