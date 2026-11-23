@@ -17,11 +17,15 @@ Use $advisor-ready-paper-structure to help me develop this idea.
 Can a retriever stop reading a long document early and still recover the evidence?
 ```
 
-1. **Discuss the idea.** Stay in the same chat. Codex challenges one assumption at a time and updates a brief with the research question, primary metric, controls, and what result would overturn the hypothesis.
-2. **Confirm the topic.** When the brief reflects what you want to test, say “Confirm this topic and search for baselines.” Codex checks original papers and official implementations, links the sources, and explains which comparisons can be run fairly and which conditions still need alignment.
-3. **Fill in the Quick Paper.** Codex puts the confirmed question, experimental plan, and verified citations into an editable Markdown outline. Labeled blanks show where to add missing method details, dataset choices, results, and conclusions. Bring back a section or an update to continue working on the gaps.
+1. **Develop the five answers.** Revisit the problem, why it matters, what makes it hard, the closest prior attempts, and your general approach. Codex debates the most consequential gap each turn, checks relevant original papers during the discussion, and updates the Research Wall with what changed.
+2. **Confirm the topic and comparisons.** When the question and intended claim are clear, confirm the brief. Codex fixes the formal baseline/control plan and records which comparison conditions still need alignment.
+3. **Choose the paper structure.** Before writing, Codex identifies whether the main contribution is a method or an analysis, gives its evidence-based reason, then builds the Quick Paper around it. Labeled blanks preserve missing evidence, experiments and conclusions.
 
 Open the Research Wall to follow the key point from each turn, the paper blocks it changes, and the evidence still needed. Ask Codex for a live preview that updates as the conversation progresses. The generated `research-workspace.html` also opens as an offline snapshot. Edit `quick-paper.md` as your draft develops. Download the two example HTML files to the same folder and open them in your browser. [Interactive idea example](examples/research-idea-workbench.html) · [Workspace with checked baselines](examples/research-workspace.html) · [Quick Paper Markdown](examples/quick-paper.md)
+
+The approach starts at a level a reader new to the field can follow. Each close prior paper gets a brief, sourced account of what it establishes and what remains open. The core idea is explained independently of particular models and datasets, with reproducibility details placed in the setup. A method paper builds around the proposed solution and its comparisons. An analysis paper builds around the questions, study design and findings.
+
+[Five-question framing and paper-type criteria](references/research-framing.md)
 
 ## Research case study
 

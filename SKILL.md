@@ -1,6 +1,6 @@
 ---
 name: advisor-ready-paper-structure
-description: "Develop a rough research idea through debate, confirm the topic, find sourced baselines, and generate an editable Quick Paper. Review and restructure a paper PDF, draft, or outline with an interactive argument map, original PDF highlights, and approvable edits. Especially useful for empirical ML/AI."
+description: "Develop research ideas through five-question debate and sourced prior work, choose a method or analysis paper structure, and create an editable Quick Paper. Review and restructure a paper PDF, draft, or outline with an interactive argument map, PDF highlights, and approvable edits. Especially useful for empirical ML/AI."
 ---
 
 # Advisor-Ready Paper Structure · 不烧心的论文结构审阅
@@ -8,7 +8,7 @@ description: "Develop a rough research idea through debate, confirm the topic, f
 Respect the author's research question, scientific scope, and target format. Choose the workflow that matches what they want to do now.
 
 - When the user sends an approved selection from **Open in Codex** or supplies an approval manifest, follow [the approved revision workflow](references/approved-revisions.md) to produce the revised files and a change record.
-- When the user wants to develop a rough idea, debate a research design, find baselines for a newly confirmed topic, or create or fill a Quick Paper, follow [the research ideation workflow](references/research-ideation.md). Start from the user's idea or current brief, ask one consequential question per round, and get their explicit confirmation of the topic before searching for baselines. After every substantive reply, save the author's point and your takeaway to the Research Wall and update the linked paper blocks and evidence.
+- When the user wants to develop an idea, debate a research design, find prior work, or create or fill a Quick Paper, follow the [research ideation workflow](references/research-ideation.md) and its [five-question framing](references/research-framing.md). Iterate on the problem, value, challenges, close prior work and general approach, using targeted literature searches during discussion. Ask for topic confirmation before fixing the formal comparison plan. Before writing, identify whether the primary contribution calls for a method or analysis paper structure. Before replying to each substantive research turn, save the author's point and your takeaway to the Research Wall and update the linked paper blocks and evidence.
 - When the user asks to review an existing PDF, draft, or outline, start below. Identify the research question, where the paper makes its central claim and presents its evidence, and what would clarify the argument. Use experiment notes, results, baseline descriptions, figures, and tables when supplied. A target venue is optional. Work on the requested sections, using wider context when it changes their role.
 
 
@@ -20,6 +20,8 @@ Respect the author's research question, scientific scope, and target format. Cho
 - Mark missing evidence or reasoning with gap IDs such as `G01`. Distinguish edits the author can make from the current draft from checks that affect a structural choice or a claim's scope. For each check, name the material, the comparison or verification, and what finding would change the recommendation. Prioritize provenance and comparability when they determine which results belong together. If a check is blocked, give a defensible fallback the author can use now.
 
 ## 2. Map the whole argument
+
+For a whole-paper review or writing handoff, identify the primary contribution as a method or analysis paper using the [framing guide](references/research-framing.md#choose-the-papers-organizing-contribution). Explain the evidence-based choice and mark it provisional when needed. Use the five questions to locate missing reasoning, then choose the corresponding structure.
 
 Use [the section playbook](references/section-playbook.md) to adapt the map to the manuscript's topic, contribution, and venue. For a whole-paper review, cover the title and abstract, introduction, related work where relevant, method, experimental setup, substantive results in the proposed order, discussion, conclusion, and appendices as applicable. Use the paper's actual section names or concrete proposed headings. Group minor subsections under the node where their material belongs. For narrower reviews, map the requested sections and include adjacent context where a handoff depends on it.
 
@@ -38,7 +40,7 @@ Assign each node the severity of its most consequential open issue.
 | Green | A small, evidence-supported change can improve wording, transitions, or placement. |
 | Blank | The section serves its role as written and has no proposed changes. |
 
-The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method explains the key idea and follows the actual flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
+The introduction leads from a concrete problem to the key idea and a bounded evidence preview. The method or study-design section explains the key idea and follows the actual research flow. Each experiment connects its purpose, comparison and reading guide, observation, interpretation, and implication for a design or claim. The conclusion returns to the opening question, states supported findings and limits, and draws future work from those limits. Other paper types may organize the argument around a proof, dataset, synthesis, or case.
 
 ## 3. Leave visible gaps and plan the displays
 

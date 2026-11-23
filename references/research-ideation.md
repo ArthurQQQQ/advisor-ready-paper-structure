@@ -46,18 +46,20 @@ When the author wants the research wall to update while open, run `python3 <skil
 
 ## Debate the idea and maintain the brief
 
+Use the [five-question framing](research-framing.md) throughout the discussion. Establish current answers for the problem, value, challenges, closest prior attempts and general approach. Save each answer and its evidence in existing Research Wall blocks, then revisit the affected answers when new information changes the argument. At each turn, develop the most consequential gap. The five-question summary is a compact synthesis at major transitions.
+
 - Start from what the author said. In each turn, state one assumption, rival explanation, failure case, or experimental trade-off that would change the design. Explain the practical consequence in a sentence and ask one focused question. Offer two concrete alternatives when that helps the author decide, with room for their own answer.
 - Keep a concise brief with the **research question**, **main metric**, **fair comparison**, and **what would falsify the hypothesis**. If useful, name the population or setting, intended intervention, prediction, and a major confound. Mark tentative entries as proposed and missing entries as open. Attribute decisions to the author and revise the brief when their answer changes a choice.
 - Ask the next question at the biggest unresolved choice. For example, if the author wants to stop reading a document partway through, whether to measure recall of gold evidence or final answer accuracy changes which comparison can explain a performance difference. Once a measure is chosen, examine the most consequential remaining failure mode or comparison condition.
 
 ## Confirm the topic
 
-- When the author has a testable direction, show the current brief and ask for confirmation in that turn. Start baseline search only after the author explicitly confirms that version of the topic. A message that clearly confirms a topic and requests search, including an author-submitted **confirm and search** handoff containing the displayed brief, satisfies this step. Carry any unsettled details forward as open items. Continue with the confirmed topic in the same turn when possible.
+- Search close prior work while debating whenever it bears on one of the five questions, and use it to revise the brief. When the author has a testable direction, show the current five-question synthesis and experimental brief and ask for topic confirmation. Once confirmed, fix the scope for formal baseline/control selection and evaluation. A message that clearly confirms the displayed topic and requests search satisfies confirmation. Continue in the same turn where possible and carry unsettled details as open items.
 - If the author revises the central question or comparison conditions after search, update the brief and ask them to confirm the changed topic. Recheck earlier baselines against the new brief before carrying them forward.
 
 ## Find baselines and check what they compare
 
-Search enabled scholarly or internet sources with terms for the confirmed question, intervention, evaluation setting, and candidate methods. Use public terminology for queries that come from unpublished work. Open original papers and official implementations or benchmark documentation to verify each baseline and its relevant conditions. Prefer the closest method for the claim, an informative control, and an upper or lower reference when each has a distinct role. A reasonable control proposed by the team can be listed as a planned comparison, with its provenance identified.
+During discussion, use targeted searches for the precise problem to challenge the proposed novelty, assumptions and approach. Once the topic is confirmed, use its question, intervention, evaluation setting and candidate methods to assemble the formal comparison plan. Search enabled scholarly or internet sources. Use public terminology for queries that come from unpublished work. Open original papers and official implementations or benchmark documentation to verify each baseline and its relevant conditions. Prefer the closest method for the claim, an informative control, and an upper or lower reference when each has a distinct role. A reasonable control proposed by the team can be listed as a planned comparison, with its provenance identified.
 
 For each selected candidate, record a stable ID, its original source link and locator, its role, which conditions match, what still needs alignment or reproduction, and the next check. Compare the dataset and split, input or evidence access, primary metric, model and implementation, and training or inference budget when those conditions affect the claim.
 
@@ -75,14 +77,18 @@ The [long-document evidence case](../examples/long-document-early-stop/README.md
 
 ## Create the editable Quick Paper
 
-Write an editable `quick-paper.md` alongside the workspace artifacts unless the author chooses a different location. Reuse a Quick Paper for the same confirmed topic if one exists. Follow any requested manuscript format or filename. Carry over what the author has confirmed and only the references you verified. Adapt section headings to the work. For an empirical paper, use the following structure:
+Write an editable `quick-paper.md` alongside the workspace artifacts unless the author chooses a different location. Reuse a Quick Paper for the same confirmed topic if one exists. Follow any requested manuscript format or filename. Carry over what the author has confirmed and only the references you verified.
+
+Before the outline, state the primary paper type, why its main claim and evidence support that choice, and any open evidence gap. Use the [method or analysis criteria](research-framing.md#choose-the-papers-organizing-contribution) and record the choice in the Research Wall. Then show the current five-question synthesis and use the corresponding [section sequence](section-playbook.md). A mixed contribution can identify a primary type with a supporting role for the other. Keep an unsettled classification provisional.
+
+For an empirical paper, adapt these slots to the selected contribution:
 
 - **Working title and brief.** Insert the confirmed question and comparison plan. Identify proposed choices and open items.
 - **Abstract and introduction.** Give the question and motivation. Leave focused slots for the main contribution, outcomes, and takeaway when those still need evidence.
 - **Related work and baselines.** Insert the sourced comparison table and leave slots for unverified candidates and alignment work.
-- **Method.** Insert agreed design decisions. Leave labeled slots for operational details, such as a stopping rule, protection against false stops, or a decision threshold.
+- **Method or study design.** For a method paper, explain the general solution and agreed design choices before the implementation. For an analysis paper, specify the research questions or hypotheses, measurement protocol, controls or interventions, and competing explanations. Leave unknown operational details as labeled gaps.
 - **Experimental setup.** Insert agreed metrics and fairness conditions. Leave slots for the data, splits, implementation settings needed to reproduce the results, and planned analysis as needed.
-- **Results.** Prepare blank cells for the candidate comparison, effect sizes, uncertainty, and failure slices that matter. A caption or adjacent note identifies the value to fill and the evidence needed.
+- **Results or findings.** Organize a method paper around comparisons supporting its proposed change. Organize an analysis paper around findings that answer its research questions. Prepare blank cells for the relevant comparisons, effect sizes, uncertainty, and failure slices. A caption or adjacent note identifies the value to fill and the evidence needed.
 - **Discussion and conclusion.** Leave slots for interpretation, limitations, counterexamples, and a scope-bounded conclusion once the evidence is available.
 
 Use placeholders that lead to a useful next action, such as `[Fill in the matched-budget evidence recall for B01 on the held-out split]`. Keep unknown result cells empty. The draft can open with a brief list of the next one or two items the author can supply.

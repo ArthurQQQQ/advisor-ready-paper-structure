@@ -1,6 +1,13 @@
 # Writing the sections of an empirical paper
 
-Use these sequences to choose what each paragraph or subsection does. Merge adjacent steps when they answer the same reader question.
+Choose the primary paper type from the [central claim and its evidence](research-framing.md#choose-the-papers-organizing-contribution), then use these sequences to choose what each paragraph or subsection does. Merge adjacent steps when they answer the same reader question.
+
+| Type | Proposed section sequence | How to organize the evidence |
+| --- | --- | --- |
+| Method paper | Introduction → Close prior work → General idea and method → Experimental setup → Comparative results and component checks → Limits and conclusion | Each comparison tests the proposed change or a design choice. |
+| Analysis paper | Introduction and research questions → Prior explanations or predictions → Study design and measurement → Findings → Robustness and competing explanations → Implications and limits | Each finding answers a question, with the controls and counterevidence needed to interpret it. |
+
+Use the five framing answers as the argument behind the introduction. Explain terminology and task first, then stakes, challenges, closest attempts and the general approach. For question 5, a study design can be the approach. Put the model and dataset identities needed for reproducibility in their appropriate setup sections.
 
 | Section | Writing sequence | What to look for in a draft |
 |---|---|---|
