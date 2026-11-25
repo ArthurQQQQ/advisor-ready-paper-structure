@@ -27,6 +27,8 @@ The approach starts at a level a reader new to the field can follow. Each close 
 
 [Five-question framing and paper-type criteria](references/research-framing.md)
 
+The [shared writing foundation](references/writing-foundations.md), adapted from the supplied Writing tips, governs the prose across these workflows. It covers the central insight, the five-question introduction followed by findings and contributions, intuition before mathematics, experiment narration, self-contained displays, and clear sentences with stable terminology.
+
 ## Research case study
 
 The long-document evidence case includes the live Research Wall workflow, a frozen OpenRouter evidence pipeline, and a fresh QASPER check. The new batch produced seven early-PASS checkpoints, and source review found 14 insufficient answers among 30 PASS responses. The case records the failed API checkpoint and the questions excluded before evaluation.

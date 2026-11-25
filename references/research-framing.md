@@ -1,6 +1,6 @@
 # Five-question research framing
 
-Use these questions to develop a research argument from an idea, notes or an existing draft. Adapt the language to the reader and field. Begin with the current question and evidence. Let changes in either revise the framing.
+Use these questions to develop a research argument from an idea, notes or an existing draft. Adapt the language to the reader and field. Begin with the current question and evidence. Let changes in either revise the framing. Use the [shared writing foundation](writing-foundations.md) to turn that argument into section and sentence-level prose.
 
 ## The five questions
 
