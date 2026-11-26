@@ -2,17 +2,16 @@
 
 Use this optional branch when the author wants concept illustrations, method diagrams, graphical abstracts, or visual alternatives for paper figures. Begin with the figure's role in the argument, the supplied evidence and actual figures from comparable papers. A structure review or prose edit can simply plan the needed displays.
 
-## Recent AI-generated references
+## Recent ICML paper-figure references
 
 These examples were checked against the papers and author pages on 2026-11-26. Match the author's requested date range, venue/status and visual taste. When they want AI-generated aesthetics, verify that the source identifies the specific output as generated or enhanced; appearance and publication year do not establish provenance. The examples below are candidates for selection, with no preference inferred from their inclusion.
 
-| ID | Paper and exact figure | Organization to study | Source |
-| --- | --- | --- | --- |
-| N1 | **PaperBanana, ICML 2026, Figure 8, proceedings PDF page 15** | Style-enhanced versions of technical diagrams. Pale blue, purple, green or cream regions group related operations; aligned typography, icons and connectors retain information density. Inspect the enhanced column alongside its original. | [Official proceedings](https://proceedings.mlr.press/v306/zhu26ag.html) · [Author style comparison](https://dwzhu-pku.github.io/PaperBanana/static/images/case_style_polish.png) |
-| N2 | **AutoFigure, ICLR 2026, Figure 3, arXiv PDF page 6** | Generated examples with muted palettes, pale panel backgrounds, outlined subject-specific illustrations and dense multi-panel explanation. The paper explicitly identifies a Morandi palette for these examples; adapt colors and icon treatment to the current subject. | [Author paper](https://arxiv.org/pdf/2602.03828#page=6) · [Author repository](https://github.com/ResearAI/AutoFigure) · [Generated examples](https://arxiv.org/html/2602.03828v1/autofigure_case.png) |
-| N3 | **PaperBanana-Interact, 2026 preprint, Figure 14, PDF page 18** | A documented multi-turn refinement trajectory. The final panel combines pale teal and blue groups, restrained accent colors and aligned technical subdiagrams. Its requirements change across turns; inspect what the revision preserves as well as its appearance. | [Preprint, first posted 2026-08-31](https://arxiv.org/abs/2608.30241) · [Author final generated example](https://shirley-wu.github.io/PaperBanana-Interact/assets/full_example_t5.png) |
+| Paper and exact figure | Organization to study | Source |
+| --- | --- | --- |
+| **DreamDojo, ICML 2026, Figure 1, PDF page 3** | White/gray surfaces with vivid lime-green emphasis. Video/image mosaics, robot imagery and training flows form four asymmetric regions with a clear visual hierarchy. Study how actual artifacts explain the stages. | [Official proceedings](https://proceedings.mlr.press/v306/gao26q.html) · [Author original figure](https://dreamdojo-world.github.io/overview.png) |
+| **OmniShow, ICML 2026, Figure 2, PDF page 4** | A dense architecture on the left, mechanism expansions in the middle and training on the right. Pale blue, peach, green and lavender groups connect matching objects, matrices and detailed computation while retaining consistent geometry and typography. | [Official proceedings](https://proceedings.mlr.press/v306/zhou26ag.html) · [Paper figure](https://raw.githubusercontent.com/mlresearch/v306/main/assets/zhou26ag/zhou26ag.pdf#page=4) · [Author project](https://correr-zhou.github.io/OmniShow/) |
 
-Select references for both the requested figure's explanatory role and the author's visual preferences. Distinguish an original human figure, a system-generated result, a reference target and a failure case when showing comparison galleries. A paper's acceptance does not certify a new figure's correctness or predict acceptance.
+Select references for both the requested figure's explanatory role and the author's visual preferences. Distinguish original diagrams, declared generated outputs, reference targets and failure cases when showing comparison galleries. Record production provenance only when the source provides it.
 
 If the requested conference edition has not opened submissions or announced decisions, verify the current official timeline and label submissions or preprints accurately. Offer relevant available work with its actual status. Keep recency and AI-generation provenance as separate facts.
 

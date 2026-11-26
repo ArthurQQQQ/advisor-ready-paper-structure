@@ -29,7 +29,9 @@ The approach starts at a level a reader new to the field can follow. Each close 
 
 The [shared writing foundation](references/writing-foundations.md), adapted from the supplied Writing tips, governs the prose across these workflows. It covers the central insight, the five-question introduction followed by findings and contributions, intuition before mathematics, experiment narration, self-contained displays, and clear sentences with stable terminology.
 
-For concept and method diagrams, explore [recent AI-generated examples](references/figure-styles.md), including PaperBanana (ICML 2026) and AutoFigure (ICLR 2026). Compare palettes, typography, grouping and detail before choosing a reference. The skill adapts the selected treatment to your research and carries it through the paper. Measured results are plotted from source data.
+For concept and method diagrams, explore [recent ICML paper figures](references/figure-styles.md), including DreamDojo and OmniShow (ICML 2026). Compare palettes, typography, grouping and detail before choosing a reference. The skill adapts the selected treatment to your research and carries it through the paper. Measured results are plotted from source data.
+
+Manuscript prose states the contribution, method and findings directly. Internal draft versions, run labels and editorial checks stay in the working record.
 
 ## Research case study
 

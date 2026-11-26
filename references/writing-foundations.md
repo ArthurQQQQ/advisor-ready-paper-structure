@@ -70,6 +70,18 @@ Keep the conclusion's claim at the same scope as the results. Use future work to
 
 ## Sentence-level writing
 
+### Manuscript presentation
+
+Present the current research directly, using stable scientific names. Keep internal draft versions, run/checkpoint/snapshot IDs, script suffixes, freeze-batch labels, local paths and audit status in the author's working record. They do not belong in the title, body, captions, figure labels, tables or appendices. Preserve actual model, data and software identities in the setting when needed for interpretation or reproduction. Internal snapshot IDs used by editing tools remain in their records.
+
+Lead with the contribution, performed method and observed finding. State the actual comparison and interpretation-changing conditions where the reader needs them. Remove repeated apologetic qualifiers and generic self-protective caveats. Explain material uncertainty and limitations concretely, without adding the agent's verification status to the paper.
+
+A source the agent has not checked creates a source-check task in the author's notes. It does not establish that the author's existing claim is false or require an automatic reduction of the main contribution. If actual evidence contradicts a statement, correct that specific statement and give the author the reason separately. New manuscript sentences and displays need an actual factual basis. In a style-only pass, preserve the supplied claim strength and scientific meaning.
+
+For a new manuscript output, use a plain scientific title and filename; keep revision history in the working record. Follow existing source filenames and required reference or artifact schemas where they identify the material being edited. Check the requested text and affected displays for internal labels and empty defensive language before delivery.
+
+### Clear sentences
+
 - Give each sentence one central idea. Split long sentences that join independent claims with rhetorical dashes, semicolons or explanatory colons. Preserve notation, code, citations, quotations and required formatting where their punctuation carries meaning.
 - Use one stable term for one thing. Keep the selected model or method name and distinguish a component from the whole system. Avoid cycling through model, system and framework as stylistic substitutes for the same referent.
 - Prefer direct statements with a clear actor. In research prose, We or I can describe what the authors study, model, test, observe or hypothesize. Use the named method when the method performs an operation.
