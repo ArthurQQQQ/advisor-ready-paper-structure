@@ -29,7 +29,7 @@
 
 [共同写作底层框架](references/writing-foundations.md)来自提供的 Writing tips，贯穿这些工作流。它规定核心洞见、五问后接实验概述与贡献清单、方法先直觉后数学、实验叙述顺序、可独立阅读的图表，以及短句和稳定术语。
 
-概念图和方法图先看[真实 ICLR 论文原图](references/figure-styles.md)，选择实例对照、计算架构或生成与核验等组织方式。Skill 把选中的画法用于你的研究，同篇沿用。结果图的数值从真实数据绘制。
+概念图和方法图可以看[近期 AI 生成样例](references/figure-styles.md)，包括 PaperBanana（ICML 2026）和 AutoFigure（ICLR 2026）。先比较配色、字体、分区与信息密度，再把选中的画法用于你的研究，同篇沿用。结果图的数值从真实数据绘制。
 
 ## 研究案例
 
