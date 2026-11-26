@@ -31,6 +31,16 @@ The [shared writing foundation](references/writing-foundations.md), adapted from
 
 For concept and method diagrams, explore [recent AI-generated examples](references/figure-styles.md), including PaperBanana (ICML 2026) and AutoFigure (ICLR 2026). Compare palettes, typography, grouping and detail before choosing a reference. The skill adapts the selected treatment to your research and carries it through the paper. Measured results are plotted from source data.
 
+### Reuse an approved figure style
+
+The bundled [Reference-Guided Paper Figures skill](skills/reference-guided-paper-figures/SKILL.md) turns a selected reference into a consistent construction diagram, timeline and data-plot family. Its [soft scientific profile](skills/reference-guided-paper-figures/references/soft-scientific-style.md) uses lavender headings, teal source cards, orange evidence links and concrete paper/calendar objects. A generic style board demonstrates the vocabulary without exposing study material. Illustrations use the available image tool; measured geometry comes from frozen data and plotting tools. The workflow checks labels, uncertainty and the compiled paper after replacement.
+
+Ask: “Reuse my approved figure style for the other figures, preserve the scientific content, and return the complete PDF.” The advisor skill reads this module directly. To also invoke it separately as `$reference-guided-paper-figures`, copy the bundled folder into your Codex skills directory:
+
+```sh
+cp -R skills/reference-guided-paper-figures "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
 ## Research case study
 
 The long-document evidence case includes the live Research Wall workflow, a frozen OpenRouter evidence pipeline, and a fresh QASPER check. The new batch produced seven early-PASS checkpoints, and source review found 14 insufficient answers among 30 PASS responses. The case records the failed API checkpoint and the questions excluded before evaluation.
@@ -93,3 +103,4 @@ Show one or two specific edits on the left and highlight the matching passage on
 Mark each node by severity and include the controls for individual and batch approval.
 Prepare evidence-supported text replacements in my editable source and record checks that require additional material.
 ```
+

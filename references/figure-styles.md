@@ -2,6 +2,8 @@
 
 Use this optional branch when the author wants concept illustrations, method diagrams, graphical abstracts, or visual alternatives for paper figures. Begin with the figure's role in the argument, the supplied evidence and actual figures from comparable papers. A structure review or prose edit can simply plan the needed displays.
 
+For production from an already selected reference, use the bundled [reference-guided paper figures skill](../skills/reference-guided-paper-figures/SKILL.md). It includes an author-approved [soft scientific illustration profile](../skills/reference-guided-paper-figures/references/soft-scientific-style.md), a generic style board, and semantic/data/PDF checks. Use that profile when requested or when it matches the author's confirmed selection; do not impose it on every paper. Keep existing recent-reference choices below available for other directions.
+
 ## Recent AI-generated references
 
 These examples were checked against the papers and author pages on 2026-11-26. Match the author's requested date range, venue/status and visual taste. When they want AI-generated aesthetics, verify that the source identifies the specific output as generated or enhanced; appearance and publication year do not establish provenance. The examples below are candidates for selection, with no preference inferred from their inclusion.
@@ -55,3 +57,4 @@ Checks: [required paths, qualifiers and labels to preserve]
 ```
 
 For example, a planned early-stopping diagram can show read prefix → cited answer → support check → planned risk gate → stop or continue. A stop branch must follow both checks. The continue branch returns to the next unread part; unread content never enters the current answer. A displayed 5% false-stop target describes the evaluation objective, with calibration and achieved results left open until measured.
+

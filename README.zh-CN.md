@@ -31,6 +31,16 @@
 
 概念图和方法图可以看[近期 AI 生成样例](references/figure-styles.md)，包括 PaperBanana（ICML 2026）和 AutoFigure（ICLR 2026）。先比较配色、字体、分区与信息密度，再把选中的画法用于你的研究，同篇沿用。结果图的数值从真实数据绘制。
 
+### 复用已经选好的图片风格
+
+内置 [Reference-Guided Paper Figures skill](skills/reference-guided-paper-figures/SKILL.md)，把已经选定的参考图用于整篇的构建流程图、时间线和数据图。[柔和科研插画 profile](skills/reference-guided-paper-figures/references/soft-scientific-style.md)保留淡紫标题、青绿来源卡、橙色证据链接及纸张／日历对象，并附不含研究数据的通用风格板。概念插画使用可用的图片工具，结果图从冻结数据精确绘制；替换后核对标签、不确定性和完整论文 PDF。
+
+可以直接说：“沿用我已经选好的图片风格，把另外几张图统一，保留科学内容，再给我完整 PDF。”主 skill 会直接读取这个模块；如果还希望单独用 `$reference-guided-paper-figures` 调用，把内置目录复制到 Codex skills 目录：
+
+```sh
+cp -R skills/reference-guided-paper-figures "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
 ## 研究案例
 
 长文档证据案例展示了研究墙、冻结的 OpenRouter 证据流程和独立新题检查。新批次出现 7 个提前通过点，30 个通过答案中有 14 个经原文审读不充分。案例同时记录运行失败和评估前排除的题目。
@@ -92,3 +102,4 @@ git clone https://github.com/ArthurQQQQ/advisor-ready-paper-structure.git "${COD
 标注问题的严重程度，并提供逐条批准和一键批准。
 在可编辑源稿里拟好有证据支撑的替换文字，并记录需要额外材料的核查事项。
 ```
+
