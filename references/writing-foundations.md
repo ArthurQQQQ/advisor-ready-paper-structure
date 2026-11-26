@@ -60,6 +60,8 @@ For a method paper, a useful opening figure illustrates the problem and core ins
 
 Apply the actual venue's format to the appendix and supplement as well as the main text. Check affected figures, tables, widths and cross-references against the supplied or current applicable template.
 
+When the author wants generated concept or method diagrams, use the optional [figure-style selection](figure-styles.md). Compare the same content in different visual directions, record the author's selection and keep the paper's figures consistent. The style controls presentation; measured results are plotted from their source data.
+
 ## Conclusion
 
 Answer the opening question with the completed work and supported insight. Then develop a concrete implication, assumption, limitation or future direction that follows from that evidence and connects the work to its field.
