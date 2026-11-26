@@ -29,7 +29,7 @@ The approach starts at a level a reader new to the field can follow. Each close 
 
 The [shared writing foundation](references/writing-foundations.md), adapted from the supplied Writing tips, governs the prose across these workflows. It covers the central insight, the five-question introduction followed by findings and contributions, intuition before mathematics, experiment narration, self-contained displays, and clear sentences with stable terminology.
 
-For concept and method diagrams, compare [three visual directions](references/figure-styles.md): Publication Minimal, Academic Tech and Warm Editorial. Ask for same-content previews, choose a direction, and carry it through the paper. Measured results are plotted from source data.
+For concept and method diagrams, start with [actual ICLR paper figures](references/figure-styles.md). Inspect the originals and choose an example-based comparison, a computational architecture, or a generation/verification layout. The skill adapts the selected organization to your research and carries it through the paper. Measured results are plotted from source data.
 
 ## Research case study
 

@@ -60,7 +60,7 @@ For a method paper, a useful opening figure illustrates the problem and core ins
 
 Apply the actual venue's format to the appendix and supplement as well as the main text. Check affected figures, tables, widths and cross-references against the supplied or current applicable template.
 
-When the author wants generated concept or method diagrams, use the optional [figure-style selection](figure-styles.md). Compare the same content in different visual directions, record the author's selection and keep the paper's figures consistent. The style controls presentation; measured results are plotted from their source data.
+When the author wants generated concept or method diagrams, use the optional [paper-figure reference workflow](figure-styles.md). Start with actual figures from comparable papers, record the author's selection and adapt the chosen organization to the current content. Keep the paper's figures consistent. Measured results are plotted from their source data.
 
 ## Conclusion
 

@@ -52,7 +52,7 @@ At a substantive gap, say what to add or verify as one of the node's edits. For 
 
 Plan only figures and tables needed for an argument. Reserve each at its intended section with a provisional title, the claim it would support, source or gap IDs, and enough specification to build it. For a figure give panels, axes/units or diagram components and the intended comparison. For a table give rows, columns, metric, analysis set, and uncertainty where applicable. Leave missing data cells and plot regions empty. Mark them with an adjacent note, never with dummy numbers, fabricated panels, or a claim that assumes the result.
 
-When the author wants to draw paper diagrams or compare visual directions, follow [the selectable figure styles](references/figure-styles.md). Offer Publication Minimal, Academic Tech and Warm Editorial; use the same content for generated alternatives, record the author's choice and reuse it for that paper. Check labels and branch logic after generation. Render measured results from real data using plotting tools.
+When the author wants to draw paper diagrams or compare visual directions, follow [the paper-figure reference workflow](references/figure-styles.md). Start with actual figures from verified comparable papers, show the originals with source links, then record the author's choice and adapt that organization to the current study. Use the same scientific content when generated alternatives are requested. Check labels and branch logic after generation. Render measured results from real data using plotting tools.
 
 ## 4. Deliver a compact review
 
